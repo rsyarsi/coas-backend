@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Service;
+
+use Exception;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;  
+use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
+use App\Repositories\Interfaces\SpecialistRepositoryInterface;
+
+class AssesmentGroupService extends Controller
+{
+    private $SpecialistRepository;
+    private $AssesmentGroupRepository;
+
+    public function __construct(
+        SpecialistRepositoryInterface $SpecialistRepository,
+        AssesmentGroupRepositoryInterface $AssesmentGroupRepository
+        
+        )
+    {
+        $this->SpecialistRepository = $SpecialistRepository;
+        $this->AssesmentGroupRepository = $AssesmentGroupRepository;
+    }
+    public function storeData(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "specialistID" => "required", 
+            "assementgroupname" => "required", 
+            "active" => "required" 
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            if($findspecialist->count() < 1){
+                return $this->sendError('Spesialis tidak ditemukan !', []);
+            }
+            $execute = $this->AssesmentGroupRepository->storeAssesmentGroup($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($execute, 'Group Penilaian Berhasil dibuat !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function update(Request $request)
+    {
+        $request->validate([ 
+            "specialistID" => "required", 
+            "assementgroupname" => "required", 
+            "active" => "required" 
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            $find = $this->AssesmentGroupRepository->findAssesmentGroup($request->id);
+             
+            if($find->count() < 1){
+                return $this->sendError('Group Penilaian tidak ditemukan !',[]);
+            }
+
+            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            if($findspecialist->count() < 1){
+                return $this->sendError('Specialist tidak di temukan !', []);
+            }
+
+            $execute = $this->AssesmentGroupRepository->updateAssesmentGroup($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($execute, 'Group Penilaian Berhasil diupdate !');
+            }
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function show($id)
+    {
+        try {
+            
+            $find = $this->AssesmentGroupRepository->findAssesmentGroup($id); 
+            if($find->count() < 1){
+                return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Group Penilaian ditemukan !');
+
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function showall()
+    {
+        try {
+            $find = $this->AssesmentGroupRepository->allAssesmentGroup();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Group Penilaian ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+}
