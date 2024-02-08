@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('universities', function (Blueprint $table) {
             $table->uuid('id')->default(DB::raw('uuid_generate_v4()'))->primary();
-            $table->string('name',4); 
+            $table->string('name',250); 
             $table->integer('active',false,'1')->default('1');
             $table->timestamps();
         });
