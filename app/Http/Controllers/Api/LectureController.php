@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\LectureRepository;
+use App\Repositories\SpecialistRepository;
+use App\Service\LectureService;
 
 class LectureController extends Controller
 {
@@ -25,6 +28,16 @@ class LectureController extends Controller
     public function create()
     {
         //
+          //
+          $SpecialistRepository =  new SpecialistRepository(); 
+          $LectureRepository =  new LectureRepository();  
+          $Service = new LectureService(
+              $SpecialistRepository,
+              $LectureRepository 
+  
+          );
+          $execute =  $Service->showall();
+          return $execute;
     }
 
     /**
@@ -36,6 +49,15 @@ class LectureController extends Controller
     public function store(Request $request)
     {
         //
+            $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository();  
+            $Service = new LectureService(
+                $SpecialistRepository,
+                $LectureRepository 
+    
+            );
+            $execute =  $Service->storeData($request);
+            return $execute;
     }
 
     /**
@@ -47,6 +69,15 @@ class LectureController extends Controller
     public function show($id)
     {
         //
+            $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository();  
+            $Service = new LectureService(
+                $SpecialistRepository,
+                $LectureRepository 
+    
+            );
+            $execute =  $Service->show($id);
+            return $execute;
     }
 
     /**
@@ -67,9 +98,18 @@ class LectureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository();  
+            $Service = new LectureService(
+                $SpecialistRepository,
+                $LectureRepository 
+    
+            );
+            $execute =  $Service->update($request);
+            return $execute;
     }
 
     /**

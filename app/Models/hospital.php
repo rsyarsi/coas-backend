@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class assesmentdetail extends Model
+class hospital extends Model
 {
     use HasFactory;
-    protected $table = "assesmentdetails";
+    protected $table = "hospitals";
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'assesmentgroupID',     
-        'assementdescription',
-        'assementbobotvalue',        
-        'active' 
+        'name'
     ];
 }

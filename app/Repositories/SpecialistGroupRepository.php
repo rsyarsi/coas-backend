@@ -23,7 +23,7 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
 
     public function findSpecialistGroup($id)
     {
-        return SpecialistGroup::find($id);
+        return SpecialistGroup::where('id',$id)->get();
     }
 
     public function updateSpecialistGroup($request)

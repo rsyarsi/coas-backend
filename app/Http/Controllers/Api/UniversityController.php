@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;  
-use App\Http\Controllers\Controller; 
-use App\Repositories\YearRepository;
-use App\Service\YearsService;
+use App\Http\Controllers\Controller;
+use App\Repositories\UniversityRepository;
+use App\Service\UniversitieService;
+use Illuminate\Http\Request;
 
-class YearController extends Controller
+class UniversityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,14 +24,11 @@ class YearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-     
-      
     public function create()
     {
         //
-        $yearRepository =  new YearRepository(); 
-        $aReturBeliService = new YearsService(
+        $yearRepository =  new UniversityRepository(); 
+        $aReturBeliService = new UniversitieService(
             $yearRepository 
         );
         $execute =  $aReturBeliService->showall();
@@ -44,32 +41,11 @@ class YearController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-     /**
-    *    @OA\Get(
-    *       path="/masterdata/create",
-    *       tags={"Year"},
-    *       operationId="tambahTahun",
-    *       summary="Tambah Tahun",
-    *       description="Untuk Input data Master Tahun",
-    *       @OA\Response(
-    *           response="200",
-    *           description="Ok",
-    *           @OA\JsonContent
-    *           (example={
-    *               "status": true,    
-    *               "code": 200,
-    *               "message": "Tahun Berhasil dibuat !",
-    *               "data": true
-    *          }),
-    *      ),
-    *  )
-    */
     public function store(Request $request)
     {
         //
-        $yearRepository =  new YearRepository(); 
-        $aReturBeliService = new YearsService(
+        $yearRepository =  new UniversityRepository(); 
+        $aReturBeliService = new UniversitieService(
             $yearRepository 
         );
         $execute =  $aReturBeliService->storeData($request);
@@ -85,8 +61,8 @@ class YearController extends Controller
     public function show($id)
     {
         //
-        $yearRepository =  new YearRepository(); 
-        $aReturBeliService = new YearsService(
+        $yearRepository =  new UniversityRepository(); 
+        $aReturBeliService = new UniversitieService(
             $yearRepository 
         );
         $execute =  $aReturBeliService->show($id);
@@ -111,32 +87,11 @@ class YearController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-      /**
-    *    @OA\Get(
-    *       path="/masterdata/update",
-    *       tags={"Year"},
-    *       operationId="updateTahun",
-    *       summary="Update Tahun",
-    *       description="Untuk Update data Master Tahun",
-    *       @OA\Response(
-    *           response="200",
-    *           description="Ok",
-    *           @OA\JsonContent
-    *           (example={
-    *               "status": true,    
-    *               "code": 200,
-    *               "message": "Tahun Berhasil diupdate !",
-    *               "data": 1
-    *          }),
-    *      ),
-    *  )
-    */
     public function update(Request $request)
     {
         //
-        $yearRepository =  new YearRepository(); 
-        $aReturBeliService = new YearsService(
+        $yearRepository =  new UniversityRepository(); 
+        $aReturBeliService = new UniversitieService(
             $yearRepository 
         );
         $execute =  $aReturBeliService->update($request);

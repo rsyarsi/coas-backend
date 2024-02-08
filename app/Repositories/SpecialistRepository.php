@@ -26,7 +26,7 @@ class SpecialistRepository implements SpecialistRepositoryInterface
 
     public function findSpecialist($id)
     {
-        return specialist::find($id);
+        return specialist::where('id',$id)->get();
     }
 
     public function updateSpecialist($request)

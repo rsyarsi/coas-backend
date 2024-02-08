@@ -14,12 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lectures', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('specialistID'); 
-            $table->string('name',150);
-            $table->integer('doctotidsimrs');
-            $table->integer('active',false,'1');
+        Schema::create('universities', function (Blueprint $table) {
+            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'))->primary();
+            $table->string('name',4); 
+            $table->integer('active',false,'1')->default('1');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lectures');
+        Schema::dropIfExists('universitiess');
     }
 };

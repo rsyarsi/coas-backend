@@ -26,7 +26,7 @@ class YearRepository implements YearRepositoryInterface
 
     public function findYears($id)
     {
-        return Year::find($id);
+        return Year::where($id)->get();
     }
 
     public function updateYears($request)

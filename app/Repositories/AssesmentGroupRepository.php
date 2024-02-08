@@ -24,7 +24,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
 
     public function findAssesmentGroup($id)
     {
-        return AssesmentGroup::find($id);
+        return AssesmentGroup::get('id',$id)->get();
     }
 
     public function updateAssesmentGroup($request)

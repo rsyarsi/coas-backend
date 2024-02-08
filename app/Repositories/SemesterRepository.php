@@ -24,7 +24,7 @@ class SemesterRepository implements SemesterRepositoryInterface
 
     public function findSemester($id)
     {
-        return Semester::find($id);
+        return Semester::where('id',$id)->get();
     }
 
     public function updateSemester($request)
