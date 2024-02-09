@@ -92,7 +92,7 @@ Route::get('reset', function (){
                     Route::get("viewall", [LectureController::class, "create"]);
                 });
                 Route::group(['prefix' => 'students'], function () { 
-                    Route::post("create", [StudentController::class, "create"]);
+                    Route::post("create", [StudentController::class, "store"]);
                     Route::post("update", [StudentController::class, "update"]);
                     Route::get("view/id/{id}", [StudentController::class, "show"]);
                     Route::get("viewall", [AssesmentDetailController::class, "create"]);
@@ -111,7 +111,18 @@ Route::get('reset', function (){
                 });
             });
             Route::group(['prefix' => 'transaction'], function () { 
-                Route::group(['prefix' => 'students'], function () { 
+                Route::group(['prefix' => 'student'], function () { 
+    
+                }); 
+                Route::group(['prefix' => 'assesment'], function () { 
+    
+                }); 
+            });
+            Route::group(['prefix' => 'emr'], function () { 
+                Route::group(['prefix' => 'periodonti'], function () { 
+    
+                }); 
+                Route::group(['prefix' => 'konservasi'], function () { 
     
                 }); 
             });

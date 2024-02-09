@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\LectureRepository;
+use App\Repositories\StudentRepository;
+use App\Repositories\HospitalRepository;
+use App\Repositories\SemesterRepository;
+use App\Repositories\SpecialistRepository;
+use App\Repositories\UniversityRepository;
+use App\Service\StudentService;
 
 class StudentController extends Controller
 {
@@ -25,6 +32,23 @@ class StudentController extends Controller
     public function create()
     {
         //
+            $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository 
+  
+            );
+            $execute =  $Service->showall();
+            return $execute;
     }
 
     /**
@@ -36,6 +60,23 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+            $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository 
+  
+            );
+            $execute =  $Service->storeData($request);
+            return $execute;
     }
 
     /**
@@ -47,6 +88,23 @@ class StudentController extends Controller
     public function show($id)
     {
         //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository 
+  
+            );
+            $execute =  $Service->show($id);
+            return $execute;
     }
 
     /**
@@ -67,10 +125,28 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository 
+  
+            );
+            $execute =  $Service->update($request);
+            return $execute;
     }
+
 
     /**
      * Remove the specified resource from storage.

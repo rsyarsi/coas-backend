@@ -19,7 +19,11 @@ return new class extends Migration
             $table->string('name',250);
             $table->string('nim',50);
             $table->uuid('semesterID');
-            $table->uuid('groupspecialistID');
+            $table->uuid('specialistID');
+            $table->date('dateIn');
+            $table->uuid('university');
+            $table->uuid('hospitalfrom');
+            $table->uuid('hospitalto');
             $table->integer('active',false,'1');
             $table->timestamps();
         });

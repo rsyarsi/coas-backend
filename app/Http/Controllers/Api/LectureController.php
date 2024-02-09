@@ -28,7 +28,7 @@ class LectureController extends Controller
     public function create()
     {
         //
-          //
+          //a
           $SpecialistRepository =  new SpecialistRepository(); 
           $LectureRepository =  new LectureRepository();  
           $Service = new LectureService(

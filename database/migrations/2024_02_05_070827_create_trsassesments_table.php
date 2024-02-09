@@ -15,13 +15,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('trsassesments', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('assesmentgroupID');
+            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'))->primary();
+            $table->uuid('assesmentdetailID');
             $table->uuid('studentID');
             $table->uuid('lectureID');
             $table->uuid('yearID');
-            $table->uuid('semesterID');
-            $table->integer('Grantotal');
+            $table->uuid('semesterID');  
+            $table->dateTime('transactiondate'); 
+            $table->integer('grandotal'); 
             $table->integer('active',false,'1');
             $table->timestamps();
         });
