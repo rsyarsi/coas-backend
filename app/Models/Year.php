@@ -20,5 +20,9 @@ class Year extends Model
     protected $fillable = [
         'name'
     ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
+    ];
 
 }

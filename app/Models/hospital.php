@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\UUIDAsPrimaryKey;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class hospital extends Model
 {
-    use HasFactory;
+    use HasFactory ;
     protected $table = "hospitals";
     /**
      * The attributes that are mass assignable.
@@ -16,5 +17,9 @@ class hospital extends Model
      */
     protected $fillable = [
         'name'
+    ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
     ];
 }

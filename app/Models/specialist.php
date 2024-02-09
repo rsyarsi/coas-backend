@@ -19,4 +19,8 @@ class specialist extends Model
         'groupspecialistID',
         'active' 
     ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
+    ];
 }

@@ -19,4 +19,8 @@ class Semester extends Model
         'semestervalue',
         'active'
     ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
+    ];
 }

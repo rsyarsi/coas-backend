@@ -20,4 +20,8 @@ class assesmentdetail extends Model
         'assementbobotvalue',        
         'active' 
     ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
+    ];
 }

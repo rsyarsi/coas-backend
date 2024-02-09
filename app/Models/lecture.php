@@ -22,4 +22,8 @@ class lecture extends Model
         'doctotidsimrs',        
         'active' 
     ];
+    public $incrementing = false;
+    protected $casts = [
+        'id' => 'string'
+    ];
 }
