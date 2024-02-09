@@ -14,14 +14,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trsassesmentdetails', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('trsassementID');
-            $table->uuid('assesmentdetailID');
+        Schema::create('type_four_trsdetailassesments', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('trsassementid');
+            $table->uuid('assesmentdetailid');
             $table->text('assementdescription');
-            $table->integer('Assementvalue');
-            $table->integer('assementbobotvalue');
-            $table->integer('assementscore');
+            $table->dateTime('transactiondate');
+            $table->text('assementskala'); 
+            $table->integer('assessmentvalue');  
+            $table->integer('assementscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();
         });
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trsassesmentdetails');
+        Schema::dropIfExists('type_four_trsdetailassesments');
     }
 };

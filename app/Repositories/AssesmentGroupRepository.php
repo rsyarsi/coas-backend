@@ -13,26 +13,22 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
         return AssesmentGroup::latest()->paginate(10);
     }
 
-    public function storeAssesmentGroup($request)
+    public function storeAssesmentGroup($request,$uuid)
     {
-        return  DB::table("assesmentgroups")->insert([
-            'specialistID' => $request->specialistID,
-            'assementgroupname' => $request->assementgroupname, 
-            'active' => $request->active 
-        ]);
+        return  DB::table("assesmentgroups")->insert($request);
     }
 
     public function findAssesmentGroup($id)
     {
-        return AssesmentGroup::get('id',$id)->get();
+        return AssesmentGroup::where('id',$id)->get();
     }
 
     public function updateAssesmentGroup($request)
     {
-        $updates = AssesmentGroup::where('id', $request->id)->update([
-            'specialistID' => $request->specialistID,
-            'assementgroupname' => $request->assementgroupname, 
-            'active' => $request->active 
+        $updates = AssesmentGroup::where('id', $request['id'])->update([
+            'specialistid' => $request['specialistid'],
+            'assementgroupname' => $request['assementgroupname'], 
+            'active' => $request['active']
         ]);
         return $updates;
     }

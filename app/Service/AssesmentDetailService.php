@@ -36,7 +36,7 @@ class AssesmentDetailService extends Controller
         $request->validate([ 
             "assesmentgroupID" => "required", 
             "assementdescription" => "required",             
-            "assementbobotvalue" => "required",  
+            "assementbobotvalue" => "required",   
             "active" => "required" 
         ]);
         

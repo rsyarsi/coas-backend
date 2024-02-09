@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -37,11 +38,23 @@ class UserService extends Controller
         try {
             // Db Transaction
             DB::beginTransaction(); 
-            $createUser = $this->userRepository->storeUser($request);
-          
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,
+                'username' => $request->username,
+                'email' => $request->email, 
+                'name' => $request->name,
+                'role' => $request->role, 
+                'access_token' => $request->access_token, 
+                'password'  => bcrypt($request->password)
+            ];
+            $createUser = $this->userRepository->storeUser($data,$uuid);
             DB::commit();
+
+            
+        
             if ($createUser) {
-                return $this->sendResponse([],"Data Username Login berhasil dibuat.");
+                return $this->sendResponse($data,"Data Username Login berhasil dibuat.");
             } else {
                 return $this->sendError("Data Username Login gagal dibuat.",[]); 
             }

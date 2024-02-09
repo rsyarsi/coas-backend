@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +31,16 @@ class SpecialistGroupService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $execute = $this->SpecialistRepository->storeSpecialistGroup($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'name' => $request->name,
+                'active' => $request->active 
+            ];
+            $execute = $this->SpecialistRepository->storeSpecialistGroup($data,$uuid);
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Specialist Group Berhasil dibuat !');
+                return $this->sendResponse($data, 'Specialist Group Berhasil dibuat !');
             }
             
 

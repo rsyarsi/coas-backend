@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -31,10 +32,17 @@ class SemesterService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $execute = $this->semesterRepository->storeSemester($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'semestername' => $request->semestername,                 
+                'semestervalue' => $request->semestervalue,  
+                'active' => $request->active 
+            ];
+            $execute = $this->semesterRepository->storeSemester($data,$uuid);
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Semster Berhasil dibuat !');
+                return $this->sendResponse($data, 'Semster Berhasil dibuat !');
             }
             
 

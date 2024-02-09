@@ -14,10 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('semesters', function (Blueprint $table) {
+        Schema::create('type_one_trsdetailassesments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('semestername',15);
-            $table->integer('semestervalue');
+            $table->uuid('trsassesmentid');
+            $table->uuid('assesmentdetailid');
+            $table->text('assesmentdescription');
+            $table->dateTime('transactiondate');
+            $table->integer('assesmentbobotvalue');
+            $table->integer('skala0');
+            $table->integer('skala1');
+            $table->integer('skala2');  
+            $table->integer('assementscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();
         });
@@ -30,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('trsassesmentdetails');
     }
 };

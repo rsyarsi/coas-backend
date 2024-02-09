@@ -4,12 +4,13 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;  
-use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
+use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
 
 class SpecialistService extends Controller
 {
@@ -30,7 +31,7 @@ class SpecialistService extends Controller
         // validate 
         $request->validate([ 
             "specialistname" => "required", 
-            "groupspecialistID" => "required", 
+            "groupspecialistid" => "required", 
             "active" => "required" 
         ]);
         
@@ -38,15 +39,22 @@ class SpecialistService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $findgroupspecialist = $this->SpecialistGroupRepository->findSpecialistGroup($request->groupspecialistID);
+            $findgroupspecialist = $this->SpecialistGroupRepository->findSpecialistGroup($request->groupspecialistid);
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Group Specialist tidak di temukan !', []);
             }
-            $execute = $this->SpecialistRepository->storeSpecialist($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'specialistname' => $request->specialistname, 
+                'groupspecialistid' => $request->groupspecialistid, 
+                'active' => $request->active 
+            ];
+            $execute = $this->SpecialistRepository->storeSpecialist($data,$uuid);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Specialist Berhasil dibuat !');
+                return $this->sendResponse($data, 'Specialist Berhasil dibuat !');
             }
             
 
@@ -61,7 +69,7 @@ class SpecialistService extends Controller
     {
         $request->validate([ 
             "specialistname" => "required", 
-            "groupspecialistID" => "required", 
+            "groupspecialistid" => "required", 
             "active" => "required" 
         ]);
         
@@ -75,16 +83,21 @@ class SpecialistService extends Controller
                 return $this->sendError('Data Specialist tidak ditemukan !',[]);
             }
 
-            $findgroupspecialist = $this->SpecialistGroupRepository->findSpecialistGroup($request->groupspecialistID);
+            $findgroupspecialist = $this->SpecialistGroupRepository->findSpecialistGroup($request->groupspecialistid);
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Group Specialist tidak di temukan !', []);
             }
-
-            $execute = $this->SpecialistRepository->updateSpecialist($request);
+            $data = [
+                'id' => $request->id,                
+                'specialistname' => $request->specialistname, 
+                'groupspecialistid' => $request->groupspecialistid, 
+                'active' => $request->active 
+            ];
+            $execute = $this->SpecialistRepository->updateSpecialist($data);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Specialist Berhasil diupdate !');
+                return $this->sendResponse($data, 'Specialist Berhasil diupdate !');
             }
 
         } catch (Exception $e) {

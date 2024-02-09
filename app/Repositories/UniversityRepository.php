@@ -15,12 +15,9 @@ class UniversityRepository implements UniversityRepositoryInterface
         return universitie::latest()->paginate(10);
     }
 
-    public function storeUniversity($request)
+    public function storeUniversity($request,$uuid)
     {
-        return  DB::table("universities")->insert([
-            'name' => $request->name,
-            'active' => $request->active 
-        ]);
+        return  DB::table("universities")->insert($request);
     }
 
     public function findUniversity($id)
@@ -30,9 +27,9 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function updateUniversity($request)
     {
-        $updates = universitie::where('id', $request->id)->update([
-            'name' => $request->name,
-            'active' => $request->active
+        $updates = universitie::where('id', $request['id'])->update([
+            'name' => $request['name'],
+            'active' => $request['active']
         ]);
         return $updates;
     }

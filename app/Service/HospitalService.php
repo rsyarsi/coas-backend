@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +31,16 @@ class HospitalService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $execute = $this->hospitalRepository->storeHospital($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'name' => $request->name,
+                'active' => $request->active 
+            ];
+            $execute = $this->hospitalRepository->storeHospital($data,$uuid);
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Rumah Sakit Berhasil dibuat !');
+                return $this->sendResponse($data, 'Rumah Sakit Berhasil dibuat !');
             }
             
 
@@ -60,12 +67,16 @@ class HospitalService extends Controller
             if($find->count() < 1){
                 return $this->sendError('Data Rumah Sakit tidak ditemukan !',[]);
             }
-
-            $execute = $this->hospitalRepository->updateHospital($request);
+            $data = [
+                'id' => $request->id,                
+                'name' => $request->name,
+                'active' => $request->active
+            ];
+            $execute = $this->hospitalRepository->updateHospital($data);
             
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Rumah Sakit Berhasil diupdate !');
+                return $this->sendResponse($data, 'Rumah Sakit Berhasil diupdate !');
             }
             
 

@@ -13,13 +13,9 @@ class SemesterRepository implements SemesterRepositoryInterface
         return Semester::latest()->paginate(10);
     }
 
-    public function storeSemester($request)
+    public function storeSemester($request,$uuid)
     {
-        return  DB::table("semesters")->insert([
-            'semestername' => $request->semestername,
-            'semestervalue' => $request->semestervalue, 
-            'active' => $request->active  
-        ]);
+        return  DB::table("semesters")->insert($request);
     }
 
     public function findSemester($id)
@@ -29,10 +25,10 @@ class SemesterRepository implements SemesterRepositoryInterface
 
     public function updateSemester($request)
     {
-        $updates = Semester::where('id', $request->id)->update([
-            'semestername' => $request->semestername,
-            'semestervalue' => $request->semestervalue, 
-            'active' => $request->active  
+        $updates = Semester::where('id', $request['id'])->update([
+            'semestername' => $request['semestername'],
+            'semestervalue' => $request['semestervalue'], 
+            'active' => $request['active']  
         ]);
         return $updates;
     }

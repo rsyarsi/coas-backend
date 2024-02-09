@@ -15,8 +15,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lectures', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('specialistID'); 
+            $table->uuid('id')->primary();
+            $table->uuid('specialistid'); 
             $table->string('name',150);
             $table->integer('doctotidsimrs');
             $table->integer('active',false,'1');

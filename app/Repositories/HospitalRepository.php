@@ -15,12 +15,9 @@ class HospitalRepository implements HospitalRepositoryInterface
         return hospital::latest()->paginate(10);
     }
 
-    public function storeHospital($request)
+    public function storeHospital($request,$uuid)
     {
-        return  DB::table("hospitals")->insert([
-            'name' => $request->name,
-            'active' => $request->active 
-        ]);
+        return  DB::table("hospitals")->insert($request);
     }
 
     public function findHospital($id)
@@ -30,9 +27,9 @@ class HospitalRepository implements HospitalRepositoryInterface
 
     public function updateHospital($request)
     {
-        $updates = hospital::where('id', $request->id)->update([
-            'name' => $request->name,
-            'active' => $request->active
+        $updates = hospital::where('id', $request['id'])->update([
+            'name' => $request['name'],
+            'active' => $request['active']
         ]);
         return $updates;
     }

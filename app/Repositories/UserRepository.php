@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\Year;
+use Ramsey\Uuid\Uuid;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -11,17 +13,11 @@ use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function storeUser($request)
+    public function storeUser($request,$uuid)
     {
         
-        return  DB::table("users")->insert([
-            'username' => $request->username,
-            'email' => $request->email, 
-            'name' => $request->name,
-            'role' => $request->role, 
-            'access_token' => $request->access_token, 
-            'password'  => bcrypt($request->password)
-        ]);
+       
+        return  User::create($request);
     } 
 
     public function login($request)

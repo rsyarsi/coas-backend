@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\UUIDAsPrimaryKey;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable ;
    
     /**
      * The attributes that are mass assignable.
@@ -20,10 +21,13 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $table = "users";
     protected $fillable = [
-        'name',
+        'id',        
+        'username',
         'email',
-        'password', 
-        'access_token'
+        'name', 
+        'role', 
+        'access_token', 
+        'password' 
     ];
 
     /**

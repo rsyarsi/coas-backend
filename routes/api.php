@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\SemesterController;
 use App\Http\Controllers\Api\SpecialistController;
 use App\Http\Controllers\Api\SpecialistGroupController;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\TransactionAssesmentController;
 use App\Http\Controllers\Api\UniversityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -115,7 +116,7 @@ Route::get('reset', function (){
     
                 }); 
                 Route::group(['prefix' => 'assesment'], function () { 
-    
+                    Route::post("create", [TransactionAssesmentController::class, "store"]);
                 }); 
             });
             Route::group(['prefix' => 'emr'], function () { 

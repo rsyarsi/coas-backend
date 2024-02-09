@@ -13,12 +13,9 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
         return SpecialistGroup::latest()->paginate(10);
     }
 
-    public function storeSpecialistGroup($request)
+    public function storeSpecialistGroup($request,$uuid)
     {
-        return  DB::table("specialistgroups")->insert([
-            'name' => $request->name,
-            'active' => $request->active 
-        ]);
+        return  DB::table("specialistgroups")->insert($request);
     }
 
     public function findSpecialistGroup($id)

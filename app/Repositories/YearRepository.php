@@ -16,25 +16,19 @@ class YearRepository implements YearRepositoryInterface
         return Year::latest()->paginate(10);
     }
 
-    public function storeYears($request)
+    public function storeYears($request,$uuid)
     {
-        return  DB::table("years")->insert([
-            'name' => $request->name,
-            'active' => $request->active 
-        ]);
+        return  DB::table("years")->insert($request);
     }
 
     public function findYears($id)
     {
-        return Year::where($id)->get();
+        return Year::where('id',$id)->get();
     }
 
     public function updateYears($request)
     {
-        $updates = Year::where('id', $request->id)->update([
-            'name' => $request->name,
-            'active' => $request->active
-        ]);
+        $updates = Year::where('id', $request['id'])->update($request);
         return $updates;
     }
 

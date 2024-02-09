@@ -15,7 +15,11 @@ class assesmentgroup extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name' 
+        'specialistID',
+        'assementgroupname',         
+        'type',
+        'active' 
+
     ];
     public $incrementing = false;
     protected $casts = [

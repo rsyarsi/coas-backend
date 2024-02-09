@@ -15,9 +15,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('assesmentgroups', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('specialistID');
-            $table->string('assementgroupname',25);
+            $table->uuid('id')->primary();
+            $table->uuid('specialistid');
+            $table->text('assementgroupname');
+            $table->integer('type');
             $table->integer('active',false,'1');
             $table->timestamps();
         });

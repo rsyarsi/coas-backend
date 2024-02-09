@@ -15,13 +15,9 @@ class SpecialistRepository implements SpecialistRepositoryInterface
         return specialist::latest()->paginate(10);
     }
 
-    public function storeSpecialist($request)
+    public function storeSpecialist($request,$uuid)
     {
-        return  DB::table("specialists")->insert([
-            'specialistname' => $request->specialistname,
-            'groupspecialistID' => $request->groupspecialistID, 
-            'active' => $request->active 
-        ]);
+        return  DB::table("specialists")->insert($request);
     }
 
     public function findSpecialist($id)
@@ -31,10 +27,10 @@ class SpecialistRepository implements SpecialistRepositoryInterface
 
     public function updateSpecialist($request)
     {
-        $updates = specialist::where('id', $request->id)->update([
-            'specialistname' => $request->specialistname,
-            'groupspecialistID' => $request->groupspecialistID, 
-            'active' => $request->active
+        $updates = specialist::where('id', $request['id'])->update([
+            'specialistname' => $request['specialistname'],
+            'groupspecialistid' => $request['groupspecialistid'], 
+            'active' => $request['active']
         ]);
         return $updates;
     }

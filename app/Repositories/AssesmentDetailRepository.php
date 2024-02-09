@@ -16,9 +16,10 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
     public function storeAssesmentDetail($request)
     {
         return  AssesmentDetail::insert([
-            'assesmentgroupID' => $request->assesmentgroupID,
+            'assesmentgroupid' => $request->assesmentgroupID,
             'assementdescription' => $request->assementdescription,             
             'assementbobotvalue' => $request->assementbobotvalue,  
+            'assementskalavalue' => $request->assementskalavalue,  
             'active' => $request->active 
         ]);
     }
@@ -30,15 +31,16 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 
     public function findAssesmentbyGroup($id)
     {
-        return AssesmentDetail::where('assesmentgroupID',$id)->get();
+        return AssesmentDetail::where('assesmentgroupid',$id)->get();
     }
 
     public function updateAssesmentDetail($request)
     {
         $updates = AssesmentDetail::where('id', $request->id)->update([
-            'assesmentgroupID' => $request->assesmentgroupID,
+            'assesmentgroupid' => $request->assesmentgroupID,
             'assementdescription' => $request->assementdescription,             
             'assementbobotvalue' => $request->assementbobotvalue,  
+            'assementskalavalue' => $request->assementskalavalue,  
             'active' => $request->active 
         ]);
         return $updates;

@@ -15,12 +15,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid('id')->primary();
             $table->string('name',250);
             $table->string('nim',50);
-            $table->uuid('semesterID');
-            $table->uuid('specialistID');
-            $table->date('dateIn');
+            $table->uuid('semesterid');
+            $table->uuid('specialistid');
+            $table->date('datein');
             $table->uuid('university');
             $table->uuid('hospitalfrom');
             $table->uuid('hospitalto');

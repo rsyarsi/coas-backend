@@ -4,12 +4,13 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;  
-use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
+use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
 
 class AssesmentGroupService extends Controller
 {
@@ -42,11 +43,20 @@ class AssesmentGroupService extends Controller
             if($findspecialist->count() < 1){
                 return $this->sendError('Spesialis tidak ditemukan !', []);
             }
-            $execute = $this->AssesmentGroupRepository->storeAssesmentGroup($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'specialistid' => $request->specialistID,
+                'assementgroupname' => $request->assementgroupname, 
+                'type' => $request->type, 
+                'active' => $request->active 
+            ];
+
+            $execute = $this->AssesmentGroupRepository->storeAssesmentGroup($data,$uuid);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Group Penilaian Berhasil dibuat !');
+                return $this->sendResponse($data, 'Group Penilaian Berhasil dibuat !');
             }
             
 
@@ -60,7 +70,7 @@ class AssesmentGroupService extends Controller
     public function update(Request $request)
     {
         $request->validate([ 
-            "specialistID" => "required", 
+            "specialistid" => "required", 
             "assementgroupname" => "required", 
             "active" => "required" 
         ]);
@@ -75,16 +85,22 @@ class AssesmentGroupService extends Controller
                 return $this->sendError('Group Penilaian tidak ditemukan !',[]);
             }
 
-            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
             if($findspecialist->count() < 1){
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
-
-            $execute = $this->AssesmentGroupRepository->updateAssesmentGroup($request);
+            $data = [
+                'id' => $request->id,         
+                'specialistid' => $request->specialistid,
+                'assementgroupname' => $request->assementgroupname, 
+                'type' => $request->type, 
+                'active' => $request->active 
+            ];
+            $execute = $this->AssesmentGroupRepository->updateAssesmentGroup($data);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Group Penilaian Berhasil diupdate !');
+                return $this->sendResponse($data, 'Group Penilaian Berhasil diupdate !');
             }
 
         } catch (Exception $e) {

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +31,16 @@ class YearsService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $execute = $this->yearRepository->storeYears($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'name' => $request->name, 
+                'active' => $request->active 
+            ];
+            $execute = $this->yearRepository->storeYears($data,$uuid);
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Tahun Berhasil dibuat !');
+                return $this->sendResponse($data, 'Tahun Berhasil dibuat !');
             }
             
 
@@ -56,16 +63,21 @@ class YearsService extends Controller
             // Db Transaction
             DB::beginTransaction(); 
             $find = $this->yearRepository->findYears($request->id);
-             
+           
             if($find->count() < 1){
                 return $this->sendError('Data Tahun tidak ditemukan !',[]);
             }
-
-            $execute = $this->yearRepository->updateYears($request);
+            $data = [
+                'id' => $request->id,                
+                'name' => $request->name, 
+                'active' => $request->active 
+            ];
+            
+            $execute = $this->yearRepository->updateYears($data);
             
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Tahun Berhasil diupdate !');
+                return $this->sendResponse($data, 'Tahun Berhasil diupdate !');
             }
             
 
