@@ -42,8 +42,7 @@ Route::get('reset', function (){
 
         Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'auth'], function () { 
-                
-                Route::post("genToken", [UserController::class, "genToken"]);
+                Route::post("refreshToken", [UserController::class, "refreshToken"]);
             });    
             Route::get('kategori-berita', [AssesmentDetailController::class, 'create']);
             Route::group(['prefix' => 'masterdata'], function () { 

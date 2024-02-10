@@ -85,18 +85,29 @@ class UserService extends Controller
             }
     
            
-             //login
-            // $loginUser = $this->userRepository->login($request);
-            
-            // if ($loginUser->count() > 0) {
-            
-            //     return $this->sendResponse($loginUser ,"Anda berhasil Login.");  
+ 
 
+        } catch (Exception $e) { 
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function refreshToken(){
+        try {
+           
+            $token = $this->userRepository->refreshToken();
+            return $this->respondWithToken($token);
 
-            // } else {
-            //     //response
-            //     return $this->sendError("Login gagal.", []);
+            // if (! $token = $this->userRepository->refreshToken()) {
+            //     // return response()->json(['error' => 'Unauthorized'], 401);
+            //     return $this->sendError("Unauthorized.", []);
+            // }else{
+            //     $this->userRepository->updateDateExpired($request,$token,Carbon::now()->addMinute()->format('Y-m-d H:i:s'));
+            //     return $this->respondWithToken($token);
             // }
+    
+           
+ 
 
         } catch (Exception $e) { 
             //Log::info($e->getMessage());
@@ -108,7 +119,7 @@ class UserService extends Controller
         $token =[
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60 * 24
         ];
 
         return $this->sendResponse($token ,"Anda berhasil Login.");  

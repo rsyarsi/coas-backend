@@ -55,16 +55,16 @@ class validate_header
         $access_token = trim($pecah_token[1]);
 
         //cek apakah access_token ini ada di database atau tidak
-        // $cek =  DB::table("users")
-        //         ->where('access_token', $access_token)->first();
-        // if(empty($cek)){
-        //     $response = [
-        //         'status' => false,
-        //         'code' => 422,
-        //         'message' => 'Forbidden : Invalid access token',
-        //     ];
-        //     return response()->json($response, 422);
-        // }
+        $cek =  DB::table("users")
+                ->where('access_token', $access_token)->first();
+        if(empty($cek)){
+            $response = [
+                'status' => false,
+                'code' => 422,
+                'message' => 'Forbidden : Invalid access token',
+            ];
+            return response()->json($response, 422);
+        }
 
         //cek apakah access_token expired atau tidak
         // if(strtotime($cek->expired_at) < time()){

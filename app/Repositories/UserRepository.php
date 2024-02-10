@@ -38,7 +38,7 @@ class UserRepository implements UserRepositoryInterface
         return $token;
         
     }
-    public function refresh($request){
+    public function refreshToken(){
         return  auth()->refresh();
     }
     public function updateDateExpired($request,$access_token,$expired)
