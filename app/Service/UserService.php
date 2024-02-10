@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\YearRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface; 
 
 class UserService extends Controller
 {
@@ -75,7 +74,6 @@ class UserService extends Controller
                 "password" => "required" 
             ]);
 
-
             if (! $token = $this->userRepository->getTokenData($request)) {
                 // return response()->json(['error' => 'Unauthorized'], 401);
                 return $this->sendError("Unauthorized.", []);
@@ -84,9 +82,6 @@ class UserService extends Controller
                 return $this->respondWithToken($token);
             }
     
-           
- 
-
         } catch (Exception $e) { 
             //Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
@@ -97,18 +92,6 @@ class UserService extends Controller
            
             $token = $this->userRepository->refreshToken();
             return $this->respondWithToken($token);
-
-            // if (! $token = $this->userRepository->refreshToken()) {
-            //     // return response()->json(['error' => 'Unauthorized'], 401);
-            //     return $this->sendError("Unauthorized.", []);
-            // }else{
-            //     $this->userRepository->updateDateExpired($request,$token,Carbon::now()->addMinute()->format('Y-m-d H:i:s'));
-            //     return $this->respondWithToken($token);
-            // }
-    
-           
- 
-
         } catch (Exception $e) { 
             //Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
@@ -176,14 +159,9 @@ class UserService extends Controller
         try {
             // validator  
             
-
              //login
             $user = $this->userRepository->logout();
-            
-            
-                
-                return $this->sendResponse($user ,"User Profile logout.");  
-             
+            return $this->sendResponse($user ,"User Profile logout.");  
 
         } catch (Exception $e) { 
             //Log::info($e->getMessage());

@@ -13,15 +13,9 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
         return AssesmentDetail::latest()->paginate(10);
     }
 
-    public function storeAssesmentDetail($request)
+    public function storeAssesmentDetail($request,$uuid)
     {
-        return  AssesmentDetail::insert([
-            'assesmentgroupid' => $request->assesmentgroupID,
-            'assementdescription' => $request->assementdescription,             
-            'assementbobotvalue' => $request->assementbobotvalue,  
-            'assementskalavalue' => $request->assementskalavalue,  
-            'active' => $request->active 
-        ]);
+        return  AssesmentDetail::insert($request);
     }
 
     public function findAssesmentDetail($id)
@@ -36,12 +30,13 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 
     public function updateAssesmentDetail($request)
     {
-        $updates = AssesmentDetail::where('id', $request->id)->update([
-            'assesmentgroupid' => $request->assesmentgroupID,
-            'assementdescription' => $request->assementdescription,             
-            'assementbobotvalue' => $request->assementbobotvalue,  
-            'assementskalavalue' => $request->assementskalavalue,  
-            'active' => $request->active 
+      
+        $updates = AssesmentDetail::where('id', $request['id'])->update([
+            'assesmentgroupid' => $request['assesmentgroupid'],
+            'assesmentdescription' => $request['assesmentdescription'],             
+            'assesmentbobotvalue' => $request['assesmentbobotvalue'],  
+            'assesmentskalavalue' => $request['assesmentskalavalue'],  
+            'active' => $request['active'] 
         ]);
         return $updates;
     }

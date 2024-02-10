@@ -4,13 +4,14 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\AssesmentDetailRepositoryInterface;
-use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
+use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
+use App\Repositories\Interfaces\AssesmentDetailRepositoryInterface;
 
 class AssesmentDetailService extends Controller
 {
@@ -34,9 +35,10 @@ class AssesmentDetailService extends Controller
     {
         // validate 
         $request->validate([ 
-            "assesmentgroupID" => "required", 
-            "assementdescription" => "required",             
-            "assementbobotvalue" => "required",   
+            "assesmentgroupid" => "required", 
+            "assesmentdescription" => "required",             
+            "assesmentbobotvalue" => "required",   
+            "assesmentskalavalue" => "required",   
             "active" => "required" 
         ]);
         
@@ -44,15 +46,24 @@ class AssesmentDetailService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $findassesmentgroup = $this->AssesmentGroupRepository->findAssesmentGroup($request->assesmentgroupID);
+            $findassesmentgroup = $this->AssesmentGroupRepository->findAssesmentGroup($request->assesmentgroupid);
             if($findassesmentgroup->count() < 1){
                 return $this->sendError('Grup Penilaian tidak ditemukan !', []);
             }
-            $execute = $this->AssesmentDetailRepository->storeAssesmentDetail($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'assesmentgroupid' => $request->assesmentgroupid,
+                'assesmentdescription' => $request->assesmentdescription, 
+                'assesmentbobotvalue' => $request->assesmentbobotvalue, 
+                'assesmentskalavalue' => $request->assesmentskalavalue, 
+                'active' => $request->active 
+            ];
+            $execute = $this->AssesmentDetailRepository->storeAssesmentDetail($data,$uuid);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Penilaian Detail Berhasil dibuat !');
+                return $this->sendResponse($data, 'Penilaian Detail Berhasil dibuat !');
             }
             
 
@@ -66,9 +77,10 @@ class AssesmentDetailService extends Controller
     public function update(Request $request)
     {
         $request->validate([ 
-            "assesmentgroupID" => "required", 
-            "assementdescription" => "required",             
-            "assementbobotvalue" => "required",  
+            "assesmentgroupid" => "required", 
+            "assesmentdescription" => "required",             
+            "assesmentbobotvalue" => "required",   
+            "assesmentskalavalue" => "required",   
             "active" => "required" 
         ]);
         
@@ -81,17 +93,24 @@ class AssesmentDetailService extends Controller
             if($find->count() < 1){
                 return $this->sendError('Penilaian Detail tidak ditemukan !',[]);
             }
-
-            $findspecialist = $this->AssesmentGroupRepository->findAssesmentGroup($request->assesmentgroupID);
+            
+            $findspecialist = $this->AssesmentGroupRepository->findAssesmentGroup($request->assesmentgroupid);
             if($findspecialist->count() < 1){
                 return $this->sendError('Grup Penilaian tidak di temukan !', []);
             }
-
-            $execute = $this->AssesmentDetailRepository->updateAssesmentDetail($request);
+            $data = [
+                'id' => $request->id,                
+                'assesmentgroupid' => $request->assesmentgroupid,
+                'assesmentdescription' => $request->assesmentdescription, 
+                'assesmentbobotvalue' => $request->assesmentbobotvalue, 
+                'assesmentskalavalue' => $request->assesmentskalavalue, 
+                'active' => $request->active 
+            ];
+            $execute = $this->AssesmentDetailRepository->updateAssesmentDetail($data);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Penilaian Detail Berhasil diupdate !');
+                return $this->sendResponse($data, 'Penilaian Detail Berhasil diupdate !');
             }
 
         } catch (Exception $e) {

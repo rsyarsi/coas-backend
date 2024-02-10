@@ -13,14 +13,9 @@ class LectureRepository implements LectureRepositoryInterface
         return Lecture::latest()->paginate(10);
     }
 
-    public function storeLecture($request)
+    public function storeLecture($request,$uuid)
     {
-        return  Lecture::insert([
-            'specialistID' => $request->specialistID,
-            'name' => $request->name,             
-            'doctotidsimrs' => $request->doctotidsimrs,  
-            'active' => $request->active 
-        ]);
+        return  Lecture::insert($request);
     }
 
     public function findLecture($id)
@@ -35,11 +30,11 @@ class LectureRepository implements LectureRepositoryInterface
 
     public function updateLecture($request)
     {
-        $updates = Lecture::where('id', $request->id)->update([
-            'specialistID' => $request->specialistID,
-            'name' => $request->name,             
-            'doctotidsimrs' => $request->doctotidsimrs,  
-            'active' => $request->active 
+        $updates = Lecture::where('id', $request['id'])->update([
+            'specialistid' => $request['specialistid'],
+            'name' => $request['name'],             
+            'doctotidsimrs' => $request['doctotidsimrs'],  
+            'active' => $request['active']
         ]);
         return $updates;
     }

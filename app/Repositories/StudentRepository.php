@@ -17,19 +17,9 @@ class StudentRepository implements StudentRepositoryInterface
         return student::latest()->paginate(10);
     }
 
-    public function storeStudent($request)
+    public function storeStudent($request,$uuid)
     {
-        return  DB::table("students")->insert([
-            'name'=> $request->name,      
-            'nim'=> $request->nim, 
-            'semesterID'=> $request->semesterID,         
-            'specialistID'=> $request->specialistID,         
-            'dateIn'=> $request->dateIn,         
-            'university'=> $request->university,         
-            'hospitalfrom'=> $request->hospitalfrom,         
-            'hospitalto'=> $request->hospitalto,      
-            'active' => $request->active
-        ]);
+        return  DB::table("students")->insert($request);
     }
 
     public function findStudent($id)
@@ -39,16 +29,16 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function updateStudent($request)
     {
-        $updates = Student::where('id', $request->id)->update([
-            'name'=> $request->name,      
-            'nim'=> $request->nim, 
-            'semesterID'=> $request->semesterID,         
-            'specialistID'=> $request->specialistID,         
-            'dateIn'=> $request->dateIn,         
-            'university'=> $request->university,         
-            'hospitalfrom'=> $request->hospitalfrom,         
-            'hospitalto'=> $request->hospitalto,      
-            'active' => $request->active
+        $updates = Student::where('id', $request['id'])->update([
+            'name'=> $request['name'],      
+            'nim'=> $request['nim'],  
+            'semesterid'=> $request['semesterid'],          
+            'specialistid'=> $request['specialistid'],          
+            'datein'=> $request['datein'],          
+            'university'=> $request['university'],          
+            'hospitalfrom'=> $request['hospitalfrom'],          
+            'hospitalto'=> $request['hospitalto'],       
+            'active' => $request['active']
         ]);
         return $updates;
     }

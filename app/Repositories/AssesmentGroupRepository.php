@@ -10,7 +10,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
 {
     public function allAssesmentGroup()
     {
-        return AssesmentGroup::latest()->paginate(10);
+        return AssesmentGroup::latest()->paginate(20);
     }
 
     public function storeAssesmentGroup($request,$uuid)

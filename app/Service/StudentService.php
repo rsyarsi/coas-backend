@@ -4,18 +4,19 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\HospitalRepository;
-use App\Repositories\Interfaces\LectureRepositoryInterface;
-use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
-use App\Repositories\Interfaces\SpecialistRepositoryInterface;
 use App\Repositories\LectureRepository;
-use App\Repositories\SemesterRepository;
 use App\Repositories\StudentRepository;
+use App\Repositories\HospitalRepository;
+use App\Repositories\SemesterRepository;
 use App\Repositories\UniversityRepository;
+use App\Repositories\Interfaces\LectureRepositoryInterface;
+use App\Repositories\Interfaces\SpecialistRepositoryInterface;
+use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
 
 class StudentService extends Controller
 {
@@ -50,9 +51,9 @@ class StudentService extends Controller
         $request->validate([ 
             "name" => "required", 
             "nim" => "required", 
-            "semesterID" => "required", 
-            "specialistID" => "required", 
-            "dateIn" => "required", 
+            "semesterid" => "required", 
+            "specialistid" => "required", 
+            "datein" => "required", 
             "university" => "required",   
             "hospitalfrom" => "required",   
             "hospitalto" => "required",   
@@ -63,17 +64,29 @@ class StudentService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
       
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
-
-            $execute = $this->studentRepository->storeStudent($request);
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'name' => $request->name,
+                'nim' => $request->nim, 
+                'semesterid' => $request->semesterid,  
+                'specialistid' => $request->specialistid,  
+                'datein' => $request->datein,  
+                'university' => $request->university,  
+                'hospitalfrom' => $request->hospitalfrom,  
+                'hospitalto' => $request->hospitalto,  
+                'active' => $request->active 
+            ];
+            $execute = $this->studentRepository->storeStudent($data,$uuid);
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Mahasiswa Berhasil dibuat !');
+                return $this->sendResponse($data, 'Mahasiswa Berhasil dibuat !');
             }
             
 
@@ -89,30 +102,40 @@ class StudentService extends Controller
         $request->validate([ 
             "name" => "required", 
             "nim" => "required", 
-            "semesterID" => "required", 
-            "specialistID" => "required", 
-            "dateIn" => "required", 
+            "semesterid" => "required", 
+            "specialistid" => "required", 
+            "datein" => "required", 
             "university" => "required",   
             "hospitalfrom" => "required",   
             "hospitalto" => "required",   
             "active" => "required",    
         ]);
-        
         try {
 
             // Db Transaction
             DB::beginTransaction(); 
-            $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
- 
-            $execute = $this->studentRepository->updateStudent($request);
+            $data = [
+                'id' => $request->id,                
+                'name' => $request->name,
+                'nim' => $request->nim, 
+                'semesterid' => $request->semesterid,  
+                'specialistid' => $request->specialistid,  
+                'datein' => $request->datein,  
+                'university' => $request->university,  
+                'hospitalfrom' => $request->hospitalfrom,  
+                'hospitalto' => $request->hospitalto,  
+                'active' => $request->active 
+            ];
+            $execute = $this->studentRepository->updateStudent($data);
         
             DB::commit();
 
             if($execute){
-                return $this->sendResponse($execute, 'Mahasiswa Berhasil diupdate !');
+                return $this->sendResponse($data, 'Mahasiswa Berhasil diupdate !');
             }
 
         } catch (Exception $e) {
