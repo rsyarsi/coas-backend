@@ -51,4 +51,10 @@ class UserRepository implements UserRepositoryInterface
             ]);
         return $updatesatuan;
     } 
+    public function profile($request){
+        return User::where('username',$request->username)->get();
+    }
+    public function logout(){
+        return  auth()->logout();
+    }
 }
