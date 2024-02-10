@@ -35,16 +35,15 @@ Route::get('reset', function (){
     Artisan::call('optimize:clear');
 });
 
- 
-    Route::post("genToken", [UserController::class, "genToken"]);
- 
     Route::post("register", [UserController::class,"store"]);  
- 
+    Route::post("login", [UserController::class, "create"]); 
+
     Route::group(["middleware"=>["auth:api","validate_header"]], function(){
 
         Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'auth'], function () { 
-                Route::post("login", [UserController::class, "create"]); 
+                
+                Route::post("genToken", [UserController::class, "genToken"]);
             });    
             Route::get('kategori-berita', [AssesmentDetailController::class, 'create']);
             Route::group(['prefix' => 'masterdata'], function () { 

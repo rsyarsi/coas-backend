@@ -75,23 +75,43 @@ class UserService extends Controller
                 "password" => "required" 
             ]);
 
-             //login
-            $loginUser = $this->userRepository->login($request);
-            
-            if ($loginUser->count() > 0) {
-            
-                return $this->sendResponse($loginUser ,"Anda berhasil Login.");  
 
-
-            } else {
-                //response
-                return $this->sendError("Login gagal.", []);
+            if (! $token = $this->userRepository->getTokenData($request)) {
+                // return response()->json(['error' => 'Unauthorized'], 401);
+                return $this->sendError("Unauthorized.", []);
+            }else{
+                $this->userRepository->updateDateExpired($request,$token,Carbon::now()->addMinute()->format('Y-m-d H:i:s'));
+                return $this->respondWithToken($token);
             }
+    
+           
+             //login
+            // $loginUser = $this->userRepository->login($request);
+            
+            // if ($loginUser->count() > 0) {
+            
+            //     return $this->sendResponse($loginUser ,"Anda berhasil Login.");  
+
+
+            // } else {
+            //     //response
+            //     return $this->sendError("Login gagal.", []);
+            // }
 
         } catch (Exception $e) { 
             //Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
+    }
+    protected function respondWithToken($token)
+    {
+        $token =[
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ];
+
+        return $this->sendResponse($token ,"Anda berhasil Login.");  
     }
     public function getTokenData (Request $request){
         try {
@@ -102,7 +122,7 @@ class UserService extends Controller
             ]);
 
              //login
-            $token = $this->userRepository->getTokenData($request);
+            $token = $this->userRepository->refresh($request);
             
             if ($token) {
                 $this->userRepository->updateDateExpired($request,$token,Carbon::now()->addMinute()->format('Y-m-d H:i:s'));
