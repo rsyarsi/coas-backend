@@ -65,10 +65,12 @@ class StudentService extends Controller
             // Db Transaction
             DB::beginTransaction(); 
             $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
-      
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
+
+
+
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,                

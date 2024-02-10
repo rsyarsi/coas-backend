@@ -97,7 +97,7 @@ Route::get('reset', function (){
                     Route::post("create", [StudentController::class, "store"]);
                     Route::post("update", [StudentController::class, "update"]);
                     Route::get("view/id/{id}", [StudentController::class, "show"]);
-                    Route::get("viewall", [AssesmentDetailController::class, "create"]);
+                    Route::get("viewall", [StudentController::class, "create"]);
                 });
                 Route::group(['prefix' => 'hospitals'], function () { 
                     Route::post("create", [HospitalController::class, "store"]);

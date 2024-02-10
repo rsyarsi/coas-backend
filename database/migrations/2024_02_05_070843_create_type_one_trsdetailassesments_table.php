@@ -21,9 +21,7 @@ return new class extends Migration
             $table->text('assesmentdescription');
             $table->dateTime('transactiondate');
             $table->integer('assesmentbobotvalue');
-            $table->integer('skala0');
-            $table->integer('skala1');
-            $table->integer('skala2');  
+            $table->integer('assesmentskala'); 
             $table->integer('assementscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();

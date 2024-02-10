@@ -5,8 +5,7 @@ namespace App\Repositories;
 use App\Models\hospital;
 use App\Models\student;
 use App\Models\Year; 
-use Illuminate\Support\Facades\DB; 
-use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use Illuminate\Support\Facades\DB;  
 use App\Repositories\Interfaces\StudentRepositoryInterface;
 
 class StudentRepository implements StudentRepositoryInterface
@@ -42,10 +41,5 @@ class StudentRepository implements StudentRepositoryInterface
         ]);
         return $updates;
     }
-
-    public function destroyStudent($id)
-    {
-        $category = Student::find($id);
-        $category->delete();
-    }
+ 
 }

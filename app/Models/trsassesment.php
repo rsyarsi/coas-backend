@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class trsassesment extends Model
 {
     use HasFactory;
+    protected $table = "trsassesments";
     protected $fillable = [
-        'assesmentdetailID',     
-        'studentID',
-        'lectureID',        
-        'yearID',        
-        'semesterID',        
+        'assesmentgroupid',     
+        'studentid',
+        'lectureid',        
+        'yearid',        
+        'semesterid',        
         'transactiondate',        
         'grandotal',        
-        'active' 
+        'active'  
     ];
     public $incrementing = false;
     protected $casts = [

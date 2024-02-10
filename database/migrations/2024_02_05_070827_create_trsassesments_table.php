@@ -21,6 +21,7 @@ return new class extends Migration
             $table->uuid('lectureid');
             $table->uuid('yearid');
             $table->uuid('semesterid');  
+            $table->uuid('specialistid');  
             $table->dateTime('transactiondate'); 
             $table->integer('grandotal'); 
             $table->integer('assesmenttype'); 

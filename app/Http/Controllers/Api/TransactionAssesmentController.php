@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Service\StudentService;
+use App\Http\Controllers\Controller;
+use App\Repositories\AssesmentGroupRepository;
+use App\Repositories\YearRepository;
+use App\Repositories\LectureRepository;
+use App\Repositories\StudentRepository;
+use App\Repositories\HospitalRepository;
+use App\Repositories\SemesterRepository;
+use App\Repositories\SpecialistRepository;
+use App\Repositories\UniversityRepository;
+use App\Service\TransactionAssesmentService;
+use App\Repositories\TransactionAssesmentRepository;
 
 class TransactionAssesmentController extends Controller
 {
@@ -36,6 +47,30 @@ class TransactionAssesmentController extends Controller
     public function store(Request $request)
     {
         //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->storeData($request);
+            return $execute;
     }
 
     /**
