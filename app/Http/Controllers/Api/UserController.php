@@ -112,4 +112,20 @@ class UserController extends Controller
         $execute =  $aReturBeliService->refreshToken();
         return $execute;
     }
+    public function profile(Request $request){
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->profile($request);
+        return $execute;
+    }
+    public function logout(){
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->logout();
+        return $execute;
+    }
 }

@@ -7,7 +7,10 @@ Interface UserRepositoryInterface{
     public function login($data); 
     public function updateDateExpired($data,$access_token,$expired);
     public function getTokenData($data);    
-    public function refreshToken();
+    public function refreshToken();    
+    public function profile($data);
+    public function logout();
+
 
    
 }

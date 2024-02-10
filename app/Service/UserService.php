@@ -148,4 +148,46 @@ class UserService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function profile(Request $request){
+        try {
+            // validator  
+            $request->validate([
+                "username" => "required"  
+            ]);
+
+             //login
+            $user = $this->userRepository->profile($request);
+            
+            if ($user) {
+                
+                return $this->sendResponse($user ,"User Profile ditemukan.");  
+            } else {
+                //response
+                return $this->sendError("ser Profile tidak ditemukan", []);
+            }
+
+        } catch (Exception $e) { 
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function logout(){
+        try {
+            // validator  
+            
+
+             //login
+            $user = $this->userRepository->logout();
+            
+            
+                
+                return $this->sendResponse($user ,"User Profile logout.");  
+             
+
+        } catch (Exception $e) { 
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }
