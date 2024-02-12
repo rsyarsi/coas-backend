@@ -12,7 +12,10 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     {
         return AssesmentGroup::latest()->paginate(20);
     }
-
+    public function viewallwithotpaging()
+    {
+        return AssesmentGroup::where('active','1')->get();
+    }
     public function storeAssesmentGroup($request,$uuid)
     {
         return  DB::table("assesmentgroups")->insert($request);

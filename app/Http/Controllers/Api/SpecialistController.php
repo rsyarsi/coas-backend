@@ -37,6 +37,18 @@ class SpecialistController extends Controller
         $execute =  $Service->showall();
         return $execute;
     }
+    public function viewallwithotpaging()
+    {
+        //
+        $Repository =  new SpecialistRepository(); 
+        $GroupSpecialistRepository =  new SpecialistGroupRepository(); 
+        $Service = new SpecialistService(
+            $Repository,
+            $GroupSpecialistRepository
+        );
+        $execute =  $Service->viewallwithotpaging();
+        return $execute;
+    }
 
     /**
      * Store a newly created resource in storage.

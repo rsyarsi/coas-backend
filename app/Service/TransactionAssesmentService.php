@@ -118,7 +118,8 @@ class TransactionAssesmentService extends Controller
                     'yearid' => $request->yearid,  
                     'semesterid' => $request->semesterid,  
                     'specialistid' => $request->specialistid,  
-                    'grandotal' => $request->grandotal,   
+                    'grandotal' => $request->grandotal,                       
+                    'transactiondate' => $request->transactiondate,    
                     'assesmenttype' => $findassesmentgroup->first()->type,   
                     'active' => $request->active 
                 ];
@@ -188,14 +189,7 @@ class TransactionAssesmentService extends Controller
                 ];
 
                 return $this->sendResponse($response, 'Transaksi Penilaian Mahasiswa sudah ada dibuat !');
-            }
-            
-           
-           
-            
-           
-            
-
+            } 
         } catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
@@ -203,5 +197,82 @@ class TransactionAssesmentService extends Controller
         }
 
     }
+    public function updateDetail(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "id" => "required", 
+            "dateupdate" => "required", 
+            "assesmentgroupid" => "required",  
+        ]);
+        
+        try {
 
+            // Db Transaction
+            DB::beginTransaction(); 
+            $findtrsbyid = $this->transactionassesmentRepository->findtrsbyid($request);
+            if($findtrsbyid->count() < 1){
+                return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
+            }
+
+            $findassesmentgroup = $this->groupAssesmentRepository->findAssesmentGroup($request->assesmentgroupid);
+            if($findassesmentgroup->count() < 1){
+                return $this->sendError('Assesment group tidak di temukan !', []);
+            }
+
+
+            // validasi row id 
+            foreach ($request->data as $key  ) {
+                # code...
+               
+                if($findassesmentgroup->first()->type == "1"){
+                    $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($key['iddetail']);
+                    if($datadetail1->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($findassesmentgroup->first()->type == "3"){
+                    $datadetail3 = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($key['iddetail']);
+                    if($datadetail3->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($findassesmentgroup->first()->type == "4"){
+                    $datadetail4 = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($key['iddetail']);
+                    if($datadetail4->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($findassesmentgroup->first()->type == "5"){
+                    $datadetail5 = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($key['iddetail']);
+                    if($datadetail5->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                } 
+            }
+
+            /// update data 
+            foreach ($request->data as $key  ) {
+                # code...
+               
+                if($findassesmentgroup->first()->type == "1"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailone($key);
+                }else if($findassesmentgroup->first()->type == "3"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailthree($key);
+                }else if($findassesmentgroup->first()->type == "4"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfour($key);
+                }else if($findassesmentgroup->first()->type == "5"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfive($key);
+                } 
+            }
+
+            // update header
+            $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->id);
+            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request,$sumdata);
+       
+            DB::commit();
+            return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
+        }catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

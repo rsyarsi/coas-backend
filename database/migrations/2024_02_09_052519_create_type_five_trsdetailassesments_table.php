@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('assesmentdescription');
             $table->dateTime('transactiondate');  
             $table->integer('assesmentbobotvalue'); 
+            $table->integer('assementvalue'); 
             $table->integer('assesmentscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();

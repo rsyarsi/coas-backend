@@ -12,7 +12,10 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
     {
         return AssesmentDetail::latest()->paginate(10);
     }
-
+    public function viewallwithotpaging()
+    {
+        return AssesmentDetail::where('active','1')->get();
+    }
     public function storeAssesmentDetail($request,$uuid)
     {
         return  AssesmentDetail::insert($request);

@@ -37,7 +37,18 @@ class AssesmentGroupController extends Controller
         $execute =  $Service->showall();
         return $execute;
     }
-
+    public function viewallwithotpaging()
+    {
+        //
+        $Repository =  new SpecialistRepository(); 
+        $AssesmentRepository =  new AssesmentGroupRepository(); 
+        $Service = new AssesmentGroupService(
+            $Repository,
+            $AssesmentRepository
+        );
+        $execute =  $Service->viewallwithotpaging();
+        return $execute;
+    }
     /**
      * Store a newly created resource in storage.
      *

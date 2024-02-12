@@ -66,7 +66,21 @@ class AssesmentDetailController extends Controller
         $execute =  $Service->showall();
         return $execute;
     }
+    public function viewallwithotpaging()
+    {
+        //
+        $Repository =  new SpecialistRepository(); 
+        $AssesmentRepository =  new AssesmentGroupRepository(); 
+        $AssesmentdetailRepository = new AssesmentDetailRepository();
+        $Service = new AssesmentDetailService(
+            $Repository,
+            $AssesmentRepository,   
+            $AssesmentdetailRepository
 
+        );
+        $execute =  $Service->viewallwithotpaging();
+        return $execute;
+    }
     /**
      * Store a newly created resource in storage.
      *

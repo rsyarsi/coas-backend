@@ -15,7 +15,10 @@ class YearRepository implements YearRepositoryInterface
     {
         return Year::latest()->paginate(10);
     }
-
+    public function allYearswithoutPaging()
+    {
+        return Year::where('active','1')->get();
+    }
     public function storeYears($request,$uuid)
     {
         return  DB::table("years")->insert($request);

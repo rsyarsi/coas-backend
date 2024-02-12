@@ -198,4 +198,18 @@ class AssesmentDetailService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewallwithotpaging()
+    {
+        try {
+            $find = $this->AssesmentDetailRepository->viewallwithotpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Penilaian Detail tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Penilaian Detail ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

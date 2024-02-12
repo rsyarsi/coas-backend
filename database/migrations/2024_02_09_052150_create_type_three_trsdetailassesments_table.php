@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('assesmentbobotvalue')->nullable(); 
             $table->integer('assesmentvalue')->nullable(); 
             $table->text('konditevalue')->nullable(); 
+            $table->integer('assementvalue'); 
             $table->integer('assesmentscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();

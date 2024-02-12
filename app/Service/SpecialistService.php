@@ -135,4 +135,18 @@ class SpecialistService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewallwithotpaging()
+    {
+        try {
+            $find = $this->SpecialistRepository->viewallwithotpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Specialist tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Specialist ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

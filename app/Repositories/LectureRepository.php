@@ -12,6 +12,10 @@ class LectureRepository implements LectureRepositoryInterface
     {
         return Lecture::latest()->paginate(10);
     }
+    public function viewallwithotpaging()
+    {
+        return Lecture::where('active','1')->get();
+    }
 
     public function storeLecture($request,$uuid)
     {

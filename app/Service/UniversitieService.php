@@ -114,4 +114,18 @@ class UniversitieService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewallwithotpaging()
+    {
+        try {
+            $find = $this->universityRepository->viewallwithotpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Universitas tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Universitas ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

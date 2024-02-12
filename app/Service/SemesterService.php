@@ -116,4 +116,18 @@ class SemesterService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewallwithotpaging()
+    {
+        try {
+            $find = $this->semesterRepository->allSemesterwithoutpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Semester tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Semester ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

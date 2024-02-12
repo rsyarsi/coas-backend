@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('assesmentdescription');
             $table->dateTime('transactiondate')->nullable(); 
             $table->text('assesmentskala')->nullable();   
+            $table->integer('assementvalue'); 
             $table->integer('assesmentscore')->nullable(); 
             $table->integer('active',false,'1');
             $table->timestamps();

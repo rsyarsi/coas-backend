@@ -15,6 +15,11 @@ class UniversityRepository implements UniversityRepositoryInterface
         return universitie::latest()->paginate(10);
     }
 
+    public function viewallwithotpaging()
+    {
+        return universitie::where('active','1')->get();
+    }
+
     public function storeUniversity($request,$uuid)
     {
         return  DB::table("universities")->insert($request);

@@ -12,6 +12,10 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
     {
         return SpecialistGroup::latest()->paginate(10);
     }
+    public function viewallwithotpaging()
+    {
+        return SpecialistGroup::where('active','1')->get();
+    }
 
     public function storeSpecialistGroup($request,$uuid)
     {

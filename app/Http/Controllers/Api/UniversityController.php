@@ -34,6 +34,16 @@ class UniversityController extends Controller
         $execute =  $aReturBeliService->showall();
         return $execute;
     }
+    public function viewallwithotpaging()
+    {
+        //
+        $yearRepository =  new UniversityRepository(); 
+        $aReturBeliService = new UniversitieService(
+            $yearRepository 
+        );
+        $execute =  $aReturBeliService->viewallwithotpaging();
+        return $execute;
+    }
 
     /**
      * Store a newly created resource in storage.

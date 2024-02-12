@@ -34,7 +34,16 @@ class HospitalController extends Controller
         $execute =  $aReturBeliService->showall();
         return $execute;
     }
-
+    public function viewallwithotpaging()
+    {
+        //
+        $yearRepository =  new HospitalRepository(); 
+        $aReturBeliService = new HospitalService(
+            $yearRepository 
+        );
+        $execute =  $aReturBeliService->viewallwithotpaging();
+        return $execute;
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -14,7 +14,10 @@ class SpecialistRepository implements SpecialistRepositoryInterface
     {
         return specialist::latest()->paginate(10);
     }
-
+    public function viewallwithotpaging()
+    {
+        return specialist::where('active','1')->get();
+    }
     public function storeSpecialist($request,$uuid)
     {
         return  DB::table("specialists")->insert($request);

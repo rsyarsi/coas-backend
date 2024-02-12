@@ -22,7 +22,8 @@ return new class extends Migration
             $table->dateTime('transactiondate')->nullable(); 
             $table->integer('assesmentbobotvalue');
             $table->text('assesmentskala')->nullable(); 
-            $table->integer('assementscore'); 
+            $table->integer('assementvalue');            
+            $table->integer('assementscore');  
             $table->integer('active',false,'1');
             $table->timestamps();
         });

@@ -102,9 +102,33 @@ class TransactionAssesmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->updateDetail($request);
+            return $execute;
     }
 
     /**

@@ -12,6 +12,10 @@ class SemesterRepository implements SemesterRepositoryInterface
     {
         return Semester::latest()->paginate(10);
     }
+    public function allSemesterwithoutpaging()
+    {
+        return Semester::where('active','1')->get();
+    }
 
     public function storeSemester($request,$uuid)
     {

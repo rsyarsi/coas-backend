@@ -37,6 +37,16 @@ class YearController extends Controller
         $execute =  $aReturBeliService->showall();
         return $execute;
     }
+    public function viewallwithotpaging()
+    {
+        //
+        $yearRepository =  new YearRepository(); 
+        $aReturBeliService = new YearsService(
+            $yearRepository 
+        );
+        $execute =  $aReturBeliService->viewallwithotpaging();
+        return $execute;
+    }
 
     /**
      * Store a newly created resource in storage.

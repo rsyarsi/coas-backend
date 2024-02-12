@@ -136,4 +136,18 @@ class LectureService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewallwithotpaging()
+    {
+        try {
+            $find = $this->lectureRepository->viewallwithotpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Dosen tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Dosen ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

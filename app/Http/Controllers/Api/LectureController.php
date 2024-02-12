@@ -39,7 +39,20 @@ class LectureController extends Controller
           $execute =  $Service->showall();
           return $execute;
     }
-
+    public function viewallwithotpaging()
+    {
+        //
+          //a
+          $SpecialistRepository =  new SpecialistRepository(); 
+          $LectureRepository =  new LectureRepository();  
+          $Service = new LectureService(
+              $SpecialistRepository,
+              $LectureRepository 
+  
+          );
+          $execute =  $Service->viewallwithotpaging();
+          return $execute;
+    }
     /**
      * Store a newly created resource in storage.
      *
