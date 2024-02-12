@@ -67,12 +67,16 @@ class UniversitieService extends Controller
             if($find->count() < 1){
                 return $this->sendError('Data Universitas tidak ditemukan !',[]);
             }
-
+            $data = [
+                'id' => $request->id,                
+                'name' => $request->name, 
+                'active' => $request->active 
+            ];
             $execute = $this->universityRepository->updateUniversity($request);
             
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Universitas Berhasil diupdate !');
+                return $this->sendResponse($data, 'Universitas Berhasil diupdate !');
             }
             
 

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->uuid('trsassesmentid');
             $table->uuid('assesmentdetailid');
             $table->text('assesmentdescription');
-            $table->dateTime('transactiondate');
+            $table->dateTime('transactiondate')->nullable(); 
             $table->integer('assesmentbobotvalue');
-            $table->integer('assesmentskala'); 
+            $table->text('assesmentskala')->nullable(); 
             $table->integer('assementscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();

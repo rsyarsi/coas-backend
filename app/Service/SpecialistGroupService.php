@@ -67,12 +67,16 @@ class SpecialistGroupService extends Controller
             if($find->count() < 1){
                 return $this->sendError('Data Specialist Group tidak ditemukan !',[]);
             }
-
+            $data = [
+                'id' => $request->id,                
+                'name' => $request->name,
+                'active' => $request->active 
+            ];
             $execute = $this->SpecialistRepository->updateSpecialistGroup($request);
             
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Specialist Group Berhasil diupdate !');
+                return $this->sendResponse($data, 'Specialist Group Berhasil diupdate !');
             }
 
         } catch (Exception $e) {

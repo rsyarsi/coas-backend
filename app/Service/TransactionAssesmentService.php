@@ -100,7 +100,12 @@ class TransactionAssesmentService extends Controller
             if($findassesmentgroup->count() < 1){
                 return $this->sendError('Assesment group tidak di temukan !', []);
             }
-            
+            if($request->id <> ""){
+                $findtrsassesmentbyId  = $this->transactionassesmentRepository->findtrsassesmentbyidandGroupId($request);
+                if($findtrsassesmentbyId->count() < 1){
+                    return $this->sendError('Group Penilaian pada Nomor Transaksi Penilaian ini tidak ditemukan, silahkan check kembali data Nomor transaksi dan Group Penilaian anda !', []);
+                }
+            }
             $verify = $this->transactionassesmentRepository->verifyTrsAssesment($request,$findassesmentgroup->first()->type);
             
             if($verify->count() < 1){
@@ -121,7 +126,7 @@ class TransactionAssesmentService extends Controller
                 $this->transactionassesmentRepository->storeTrsAssesment($data,$uuid);
                 $date = Carbon::now();
                 $verify2 = $this->transactionassesmentRepository->findassesmentbygrouptype($request,$findassesmentgroup->first()->type);
-                    
+                 
                 foreach ($verify2 as $key ) {
                     # code...
                     $uuiddetail = Uuid::uuid4();

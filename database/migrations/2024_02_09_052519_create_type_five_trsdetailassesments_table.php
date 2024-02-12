@@ -16,12 +16,12 @@ return new class extends Migration
     {
         Schema::create('type_five_trsdetailassesments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('trsassementid');
+            $table->uuid('trsassesmentid');
             $table->uuid('assesmentdetailid');
-            $table->text('assementdescription');
-            $table->dateTime('transactiondate'); 
-            $table->integer('assessmentvalue');  
-            $table->integer('assementscore'); 
+            $table->text('assesmentdescription');
+            $table->dateTime('transactiondate');  
+            $table->integer('assesmentbobotvalue'); 
+            $table->integer('assesmentscore'); 
             $table->integer('active',false,'1');
             $table->timestamps();
         });

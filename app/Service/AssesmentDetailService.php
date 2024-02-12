@@ -38,7 +38,15 @@ class AssesmentDetailService extends Controller
             "assesmentgroupid" => "required", 
             "assesmentdescription" => "required",             
             "assesmentbobotvalue" => "required",   
+            "assesmentvaluestart" => "required",   
+            "assesmentvalueend" => "required",   
+            "assesmentnumbers" => "required",   
             "assesmentskalavalue" => "required",   
+            "assesmentskalavaluestart" => "required",   
+            "assesmentskalavalueend" => "required", 
+            "assesmentkonditevalue" => "required",  
+            "assesmentkonditevaluestart" => "required",   
+            "assesmentkonditevalueend" => "required",   
             "active" => "required" 
         ]);
         
@@ -50,13 +58,22 @@ class AssesmentDetailService extends Controller
             if($findassesmentgroup->count() < 1){
                 return $this->sendError('Grup Penilaian tidak ditemukan !', []);
             }
-            $uuid = Uuid::uuid4();
+            $uuid = Uuid::uuid4(); 
+           
             $data = [
                 'id' => $uuid,                
                 'assesmentgroupid' => $request->assesmentgroupid,
+                'assesmentnumbers' => $request->assesmentnumbers,
                 'assesmentdescription' => $request->assesmentdescription, 
                 'assesmentbobotvalue' => $request->assesmentbobotvalue, 
-                'assesmentskalavalue' => $request->assesmentskalavalue, 
+                'assesmentskalavalue' => $request->assesmentskalavalue,  
+                'assesmentvaluestart' => $request->assesmentvaluestart,  
+                'assesmentvalueend' => $request->assesmentvalueend,  
+                'assesmentskalavaluestart' => $request->assesmentskalavaluestart, 
+                'assesmentskalavalueend' => $request->assesmentskalavalueend, 
+                'assesmentkonditevalue' => $request->assesmentkonditevalue,  
+                'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
+                'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
                 'active' => $request->active 
             ];
             $execute = $this->AssesmentDetailRepository->storeAssesmentDetail($data,$uuid);
@@ -79,8 +96,16 @@ class AssesmentDetailService extends Controller
         $request->validate([ 
             "assesmentgroupid" => "required", 
             "assesmentdescription" => "required",             
+            "assesmentnumbers" => "required",   
             "assesmentbobotvalue" => "required",   
+            "assesmentvaluestart" => "required",   
+            "assesmentvalueend" => "required",   
             "assesmentskalavalue" => "required",   
+            "assesmentskalavaluestart" => "required",   
+            "assesmentskalavalueend" => "required", 
+            "assesmentkonditevalue" => "required", 
+            "assesmentkonditevaluestart" => "required",   
+            "assesmentkonditevalueend" => "required",    
             "active" => "required" 
         ]);
         
@@ -97,13 +122,22 @@ class AssesmentDetailService extends Controller
             $findspecialist = $this->AssesmentGroupRepository->findAssesmentGroup($request->assesmentgroupid);
             if($findspecialist->count() < 1){
                 return $this->sendError('Grup Penilaian tidak di temukan !', []);
-            }
+            }  
+            
             $data = [
                 'id' => $request->id,                
                 'assesmentgroupid' => $request->assesmentgroupid,
+                'assesmentnumbers' => $request->assesmentnumbers,
                 'assesmentdescription' => $request->assesmentdescription, 
                 'assesmentbobotvalue' => $request->assesmentbobotvalue, 
-                'assesmentskalavalue' => $request->assesmentskalavalue, 
+                'assesmentvaluestart' => $request->assesmentvaluestart, 
+                'assesmentvalueend' => $request->assesmentvalueend, 
+                'assesmentskalavalue' => $request->assesmentskalavalue,  
+                'assesmentskalavaluestart' => $request->assesmentskalavaluestart, 
+                'assesmentskalavalueend' => $request->assesmentskalavalueend, 
+                'assesmentkonditevalue' => $request->assesmentkonditevalue, 
+                'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
+                'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
                 'active' => $request->active 
             ];
             $execute = $this->AssesmentDetailRepository->updateAssesmentDetail($data);

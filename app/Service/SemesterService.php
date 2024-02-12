@@ -70,12 +70,17 @@ class SemesterService extends Controller
             if($find->count() < 1){
                 return $this->sendError('Data Semester tidak ditemukan !',[]);
             }
-
+            $data = [
+                'id' => $request->id,                
+                'semestername' => $request->semestername,                 
+                'semestervalue' => $request->semestervalue,  
+                'active' => $request->active 
+            ];
             $execute = $this->semesterRepository->updateSemester($request);
             
             DB::commit();
             if($execute){
-                return $this->sendResponse($execute, 'Semester Berhasil diupdate !');
+                return $this->sendResponse($data, 'Semester Berhasil diupdate !');
             }
 
         } catch (Exception $e) {

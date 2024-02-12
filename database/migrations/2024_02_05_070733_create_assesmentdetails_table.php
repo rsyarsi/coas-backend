@@ -14,12 +14,21 @@ return new class extends Migration
      */
     public function up()
     {
+        
         Schema::create('assesmentdetails', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('assesmentgroupid');
+            $table->integer('assesmentnumbers');
             $table->text('assesmentdescription');
             $table->integer('assesmentbobotvalue');
+            $table->integer('assesmentvaluestart');
+            $table->integer('assesmentvalueend');
             $table->text('assesmentskalavalue');
+            $table->integer('assesmentskalavaluestart');
+            $table->integer('assesmentskalavalueend'); 
+            $table->text('assesmentkonditevalue');
+            $table->integer('assesmentkonditevaluestart');
+            $table->integer('assesmentkonditevalueend'); 
             $table->integer('active',false,'1');
             $table->timestamps();
         });

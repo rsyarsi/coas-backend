@@ -19,9 +19,12 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function storeTrsAssesment($request,$uuid)
     {
         return  DB::table("trsassesments")->insert($request);
-
-         
     } 
+    public function findtrsassesmentbyidandGroupId($request){
+        return trsassesment::where('id',$request->id)
+        ->where('assesmentgroupid',$request->assesmentgroupid)
+        ->get();
+    }
     public function findassesmentbygrouptype($request,$type){
         return  DB::table("viewassesmentdetailbygrouptypes")
         ->where('activeassesmentgroups','1') 
@@ -49,8 +52,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'id'=> $uuiddetail,      
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
-            'assesmentdescription'=> $key->assesmentdescription,   
-            'transactiondate'=> $date,   
+            'assesmentdescription'=> $key->assesmentdescription,    
             'assesmentskala'=> $key->assesmentskalavalue,   
             'assesmentbobotvalue'=> $key->assesmentbobotvalue,   
             'assementscore'=> '0',
@@ -65,12 +67,10 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
             'assesmentdescription'=> $key->assesmentdescription,   
-            'transactiondate'=> $date,   
-            'assementskala'=> $key->assementskala,   
-            'assementbobotvalue'=> $key->assementbobotvalue,   
-            'assessmentvalue'=> $key->assessmentvalue,   
-            'konditevalue'=> $key->konditevalue,   
-            'assementscore'=> '0',
+            'assesmentskala'=> $key->assesmentskalavalue,   
+            'assesmentbobotvalue'=> $key->assesmentbobotvalue,    
+            'konditevalue'=> $key->assesmentkonditevalue,   
+            'assesmentscore'=> '0',
             'active' => '1'
         ]);
     }
@@ -81,10 +81,8 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'id'=> $uuiddetail,      
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
-            'assesmentdescription'=> $key->assesmentdescription,   
-            'transactiondate'=> $date,   
-            'assementskala'=> $key->assementskala,    
-            'assessmentvalue'=> $key->assessmentvalue,   
+            'assesmentdescription'=> $key->assesmentdescription,    
+            'assesmentskala'=> $key->assesmentskalavalue,    
             'assementscore'=> '0', 
             'active' => '1'
         ]);
@@ -96,10 +94,9 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'id'=> $uuiddetail,      
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
-            'assesmentdescription'=> $key->assesmentdescription,   
-            'transactiondate'=> $date,   
-            'assesmentvalue'=> $key->assesmentvalue,     
-            'assementscore'=> '0', 
+            'assesmentdescription'=> $key->assesmentdescription,       
+            'assesmentbobotvalue'=> $key->assesmentbobotvalue,    
+            'assesmentscore'=> '0', 
             'active' => '1'
         ]);
     }

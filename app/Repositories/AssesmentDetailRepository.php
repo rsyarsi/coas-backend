@@ -33,6 +33,7 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
       
         $updates = AssesmentDetail::where('id', $request['id'])->update([
             'assesmentgroupid' => $request['assesmentgroupid'],
+            'assesmentnumbers' => $request['assesmentnumbers'],
             'assesmentdescription' => $request['assesmentdescription'],             
             'assesmentbobotvalue' => $request['assesmentbobotvalue'],  
             'assesmentskalavalue' => $request['assesmentskalavalue'],  
