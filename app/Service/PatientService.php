@@ -30,7 +30,7 @@ class PatientService extends Controller
     public function listksmgigihistory($request)
     {
         try {
-            return $this->GuzzleClientRequestPost(
+            $data =  $this->GuzzleClientRequestPost(
                 env('API_URL_YARSI') . "registrations/getRegistrationRajalHistoryCoas",
                 "POST",
                 json_encode([
@@ -38,6 +38,7 @@ class PatientService extends Controller
                     'tglPeriodeBerobatAkhir' => $request->tglAkhir,
                 ]) 
             );
+            return $this->sendResponse($data, 'Data ditemukan !');
         } catch (\Exception $e) {
             throw new HttpException(200, $e);
         }
