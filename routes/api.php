@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EmrKonservasiController;
 use App\Http\Controllers\Api\EmrPeriodontieController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\LectureController;
+use App\Http\Controllers\Api\PatientListController;
 use App\Http\Controllers\Api\SemesterController;
 use App\Http\Controllers\Api\SpecialistController;
 use App\Http\Controllers\Api\SpecialistGroupController;
@@ -134,6 +135,11 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     Route::post("create", [TransactionAssesmentController::class, "store"]);
                     Route::post("updatedetails", [TransactionAssesmentController::class, "update"]);
                 });
+                Route::group(['prefix' => 'patient'], function () {
+                    Route::get("listksmgigi", [PatientListController::class, "create"]);
+                    Route::post("listksmgigihistory", [PatientListController::class, "update"]);
+                    Route::post("detailbyNoregistrasi", [PatientListController::class, "store"]);
+                });
             });
             Route::group(['prefix' => 'emr'], function () {
                 Route::group(['prefix' => 'periodonti'], function () {
@@ -142,9 +148,30 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 });
                 Route::group(['prefix' => 'pedodointi'], function () {
                     Route::group(['prefix' => 'create'], function () {
-                        Route::post("medicaldentalhistory", [EmrPedodontiController::class, "store"]);
-                        // Route::post("behaviorrating", [EmrPedodontiController::class, "store"]);
-                    });;
+                        Route::post("medicaldentalhistory", [EmrPedodontiController::class, "store"]);  
+                    });
+                    Route::group(['prefix' => 'behaviorrating'], function () {
+                        Route::post("create", [EmrPedodontiController::class, "behaviorratingcreate"]);
+                        Route::post("update", [EmrPedodontiController::class, "behaviorratingupdate"]);
+                        Route::post("delete", [EmrPedodontiController::class, "behaviorratingdelete"]);
+                        Route::post("viewabyId", [EmrPedodontiController::class, "behaviorratingviewbyid"]);
+                        Route::post("viewall", [EmrPedodontiController::class, "behaviorratingviewall"]);
+                    });
+                    Route::group(['prefix' => 'treatment'], function () {
+                        Route::post("create", [EmrPedodontiController::class, "treatmentcreate"]);
+                        Route::post("update", [EmrPedodontiController::class, "treatmentupdate"]);
+                        Route::post("delete", [EmrPedodontiController::class, "treatmentdelete"]);
+                        Route::post("viewabyId", [EmrPedodontiController::class, "treatmentviewbyid"]);
+                        Route::post("viewall", [EmrPedodontiController::class, "treatmentviewall"]);
+                        Route::post("validatesupervisor", [EmrPedodontiController::class, "validatesupervisor"]);
+                    });
+                    Route::group(['prefix' => 'treatmentplan'], function () {
+                        Route::post("create", [EmrPedodontiController::class, "treatmentplancreate"]);
+                        Route::post("update", [EmrPedodontiController::class, "treatmentplanupdate"]);
+                        Route::post("delete", [EmrPedodontiController::class, "treatmentplandelete"]);
+                        Route::post("viewabyId", [EmrPedodontiController::class, "treatmentplanviewbyid"]);
+                        Route::post("viewall", [EmrPedodontiController::class, "treatmentplanviewall"]);
+                    });
                 });
                 Route::group(['prefix' => 'pedodontii'], function () {
                     Route::group(['prefix' => 'create'], function () {
@@ -160,6 +187,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 });
                 Route::group(['prefix' => 'prostodonti'], function () {
                     Route::group(['prefix' => 'create'], function () {
+                        Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                         Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                     });;
                 });

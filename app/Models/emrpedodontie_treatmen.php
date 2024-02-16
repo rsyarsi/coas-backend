@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class emrpedodontie_behaviorrating extends Model
+class emrpedodontie_treatmen extends Model
 {
     use HasFactory;
-    protected $table = "emrpedodontie_behaviorratings";
+    protected $table = "emrpedodontie_treatmens";
     /**
      * The attributes that are mass assignable.
      *
@@ -17,9 +17,12 @@ class emrpedodontie_behaviorrating extends Model
     protected $fillable = [
         'id',
         'emrid',
-        'frankscale',
-        'beforetreatment', 
-        'duringtreatment', 
+        'datetreatment',
+        'itemtreatment', 
+        'supervisorvalidate',         
+        'userentryname', 
+        'supervisorname', 
+
     ];
     public $incrementing = false;
     protected $casts = [

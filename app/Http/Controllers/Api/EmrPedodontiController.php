@@ -90,4 +90,171 @@ class EmrPedodontiController extends Controller
     {
         //
     }
+
+    // behavior rating
+    public function behaviorratingcreate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->behaviorratingcreate($request);
+        return $execute;
+    }
+    public function behaviorratingupdate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->behaviorratingupdate($request);
+        return $execute;
+    }
+    public function behaviorratingdelete(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->behaviorratingdelete($request);
+        return $execute;
+    }
+    public function behaviorratingviewbyid(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->behaviorratingviewbyid($request);
+        return $execute;
+    }
+    public function behaviorratingviewall(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->behaviorratingviewall($request);
+        return $execute;
+    }
+    // behavior rating
+    // treatment
+    public function treatmentcreate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentcreate($request);
+        return $execute;
+    }
+    public function treatmentupdate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentupdate($request);
+        return $execute;
+    }
+    public function treatmentdelete(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentdelete($request);
+        return $execute;
+    }
+    public function treatmentviewbyid(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentviewbyid($request);
+        return $execute;
+    }
+    public function treatmentviewall(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentviewall($request);
+        return $execute;
+    }
+    public function validatesupervisor(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->validatesupervisor($request);
+        return $execute;
+    }
+    //treatment
+    // treatmentplan
+    public function treatmentplancreate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentplancreate($request);
+        return $execute;
+    }
+    public function treatmentplanupdate(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentplanupdate($request);
+        return $execute;
+    }
+    public function treatmentplandelete(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentplandelete($request);
+        return $execute;
+    }
+    public function treatmentplanviewbyid(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentplanviewbyid($request);
+        return $execute;
+    } 
+    public function treatmentplanviewall(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->treatmentplanviewall($request);
+        return $execute;
+    }
+    //treatment plan
 }
