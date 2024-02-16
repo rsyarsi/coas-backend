@@ -257,4 +257,14 @@ class EmrPedodontiController extends Controller
         return $execute;
     }
     //treatment plan
+    public function uploadfoto(Request $request)
+    {
+        //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->uploadfoto($request);
+        return $execute;
+    }
 }

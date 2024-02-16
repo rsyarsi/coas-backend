@@ -5,15 +5,17 @@ namespace App\Service;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use App\Traits\AwsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\EmrProstodontieRepositoryInterface;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrProstodontieRepositoryInterface;
 
 class EmrProstodontieService extends Controller
 {
+    use AwsTrait;
     private $emrprostodontieRepository;
 
     public function __construct(EmrProstodontieRepositoryInterface $emrprostodontieRepository)
@@ -442,5 +444,249 @@ class EmrProstodontieService extends Controller
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
+    }
+    public function uploadfoto(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000",
+            "notes" => "required" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/prostodonti/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+        //    $this->emrpedodontiRepository->uploadfoto($request);
+        //     DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Prostonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    //logbook 
+    public function logbookcreate(Request $request)
+    {
+      
+            // validate 
+        $request->validate([ 
+            "emrid" => "required", 
+            "dateentri" => "required",  
+            "work" => "required",    
+            "usernameentry" => "required",    
+            "usernameentryname" => "required",    
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+            // $findmedicalhistory = $this->emrpedodontiRepository->findmedicaldentalhistory($request->emrid);
+            // dd($findmedicalhistory);
+            // if($findmedicalhistory->count() < 1){
+            //     return $this->sendError('Medical History tidak ditemukan !', []);
+            // }
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'emrid' => $request->emrid,
+                'dateentri' => $request->dateentri, 
+                'work' => $request->work,  
+                'usernameentry' => $request->usernameentry,
+                'usernameentryname' => $request->usernameentryname, 
+            ];
+       
+            $execute = $this->emrprostodontieRepository->logbookcreate($data,$uuid);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment Plan berhasil ditambahkan !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function logbookupdate(Request $request)
+    {
+        $request->validate([ 
+            "emrid" => "required", 
+            "dateentri" => "required",  
+            "work" => "required",    
+            "usernameentry" => "required",    
+            "usernameentryname" => "required",    
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+            // $findmedicalhistory = $this->emrpedodontiRepository->findmedicaldentalhistory($request->emrid);
+            // dd($findmedicalhistory);
+            // if($findmedicalhistory->count() < 1){
+            //     return $this->sendError('Medical History tidak ditemukan !', []);
+            // } 
+            $data = [
+                'id' => $request->id,                
+                'emrid' => $request->emrid,
+                'dateentri' => $request->dateentri, 
+                'work' => $request->work,  
+                'usernameentry' => $request->usernameentry,
+                'usernameentryname' => $request->usernameentryname, 
+            ];
+       
+            $execute = $this->emrprostodontieRepository->logbookupdate($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment Plan berhasil dirubah !');
+            } 
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function logbookdelete(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+
+            $findmedicalhistory = $this->emrprostodontieRepository->findlogbookbyId($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment tidak ditemukan !', []);
+            } 
+
+            $data = [
+                'id' => $request->id,                 
+            ];
+       
+            $execute = $this->emrprostodontieRepository->logbookdelete($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment berhasil dihapus !');
+            } 
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function logbookviewbyid(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try { 
+            $findmedicalhistory = $this->emrprostodontieRepository->findlogbookbyId($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment Plan tidak ditemukan !', []);
+            } else{
+                return $this->sendResponse($findmedicalhistory->first(), 'Treatment berhasil ditemukan !');
+            }
+ 
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function logbookviewall(Request $request)
+    {
+        $request->validate([ 
+            "emrid" => "required",  
+        ]);
+        
+        try { 
+            $findmedicalhistory = $this->emrprostodontieRepository->findlogbookAll($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment Plan tidak ditemukan !', []);
+            } else{
+                return $this->sendResponse($findmedicalhistory, 'Treatment Plan berhasil ditemukan !');
+            }
+ 
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function validatelecture(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "lectureid" => "required",
+            "lecturename" => "required" 
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+            $findmedicalhistory = $this->emrprostodontieRepository->findlogbookbyId($request);
+          
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Log Book tidak ditemukan !', []);
+            } 
+           
+            $data = [
+                'id' => $request->id,                 
+                'lectureid' => $request->lectureid,
+                'lecturename' => $request->lecturename 
+            ];
+       
+            $execute = $this->emrprostodontieRepository->validatelecture($request);
+          
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment Plan berhasil dirubah !');
+            } 
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
     }
 }

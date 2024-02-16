@@ -87,4 +87,57 @@ class EmrProstodontieController extends Controller
     {
         //
     }
+    public function uploadfoto(Request $request)
+    {
+        //
+        $repo =  new EmrProstodontieRepository(); 
+        $aReturBeliService = new EmrProstodontieService(
+            $repo
+        );
+        $execute =  $aReturBeliService->uploadfoto($request);
+        return $execute;
+    }
+    //logbook
+    public function logbookcreate(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->logbookcreate($request);
+        return $execute;
+    }
+    public function logbookupdate(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->logbookupdate($request);
+        return $execute;
+    }
+    public function logbookdelete(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->logbookdelete($request);
+        return $execute;
+    }
+    public function logbookviewbyid(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->logbookviewbyid($request);
+        return $execute;
+    }
+    public function logbookviewall(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->logbookviewall($request);
+        return $execute;
+    }
+    public function validatelecture(Request $request)
+    {
+        $repo =  new EmrProstodontieRepository();
+        $services = new EmrProstodontieService($repo);
+        $execute =  $services->validatelecture($request);
+        return $execute;
+    }
 }

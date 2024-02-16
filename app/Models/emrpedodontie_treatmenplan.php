@@ -17,8 +17,11 @@ class emrpedodontie_treatmenplan extends Model
     protected $fillable = [
         'id',
         'emrid',
+        'datetreatmentplanentry',
         'oralfinding',
         'diagnosis', 
+        'userentry',
+        'userentryname',
         'treatmentplanning', 
     ];
     public $incrementing = false;

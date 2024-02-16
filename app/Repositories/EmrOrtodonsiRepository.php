@@ -255,4 +255,156 @@ class EmrOrtodonsiRepository implements EmrOrtodonsiRepositoryInterface
         ]);
         return $updates;;
     }
+    public function updateimagesfotopemriksaangigi($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'image_pemeriksaangigi' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function updateuploadtampakdepan($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'image_pemeriksaangigi' => $awsurl,
+            'tampakdepantakterlihatgigi' => $awsurl,
+            'fotomuka_bentukmuka' => $data->bentukmuka 
+        ]);
+        return $updates;
+    }
+    public function updateuploadtampakdepansenyumterlihatgigi($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([  
+            'tampakdepansenyumterlihatgigi' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function updateimagesfotosamping($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([  
+            'fotomuka_profilmuka' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function updateimagesfototampakmiring($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampakmiring' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    //geligeli
+    public function uploadtampaksampingkanan($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampaksampingkanan' => $awsurl 
+        ]);
+        return $updates;
+    }
+     
+    public function uploadtampakdepangeli($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampakdepan' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadtampaksampingkiri($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampaksampingkiri' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadtampakoklusalatas($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampakoklusalatas' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadtampakoklusalbawah($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'tampakoklusalbawah' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadmodelstudi($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'skemafotooklusalgigidarimodelstudi' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    public function uploadsefalometri($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'fotosefalometri' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    public function uploadpanoramik($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'fotopanoramik' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    public function uploadanalisaetiologi($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'analisisetiologimaloklusi' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    //jalan perawatan
+    public function uploadpencarianruang($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'pencarianruang' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadrahangatas($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'koreksimalposisigigiindividual_rahangatas' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadrahangbawah($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'koreksimalposisigigiindividual_rahangbawah' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadretainer($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'retainer' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    //plakat
+    public function uploadplakatrahangatas($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'gambarplataktif_rahangatas' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadplakatrahangbawah($data,$awsurl)
+    { 
+        $updates = emrortodonsie::where('id', $data->id)->update([ 
+            'gambarplataktif_rahangatas' => $awsurl 
+        ]);
+        return $updates;
+    }
 }

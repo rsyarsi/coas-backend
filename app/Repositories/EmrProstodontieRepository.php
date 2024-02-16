@@ -2,12 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\emrprostodontie;
-use App\Models\hospital;
+use Carbon\Carbon;
 use App\Models\Year;
-use App\Repositories\Interfaces\EmrProstodontieRepositoryInterface;
+use App\Models\hospital;
+use App\Models\emrprostodontie;
 use Illuminate\Support\Facades\DB;
+use App\Models\emrprostodontie_logbook;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrProstodontieRepositoryInterface;
 
 class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
 {
@@ -224,5 +226,47 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
 
         ]);
         return $updates;;
+    }
+
+    //logbook 
+    public function logbookcreate($data)
+    {
+        return emrprostodontie_logbook::create($data);
+    }
+    public function logbookupdate($data)
+    {
+
+        $updates = emrprostodontie_logbook::where('id', $data->id)->update([
+            'emrid' => $data->emrid,
+            'dateentri' => $data->dateentri,
+            'work' => $data->work,
+            'usernameentry' => $data->usernameentry,
+            'usernameentryname' => $data->usernameentryname,            
+            'lectureid' => $data->lectureid,
+            'lecturename' => $data->lecturename,       
+
+        ]);
+        return $updates;
+    }
+    public function logbookdelete($data)
+    {
+        return  emrprostodontie_logbook::where('id',$data->id)->delete();
+    }
+    public function findlogbookbyId($data)
+    {
+        return emrprostodontie_logbook::where('id', $data->id)->get();
+    }
+    public function findlogbookAll($data)
+    {
+        return emrprostodontie_logbook::where('emrid', $data->emrid)->get();
+    }
+    public function validatelecture($data)
+    { 
+        $updates = emrprostodontie_logbook::where('id', $data->id)->update([
+            'dateverifylecture' => Carbon::now(),
+            'lectureid' => $data->lectureid, 
+            'lecturename' => $data->lecturename
+        ]);
+        return $updates;
     }
 }

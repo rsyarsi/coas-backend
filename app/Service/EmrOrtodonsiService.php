@@ -5,15 +5,17 @@ namespace App\Service;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use App\Traits\AwsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\EmrOrtodonsiRepositoryInterface;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrOrtodonsiRepositoryInterface;
 
 class EmrOrtodonsiService extends Controller
 {
+    use AwsTrait;
     private $emrortodonsiRepository;
 
     public function __construct(EmrOrtodonsiRepositoryInterface $emrortodonsiRepository)
@@ -501,5 +503,754 @@ class EmrOrtodonsiService extends Controller
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
+    }
+    public function uploadfoto(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/pemeriksaangigi/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->updateimagesfotopemriksaangigi($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    // analisa foto muka
+    public function uploadtampakdepan(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "fotomuka_bentukmuka" => "required",   
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisabentukmuka/tampakdepantakterlihatgigi/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload,
+                'bentukmuka' => $request->bentukmuka
+            ];
+       
+           $this->emrortodonsiRepository->updateuploadtampakdepan($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadfotosenyum(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisabentukmuka/tampakdepansenyumterlihatgigi/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->updateuploadtampakdepansenyumterlihatgigi($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadfotosamping(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "fotomuka_profilmuka" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisabentukmuka/tampaksamping/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->updateimagesfotosamping($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadfotomiring(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisabentukmuka/tampakmiring/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->updateimagesfototampakmiring($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    //geligeli
+    public function uploadtampaksampingkanan(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/geligeli/tampaksampingkanan/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadtampaksampingkanan($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadtampakdepangeli(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/geligeli/tampakdepan/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadtampakdepangeli($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadtampaksampingkiri(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/geligeli/tampaksampingkiri/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadtampaksampingkiri($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadtampakoklusalatas(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/geligeli/tampakoklusalatas/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadtampakoklusalatas($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadtampakoklusalbawah(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/geligeli/tampakoklusalbawah/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadtampakoklusalbawah($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadmodelstudi(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/okulasigigi/modelstudi/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadmodelstudi($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadsefalometri(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisaradiografi/sefalometri/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadsefalometri($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadpanoramik(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisaradiografi/panoramik/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadpanoramik($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadanalisaetiologi(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/analisaetiologi/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadanalisaetiologi($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    //jalanperawatan
+    public function uploadpencarianruang(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/jalanperawatan/uploadpencarianruang/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadpencarianruang($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadrahangatas(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/jalanperawatan/uploadrahangatas/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadrahangatas($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadrahangbawah(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/jalanperawatan/uploadrahangbawah/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadrahangbawah($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadretainer(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/retainer/uploadretainer/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadretainer($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    //plakat
+    public function uploadplakatrahangatas(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/plakat/plakatrahangatas/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadplakatrahangatas($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function uploadplakatrahangbawah(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/orthodonti/plakat/plakatrahangbawah/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+           $this->emrortodonsiRepository->uploadplakatrahangbawah($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
     }
 }

@@ -115,6 +115,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
             'datetreatment' => $data->datetreatment,
             'itemtreatment' => $data->itemtreatment,
             'supervisorvalidate' => $data->supervisorvalidate,            
+            'userentry' => $data->userentry,
             'userentryname' => $data->userentryname,
         ]);
         return $updates;
@@ -123,6 +124,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     { 
         $updates = emrpedodontie_treatmen::where('id', $data->id)->update([
             'supervisorvalidate' => Carbon::now(),
+            'supervisousername' => $data->supervisousername, 
             'supervisorname' => $data->supervisorname, 
         ]);
         return $updates;
@@ -150,9 +152,11 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
 
         $updates = emrpedodontie_treatmenplan::where('id', $data->id)->update([
             'emrid' => $data->emrid,
+            'datetreatmentplanentry' => $data->datetreatmentplanentry,
             'oralfinding' => $data->oralfinding,
             'diagnosis' => $data->diagnosis,
             'treatmentplanning' => $data->treatmentplanning,            
+            'userentry' => $data->userentry,
             'userentryname' => $data->userentryname,
         ]);
         return $updates;

@@ -4,16 +4,19 @@ namespace App\Service;
 
 use Exception;
 use Carbon\Carbon;
+use Aws\S3\S3Client;
 use Ramsey\Uuid\Uuid;
+use App\Traits\AwsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\EmrPedodontiRepositoryInterface;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrPedodontiRepositoryInterface;
 
 class EmrPedodontiService extends Controller
 {
+    use AwsTrait;
     private $emrpedodontiRepository;
 
     public function __construct(EmrPedodontiRepositoryInterface $emrpedodontiRepository)
@@ -330,7 +333,8 @@ class EmrPedodontiService extends Controller
             "emrid" => "required", 
             "datetreatment" => "required",  
             "itemtreatment" => "required",    
-            "userentryname" => "required" 
+            "userentryname" => "required",
+            "userentry" => "required"
         ]);
         
         try {
@@ -349,6 +353,7 @@ class EmrPedodontiService extends Controller
                 'datetreatment' => $request->datetreatment, 
                 'itemtreatment' => $request->itemtreatment,  
                 'supervisorvalidate' => $request->supervisorvalidate,
+                'userentry' => $request->userentry, 
                 'userentryname' => $request->userentryname 
             ];
        
@@ -375,7 +380,8 @@ class EmrPedodontiService extends Controller
             "emrid" => "required", 
             "datetreatment" => "required",  
             "itemtreatment" => "required",    
-            "userentryname" => "required" 
+            "userentryname" => "required",
+            "userentry" => "required"
         ]);
         
         try {
@@ -393,6 +399,7 @@ class EmrPedodontiService extends Controller
                 'datetreatment' => $request->datetreatment, 
                 'itemtreatment' => $request->itemtreatment,  
                 'supervisorvalidate' => $request->supervisorvalidate,
+                'userentry' => $request->userentry, 
                 'userentryname' => $request->userentryname 
             ];
        
@@ -473,12 +480,12 @@ class EmrPedodontiService extends Controller
         ]);
         
         try { 
-            $findmedicalhistory = $this->emrpedodontiRepository->findbehaviorratingAll($request);
+            $findmedicalhistory = $this->emrpedodontiRepository->findtreatmentAll($request);
         
             if($findmedicalhistory->count() < 1){
-                return $this->sendError('Behavior Rating tidak ditemukan !', []);
+                return $this->sendError('Treatment tidak ditemukan !', []);
             } else{
-                return $this->sendResponse($findmedicalhistory, 'Behavior rating berhasil ditemukan !');
+                return $this->sendResponse($findmedicalhistory, 'Treatment berhasil ditemukan !');
             }
  
         } catch (Exception $e) { 
@@ -490,6 +497,7 @@ class EmrPedodontiService extends Controller
     {
         $request->validate([ 
             "id" => "required",  
+            "supervisousername" => "required",
             "supervisorname" => "required" 
         ]);
         
@@ -504,6 +512,7 @@ class EmrPedodontiService extends Controller
             // } 
             $data = [
                 'id' => $request->id,                 
+                'supervisousername' => $request->supervisousername,
                 'supervisorname' => $request->supervisorname 
             ];
        
@@ -520,5 +529,216 @@ class EmrPedodontiService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
 
+    }
+
+    public function uploadfoto(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000",
+            "notes" => "required" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/pedodonti/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
+
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+       
+        //    $this->emrpedodontiRepository->uploadfoto($request);
+        //     DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    // treatmentplan
+    public function treatmentplancreate(Request $request)
+    {
+      
+            // validate 
+        $request->validate([ 
+            "emrid" => "required", 
+            "datetreatmentplanentry" => "required",  
+            "oralfinding" => "required",    
+            "diagnosis" => "required",    
+            "treatmentplanning" => "required",    
+            "userentry" => "required",     
+            "userentryname" => "required" 
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+            // $findmedicalhistory = $this->emrpedodontiRepository->findmedicaldentalhistory($request->emrid);
+            // dd($findmedicalhistory);
+            // if($findmedicalhistory->count() < 1){
+            //     return $this->sendError('Medical History tidak ditemukan !', []);
+            // }
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'emrid' => $request->emrid,
+                'datetreatmentplanentry' => $request->datetreatmentplanentry, 
+                'oralfinding' => $request->oralfinding,  
+                'diagnosis' => $request->supervisorvalidate,
+                'treatmentplanning' => $request->treatmentplanning,
+                'userentry' => $request->userentry, 
+                'userentryname' => $request->userentryname 
+            ];
+       
+            $execute = $this->emrpedodontiRepository->createtreatmentplan($data,$uuid);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment Plan berhasil ditambahkan !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function treatmentplanupdate(Request $request)
+    {
+        $request->validate([ 
+            "emrid" => "required", 
+            "datetreatmentplanentry" => "required",  
+            "oralfinding" => "required",    
+            "diagnosis" => "required",    
+            "treatmentplanning" => "required",    
+            "userentry" => "required",     
+            "userentryname" => "required" 
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+            // $findmedicalhistory = $this->emrpedodontiRepository->findmedicaldentalhistory($request->emrid);
+            // dd($findmedicalhistory);
+            // if($findmedicalhistory->count() < 1){
+            //     return $this->sendError('Medical History tidak ditemukan !', []);
+            // } 
+            $data = [
+                'id' => $request->id,                
+                'emrid' => $request->emrid,
+                'datetreatment' => $request->datetreatment, 
+                'itemtreatment' => $request->itemtreatment,  
+                'supervisorvalidate' => $request->supervisorvalidate,
+                'userentryname' => $request->userentryname 
+            ];
+       
+            $execute = $this->emrpedodontiRepository->updatetreatmentplan($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment Plan berhasil dirubah !');
+            } 
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function treatmentplandelete(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+
+            $findmedicalhistory = $this->emrpedodontiRepository->findtreatmentplanbyId($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment tidak ditemukan !', []);
+            } 
+
+            $data = [
+                'id' => $request->id,                 
+            ];
+       
+            $execute = $this->emrpedodontiRepository->deletetreatmentplan($request);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Treatment berhasil dihapus !');
+            } 
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function treatmentplanviewbyid(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try { 
+            $findmedicalhistory = $this->emrpedodontiRepository->findtreatmentplanbyId($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment Plan tidak ditemukan !', []);
+            } else{
+                return $this->sendResponse($findmedicalhistory->first(), 'Treatment berhasil ditemukan !');
+            }
+ 
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function treatmentplanviewall(Request $request)
+    {
+        $request->validate([ 
+            "emrid" => "required",  
+        ]);
+        
+        try { 
+            $findmedicalhistory = $this->emrpedodontiRepository->findtreatmentplanAll($request);
+        
+            if($findmedicalhistory->count() < 1){
+                return $this->sendError('Treatment Plan tidak ditemukan !', []);
+            } else{
+                return $this->sendResponse($findmedicalhistory, 'Treatment Plan berhasil ditemukan !');
+            }
+ 
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
     }
 }

@@ -149,6 +149,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::group(['prefix' => 'pedodointi'], function () {
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicaldentalhistory", [EmrPedodontiController::class, "store"]);  
+                        Route::post("uploadodontogramfoto", [EmrPedodontiController::class, "uploadfoto"]);  
                     });
                     Route::group(['prefix' => 'behaviorrating'], function () {
                         Route::post("create", [EmrPedodontiController::class, "behaviorratingcreate"]);
@@ -182,14 +183,60 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::group(['prefix' => 'ortodonsi'], function () {
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicalwaktuperawatan", [EmrOrtodonsiController::class, "store"]);
-                        // Route::post("behaviorrating", [EmrPedodontiController::class, "store"]);
-                    });;
+                        Route::post("uploadpemeriksaangigi", [EmrOrtodonsiController::class, "uploadfoto"]);  
+                    });
+                    Route::group(['prefix' => 'analisafoto'], function () {
+                        Route::post("uploadtampakdepan", [EmrOrtodonsiController::class, "uploadtampakdepan"]);
+                        Route::post("uploadfotosenyum", [EmrOrtodonsiController::class, "uploadfotosenyum"]);  
+                        Route::post("uploadfotosamping", [EmrOrtodonsiController::class, "uploadfotosamping"]);  
+                        Route::post("uploadfotomiring", [EmrOrtodonsiController::class, "uploadfotomiring"]);  
+                    });
+                    Route::group(['prefix' => 'geligeli'], function () {
+                        Route::post("uploadtampaksampingkanan", [EmrOrtodonsiController::class, "uploadtampaksampingkanan"]);
+                        Route::post("uploadtampakdepan", [EmrOrtodonsiController::class, "uploadtampakdepan"]);  
+                        Route::post("uploadtampaksampingkiri", [EmrOrtodonsiController::class, "uploadtampaksampingkiri"]);  
+                        Route::post("uploadtampakoklusalatas", [EmrOrtodonsiController::class, "uploadtampakoklusalatas"]);  
+                        Route::post("uploadtampakoklusalbawah", [EmrOrtodonsiController::class, "uploadtampakoklusalbawah"]);  
+                    });
+                    Route::group(['prefix' => 'okulasigigi'], function () {
+                        Route::post("uploadmodelstudi", [EmrOrtodonsiController::class, "uploadmodelstudi"]); 
+                    });
+                    Route::group(['prefix' => 'analisaradiografi'], function () {
+                        Route::post("uploadsefalometri", [EmrOrtodonsiController::class, "uploadsefalometri"]); 
+                        Route::post("uploadpanoramik", [EmrOrtodonsiController::class, "uploadpanoramik"]); 
+                    });
+                    Route::group(['prefix' => 'analisaetiologi'], function () {
+                        Route::post("uploadanalisaetiologi", [EmrOrtodonsiController::class, "uploadanalisaetiologi"]);  
+                    });
+                    Route::group(['prefix' => 'jalanperawatan'], function () {
+                        Route::post("uploadpencarianruang", [EmrOrtodonsiController::class, "uploadpencarianruang"]);  
+                        Route::post("uploadrahangatas", [EmrOrtodonsiController::class, "uploadrahangatas"]);  
+                        Route::post("uploadrahangbawah", [EmrOrtodonsiController::class, "uploadrahangbawah"]);  
+                    });
+                    Route::group(['prefix' => 'retainer'], function () {
+                        Route::post("uploadretainer", [EmrOrtodonsiController::class, "uploadretainer"]);   
+                    });
+
+                    Route::group(['prefix' => 'desainalat'], function () {
+                        Route::post("uploadplakatrahangatas", [EmrOrtodonsiController::class, "uploadplakatrahangatas"]);   
+                        Route::post("uploadplakatrahangbawah", [EmrOrtodonsiController::class, "uploadplakatrahangbawah"]);  
+                    });
+
                 });
                 Route::group(['prefix' => 'prostodonti'], function () {
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                         Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
-                    });;
+                        Route::post("uploadgigi", [EmrProstodontieController::class, "uploadfoto"]);   
+                    });
+                    Route::group(['prefix' => 'logbook'], function () {
+                        Route::post("create", [EmrProstodontieController::class, "logbookcreate"]);
+                        Route::post("validatelecture", [EmrProstodontieController::class, "validatelecture"]);
+                        Route::post("update", [EmrProstodontieController::class, "logbookupdate"]);
+                        Route::post("delete", [EmrProstodontieController::class, "logbookdelete"]);
+                        Route::post("viewabyId", [EmrProstodontieController::class, "logbookviewbyid"]);
+                        Route::post("viewall", [EmrProstodontieController::class, "logbookviewall"]);
+                    });
                 });
                 Route::group(['prefix' => 'konservasi'], function () {
                     Route::group(['prefix' => 'create'], function () {

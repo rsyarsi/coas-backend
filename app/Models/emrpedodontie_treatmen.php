@@ -21,7 +21,9 @@ class emrpedodontie_treatmen extends Model
         'itemtreatment', 
         'supervisorvalidate',         
         'userentryname', 
+        'userentry',
         'supervisorname', 
+        'supervisousername', 
 
     ];
     public $incrementing = false;

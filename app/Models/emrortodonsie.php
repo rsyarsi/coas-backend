@@ -16,6 +16,7 @@ class emrortodonsie extends Model
      */
     protected $fillable = [
         'noregister',
+        'image_pemeriksaangigi',
         'noepisode',
         'pendaftaran',
         'pencetakan',
