@@ -17,7 +17,7 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function viewallwithotpaging()
     {
-        return universitie::where('active','1')->get();
+        return universitie::all();
     }
 
     public function storeUniversity($request,$uuid)
