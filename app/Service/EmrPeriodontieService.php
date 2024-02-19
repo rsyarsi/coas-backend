@@ -2067,7 +2067,6 @@ class EmrPeriodontieService extends Controller
             if($cekdata->count() < 1 ){
                 return $this->sendError('Data SOAP tidak ditemukan !', []);
             }
-            
             $execute = $this->emrperiodontieRepository->updatesoap($data);
             DB::commit();
 

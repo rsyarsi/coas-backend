@@ -469,7 +469,7 @@ class EmrProstodontieService extends Controller
                 'id' => $request->id,
                 'select_file' => $upload
             ];
-       
+ 
            $this->emrprostodontieRepository->uploadfoto($request,$upload);
             DB::commit();
 

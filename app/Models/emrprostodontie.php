@@ -18,8 +18,7 @@ class emrprostodontie extends Model
         "noregister",
         "noepisode",        
         "designngigi",
-        "designngigitext",
-
+        "designngigitext", 
         "nomorrekammedik",
         "tanggal",
         "namapasien",
