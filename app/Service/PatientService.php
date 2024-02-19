@@ -145,7 +145,7 @@ class PatientService extends Controller
                 env('API_URL_YARSI') . "registrations/viewByNoregistrasi",
                 "POST",
                 json_encode([ 
-                    'NoRegistrasi' => $request->NoRegistrasi
+                    'NoRegistrasi' => $request
                 ])
             );
         } catch (\Exception $e) {
