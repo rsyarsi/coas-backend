@@ -1072,7 +1072,9 @@ class EmrOrtodonsiService extends Controller
                 $data = [
                     'id' => $uuid,
                     'nim' => $request->nim,
-                    "noregister" => $request->noregister,
+                    "noregister" => $request->noregister,                    
+                    "noepisode" => null,
+
                 ];
                  $this->emrortodonsiRepository->createwaktuperawatan($data, $uuid);
                 $message = 'Assesment Orthodonsi Berhasil Dibuat !';
