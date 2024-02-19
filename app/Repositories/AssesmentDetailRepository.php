@@ -14,7 +14,7 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
     }
     public function viewallwithotpaging()
     {
-        return AssesmentDetail::where('active','1')->get();
+        return AssesmentDetail::all();
     }
     public function storeAssesmentDetail($request,$uuid)
     {

@@ -16,7 +16,7 @@ class SpecialistRepository implements SpecialistRepositoryInterface
     }
     public function viewallwithotpaging()
     {
-        return specialist::where('active','1')->get();
+        return specialist::all();
     }
     public function storeSpecialist($request,$uuid)
     {

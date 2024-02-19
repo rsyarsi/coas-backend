@@ -18,7 +18,7 @@ class HospitalRepository implements HospitalRepositoryInterface
 
     public function viewallwithotpaging()
     {
-        return hospital::where('active','1')->get();
+        return hospital::all();
     }
 
 

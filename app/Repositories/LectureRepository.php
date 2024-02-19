@@ -14,7 +14,7 @@ class LectureRepository implements LectureRepositoryInterface
     }
     public function viewallwithotpaging()
     {
-        return Lecture::where('active','1')->get();
+        return Lecture::all();
     }
 
     public function storeLecture($request,$uuid)

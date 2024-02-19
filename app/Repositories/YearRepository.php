@@ -17,7 +17,7 @@ class YearRepository implements YearRepositoryInterface
     }
     public function allYearswithoutPaging()
     {
-        return Year::where('active','1')->get();
+        return Year::all();
     }
     public function storeYears($request,$uuid)
     {

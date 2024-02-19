@@ -14,7 +14,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     }
     public function viewallwithotpaging()
     {
-        return AssesmentGroup::where('active','1')->get();
+        return AssesmentGroup::all();
     }
     public function storeAssesmentGroup($request,$uuid)
     {

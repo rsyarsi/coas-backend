@@ -14,7 +14,7 @@ class SemesterRepository implements SemesterRepositoryInterface
     }
     public function allSemesterwithoutpaging()
     {
-        return Semester::where('active','1')->get();
+        return Semester::all();
     }
 
     public function storeSemester($request,$uuid)
