@@ -566,16 +566,33 @@ class EmrKonservasiService extends Controller
         ]);
       
         try {    
-            
+            DB::beginTransaction();
             $cekdata = $this->emrkonservasiRepository->viewemrbyRegOperator($request);
 
             if($cekdata->count() < 1){
-                return $this->sendError('Data EMR tidak ditemukan !',[]);
+
+                $uuid = Uuid::uuid4();
+                $data = [
+                    'id' => $uuid,
+                    'nim' => $request->nim,
+                    "noregister" => $request->noregister,
+                ];
+
+                $this->emrkonservasiRepository->createwaktuperawatan($data, $uuid);
+                $message = 'Assesment Prostodonti Berhasil Dibuat !';
+
+                 DB::commit();
+ 
+                return $this->sendResponse($data, $message);
+            }else{
+                $uuiddata = $cekdata->first(); 
+                return $this->sendResponse($uuiddata, 'Data EMR ditemukan !');
             }
-            return $this->sendResponse($cekdata, 'DataEMR ditemukan !');
+           
+            
 
         } catch (Exception $e) {
-            
+            DB::rollBack();
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }

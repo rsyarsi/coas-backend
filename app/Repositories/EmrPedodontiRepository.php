@@ -99,7 +99,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     }
     public function viewemrbyRegOperator($data)
     {
-        return emrpedodontie_behaviorrating::where('nim', $data->nim)->where('noregister', $data->noregister)->get(); 
+        return emrpedodontie::where('nim', $data->nim)->where('noregister', $data->noregister)->get(); 
     }
     public function findbehaviorratingAll($data)
     {

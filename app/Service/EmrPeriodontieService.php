@@ -1860,9 +1860,26 @@ class EmrPeriodontieService extends Controller
             $cekdata = $this->emrperiodontieRepository->viewemrbyRegOperator($request);
 
             if($cekdata->count() < 1){
-                return $this->sendError('Data EMR tidak ditemukan !',[]);
+              
+                $uuid = Uuid::uuid4();
+                $data = [
+                    'id' => $uuid,
+                    'npm' => $request->nim,
+                    "noregister" => $request->noregister,
+                ];
+
+                $this->emrperiodontieRepository->createwaktuperawatan($data, $uuid);
+                $message = 'Assesment Prostodonti Berhasil Dibuat !';
+
+                 DB::commit();
+ 
+                return $this->sendResponse($data, $message);
+            }else{
+                $uuiddata = $cekdata->first(); 
+                return $this->sendResponse($uuiddata, 'Data EMR ditemukan !');
             }
-            return $this->sendResponse($cekdata, 'DataEMR ditemukan !');
+           
+           
 
         } catch (Exception $e) {
             
