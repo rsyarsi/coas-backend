@@ -142,10 +142,6 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 });
             });
             Route::group(['prefix' => 'emr'], function () {
-                Route::group(['prefix' => 'periodonti'], function () {
-                });
-                Route::group(['prefix' => 'konservasi'], function () {
-                });
                 Route::group(['prefix' => 'pedodointi'], function () {
                     Route::post("viewemrbyRegOperator", [EmrPedodontiController::class, "update"]);
                     Route::group(['prefix' => 'create'], function () {
@@ -245,7 +241,10 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     Route::post("viewemrbyRegOperator", [EmrPeriodontieController::class, "update"]);
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicaldentalhistory", [EmrPeriodontieController::class, "store"]); 
-                    });;
+                    });
+                    Route::group(['prefix' => 'fotoklinisintraoral'], function () {
+                        Route::post("upload", [EmrPeriodontieController::class, "uploadfotoklinisintraoral"]);  
+                    });
                 });
             });
         });

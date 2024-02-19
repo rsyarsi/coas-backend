@@ -12,7 +12,7 @@ class HospitalRepository implements HospitalRepositoryInterface
 
     public function allHospital()
     {
-        return hospital::latest()->paginate(10);
+        return hospital::orderBy('id', 'DESC')->latest()->paginate(10);
     }
 
 

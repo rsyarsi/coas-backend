@@ -929,4 +929,61 @@ class EmrPeriodontieRepository implements EmrPeriodontieRepositoryInterface
         ]);
         return $updates;
     }
+    public function foto_klinis_oklusi_arah_kiri($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_oklusi_arah_kiri' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_klinis_oklusi_arah_kanan($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_oklusi_arah_kanan' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_klinis_oklusi_arah_anterior($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_oklusi_arah_anterior' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_klinis_oklusal_rahang_atas($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_oklusal_rahang_atas' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_klinis_oklusal_rahang_bawah($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_oklusal_rahang_bawah' => $awsurl 
+        ]);
+        return $updates;
+    }
+
+    public function  foto_klinis_before($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            ' foto_klinis_before' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_klinis_after($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_after' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function foto_ronsen_panoramik($data,$awsurl)
+    { 
+        $updates = emrperiodontie::where('id', $data->id)->update([ 
+            'foto_klinis_after' => $awsurl 
+        ]);
+        return $updates;
+    }
 }

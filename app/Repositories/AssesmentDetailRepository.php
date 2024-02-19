@@ -10,7 +10,7 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 {
     public function allAssesmentDetail()
     {
-        return AssesmentDetail::latest()->paginate(10);
+        return AssesmentDetail::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {

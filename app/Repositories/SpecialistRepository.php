@@ -12,7 +12,7 @@ class SpecialistRepository implements SpecialistRepositoryInterface
 {
     public function allSpecialist()
     {
-        return specialist::latest()->paginate(10);
+        return specialist::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {

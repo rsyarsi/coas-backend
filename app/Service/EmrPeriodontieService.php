@@ -5,15 +5,17 @@ namespace App\Service;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use App\Traits\AwsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\EmrPeriodontieRepositoryInterface;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrPeriodontieRepositoryInterface;
 
 class EmrPeriodontieService extends Controller
 {
+    use AwsTrait;
     private $emrperiodontieRepository;
 
     public function __construct(EmrPeriodontieRepositoryInterface $emrperiodontieRepository)
@@ -1867,6 +1869,61 @@ class EmrPeriodontieService extends Controller
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
+
+    }
+    public function uploadfotoklinisintraoral(Request $request)
+    {
+      
+            $request->validate([ 
+                "idemr" => "required",                  
+                "idfotoklinisintraoral" => "required",  
+                "select_file" => "required|max:10000" 
+            ]);
+          
+            try {
+               
+                // Db Transaction
+                DB::beginTransaction(); 
+                 
+                $image = $request->file('select_file');
+                $uuid = Uuid::uuid4();
+                $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+                $image->move(storage_path('app/'), $new_name);
+                $keyaws = 'emr/periodonti/fotoklinisintraoral/';
+                $upload = $this->UploadtoAWS($new_name,$keyaws);
+    
+                $data = [
+                    'id' => $request->id,
+                    'select_file' => $upload
+                ];
+                if($request->idfotoklinisintraoral == "1"){
+                    $this->emrperiodontieRepository->foto_klinis_oklusi_arah_kiri($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "2"){
+                    $this->emrperiodontieRepository->foto_klinis_oklusi_arah_kanan($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "3"){
+                    $this->emrperiodontieRepository->foto_klinis_oklusi_arah_anterior($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "4"){
+                    $this->emrperiodontieRepository->foto_klinis_oklusal_rahang_atas($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "5"){
+                    $this->emrperiodontieRepository->foto_klinis_oklusal_rahang_bawah($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "6"){
+                    $this->emrperiodontieRepository->foto_klinis_before($request,$upload);
+                }elseif($request->idfotoklinisintraoral == "7"){
+                    $this->emrperiodontieRepository->foto_klinis_after($request,$upload);
+                }
+              
+                DB::commit();
+    
+                unlink(storage_path() . "/app/". $new_name);
+                return $this->sendResponse($data, 'Foto Klinis Intra Oral berhasil di upload !');
+    
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    
+     
 
     }
 }

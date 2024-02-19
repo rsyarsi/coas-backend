@@ -13,7 +13,7 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function allStudent()
     {
-        return student::latest()->paginate(10);
+        return student::orderBy('id', 'DESC')->latest()->paginate(10);
     }
 
     public function storeStudent($request,$uuid)

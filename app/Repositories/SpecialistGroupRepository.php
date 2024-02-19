@@ -10,7 +10,7 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
 {
     public function allSpecialistGroup()
     {
-        return SpecialistGroup::latest()->paginate(10);
+        return SpecialistGroup::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {

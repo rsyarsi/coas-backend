@@ -10,7 +10,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
 {
     public function allAssesmentGroup()
     {
-        return AssesmentGroup::latest()->paginate(20);
+        return AssesmentGroup::orderBy('id', 'DESC')->latest()->paginate(20);
     }
     public function viewallwithotpaging()
     {

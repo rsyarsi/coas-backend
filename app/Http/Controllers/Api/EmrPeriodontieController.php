@@ -92,4 +92,13 @@ class EmrPeriodontieController extends Controller
     {
         //
     }
+
+    public function uploadfotoklinisintraoral(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->uploadfotoklinisintraoral($request);
+        return $execute;
+    }
 }

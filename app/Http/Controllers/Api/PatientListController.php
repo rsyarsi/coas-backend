@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\PatientRepository;
 use App\Service\PatientService;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,8 @@ class PatientListController extends Controller
     {
         //
         //
-        $services = new PatientService();
+        $repo = new PatientRepository;
+        $services = new PatientService($repo);
         $execute =  $services->listksmgigi();
         return $execute;
     }
@@ -41,7 +43,8 @@ class PatientListController extends Controller
     public function store($request)
     {
         //
-        $services = new PatientService();
+        $repo = new PatientRepository;
+        $services = new PatientService($repo);
         $execute =  $services->detail($request);
         return $execute;
     }
@@ -78,7 +81,8 @@ class PatientListController extends Controller
     public function update(Request $request)
     {
         //
-        $services = new PatientService();
+        $repo = new PatientRepository;
+        $services = new PatientService($repo);
         $execute =  $services->listksmgigihistory($request);
         return $execute;
     }

@@ -10,7 +10,7 @@ class LectureRepository implements LectureRepositoryInterface
 {
     public function allLecture()
     {
-        return Lecture::latest()->paginate(10);
+        return Lecture::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {

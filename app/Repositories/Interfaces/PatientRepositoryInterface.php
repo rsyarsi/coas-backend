@@ -2,5 +2,8 @@
 namespace App\Repositories\Interfaces;
 
 Interface PatientRepositoryInterface{
-    public function listksmgigi();     
+    public function findpatients();         
+    public function findbyNoregistrasi($id);  
+    public function storePatient($request);   
+
 }

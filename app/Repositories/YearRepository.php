@@ -13,7 +13,7 @@ class YearRepository implements YearRepositoryInterface
 
     public function allYears()
     {
-        return Year::latest()->paginate(10);
+        return Year::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function allYearswithoutPaging()
     {

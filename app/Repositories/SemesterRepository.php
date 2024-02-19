@@ -10,7 +10,7 @@ class SemesterRepository implements SemesterRepositoryInterface
 {
     public function allSemester()
     {
-        return Semester::latest()->paginate(10);
+        return Semester::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function allSemesterwithoutpaging()
     {

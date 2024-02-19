@@ -12,7 +12,7 @@ class UniversityRepository implements UniversityRepositoryInterface
 
     public function allUniversity()
     {
-        return universitie::latest()->paginate(10);
+        return universitie::orderBy('id', 'DESC')->latest()->paginate(10);
     }
 
     public function viewallwithotpaging()
