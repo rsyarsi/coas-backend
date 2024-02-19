@@ -138,7 +138,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::group(['prefix' => 'patient'], function () {
                     Route::get("listksmgigi", [PatientListController::class, "create"]);
                     Route::post("listksmgigihistory", [PatientListController::class, "update"]);
-                    Route::get("detailbyNoregistrasi", [PatientListController::class, "store"]);
+                    Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);
                 });
             });
             Route::group(['prefix' => 'emr'], function () {
