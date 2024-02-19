@@ -470,8 +470,8 @@ class EmrProstodontieService extends Controller
                 'select_file' => $upload
             ];
        
-        //    $this->emrpedodontiRepository->uploadfoto($request);
-        //     DB::commit();
+           $this->emrprostodontieRepository->uploadfoto($request,$upload);
+            DB::commit();
 
             unlink(storage_path() . "/app/". $new_name);
             return $this->sendResponse($data, 'Foto Prostonti berhasil di upload !');

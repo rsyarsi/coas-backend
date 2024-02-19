@@ -16,7 +16,10 @@ class emrprostodontie extends Model
      */
     protected $fillable = [
         "noregister",
-        "noepisode",
+        "noepisode",        
+        "designngigi",
+        "designngigitext",
+
         "nomorrekammedik",
         "tanggal",
         "namapasien",

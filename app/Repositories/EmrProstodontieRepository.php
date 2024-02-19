@@ -226,7 +226,10 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
             'perawatanulangsebab' => $data->perawatanulangsebab,
             'perawatanulanglainlain' => $data->perawatanulanglainlain,
             'perawatanulanglainlaintanggal' => $data->perawatanulanglainlaintanggal,
-            'perawatanulangketerangan' => $data->perawatanulangketerangan
+            'perawatanulangketerangan' => $data->perawatanulangketerangan ,           
+   
+            'designngigitext' => $data->designngigitext
+
 
         ]);
         return $updates;;
@@ -270,6 +273,13 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
             'dateverifylecture' => Carbon::now(),
             'lectureid' => $data->lectureid, 
             'lecturename' => $data->lecturename
+        ]);
+        return $updates;
+    }
+    public function uploadfoto($request,$upload)
+    { 
+        $updates = emrprostodontie::where('id', $request->id)->update([
+            'designngigitext' => $request->designngigitext 
         ]);
         return $updates;
     }
