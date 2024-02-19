@@ -285,7 +285,7 @@ class EmrOrtodonsiRepository implements EmrOrtodonsiRepositoryInterface
     public function updateimagesfotosamping($data,$awsurl)
     { 
         $updates = emrortodonsie::where('id', $data->id)->update([  
-            'fotomuka_profilmuka' => $awsurl 
+            'tampaksamping' => $awsurl 
         ]);
         return $updates;
     }
