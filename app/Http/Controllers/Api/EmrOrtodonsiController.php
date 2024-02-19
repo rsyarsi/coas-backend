@@ -114,7 +114,7 @@ class EmrOrtodonsiController extends Controller
         $aReturBeliService = new EmrOrtodonsiService(
             $yearRepository
         );
-        $execute =  $aReturBeliService->uploadtampakdepangeli($request);
+        $execute =  $aReturBeliService->uploadtampakdepan($request);
         return $execute;
     }
     public function uploadfotosenyum(Request $request)

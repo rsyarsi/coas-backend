@@ -185,7 +185,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     });
                     Route::group(['prefix' => 'geligeli'], function () {
                         Route::post("uploadtampaksampingkanan", [EmrOrtodonsiController::class, "uploadtampaksampingkanan"]);
-                        Route::post("uploadtampakdepan", [EmrOrtodonsiController::class, "uploadtampakdepan"]);  
+                        Route::post("uploadtampakdepangeli", [EmrOrtodonsiController::class, "uploadtampakdepangeli"]);  
                         Route::post("uploadtampaksampingkiri", [EmrOrtodonsiController::class, "uploadtampaksampingkiri"]);  
                         Route::post("uploadtampakoklusalatas", [EmrOrtodonsiController::class, "uploadtampakoklusalatas"]);  
                         Route::post("uploadtampakoklusalbawah", [EmrOrtodonsiController::class, "uploadtampakoklusalbawah"]);  
