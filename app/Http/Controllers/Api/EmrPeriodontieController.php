@@ -101,4 +101,63 @@ class EmrPeriodontieController extends Controller
         $execute =  $services->uploadfotoklinisintraoral($request);
         return $execute;
     }
+    public function uploadfotopanoramik(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->uploadfotopanoramik($request);
+        return $execute;
+    }
+
+
+    //soap
+    public function createsoap(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->createsoap($request);
+        return $execute;
+    }
+    public function updatesoap(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->updatesoap($request);
+        return $execute;
+    }
+    public function deletesoap(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->deletesoap($request);
+        return $execute;
+    }
+    public function showbyidsoap(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->showbyidsoap($request);
+        return $execute;
+    }
+    public function showallsoap(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->showallsoap($request);
+        return $execute;
+    }
+    public function verifydpk(Request $request)
+    {
+        //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->verifydpk($request);
+        return $execute;
+    }
 }

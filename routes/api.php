@@ -238,12 +238,22 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     });;
                 });
                 Route::group(['prefix' => 'periodonti'], function () {
+                    Route::post("uploadfotopanoramik", [EmrPeriodontieController::class, "uploadfotopanoramik"]);  
                     Route::post("viewemrbyRegOperator", [EmrPeriodontieController::class, "update"]);
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicaldentalhistory", [EmrPeriodontieController::class, "store"]); 
                     });
                     Route::group(['prefix' => 'fotoklinisintraoral'], function () {
                         Route::post("upload", [EmrPeriodontieController::class, "uploadfotoklinisintraoral"]);  
+                    });
+                    Route::group(['prefix' => 'soap'], function () {
+                        Route::post("create", [EmrPeriodontieController::class, "createsoap"]);  
+                        Route::post("update", [EmrPeriodontieController::class, "updatesoap"]);  
+                        Route::post("delete", [EmrPeriodontieController::class, "deletesoap"]);  
+                        Route::post("showbyid", [EmrPeriodontieController::class, "showbyidsoap"]);  
+                        Route::post("showall", [EmrPeriodontieController::class, "showallsoap"]);  
+                        Route::post("verifydpk", [EmrPeriodontieController::class, "verifydpk"]);  
+                        
                     });
                 });
             });

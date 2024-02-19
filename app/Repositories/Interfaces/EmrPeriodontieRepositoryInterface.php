@@ -11,7 +11,8 @@ interface EmrPeriodontieRepositoryInterface
     
     public function updatewaktuperawatan($data);
 
-    public function foto_klinis_oklusi_arah_kiri($data,$upload);   
+    public function foto_klinis_oklusi_arah_kiri($data,$upload);      
+
     public function foto_klinis_oklusi_arah_kanan($data,$upload);   
     public function foto_klinis_oklusi_arah_anterior($data,$upload);   
     public function foto_klinis_oklusal_rahang_atas($data,$upload);   
@@ -21,4 +22,13 @@ interface EmrPeriodontieRepositoryInterface
     public function foto_klinis_after($data,$upload); 
 
     public function foto_ronsen_panoramik($data,$upload);   
+
+    // soap - 
+    public function createsoap($data);   
+    public function updatesoap($data);    
+    public function deletesoap($data);   
+    public function showbyidsoap($data);      
+    public function showallsoap($data);   
+    public function verifydpk($data);   
+
 }

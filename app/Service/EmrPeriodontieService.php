@@ -1943,4 +1943,271 @@ class EmrPeriodontieService extends Controller
      
 
     }
+    public function uploadfotopanoramik(Request $request)
+    {
+      
+            $request->validate([ 
+                "idemr" => "required",                  
+                "select_file" => "required|max:10000" 
+            ]);
+          
+            try {
+               
+                // Db Transaction
+                DB::beginTransaction(); 
+                 
+                $image = $request->file('select_file');
+                $uuid = Uuid::uuid4();
+                $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+                $image->move(storage_path('app/'), $new_name);
+                $keyaws = 'emr/periodonti/fotopanoramik/';
+                $upload = $this->UploadtoAWS($new_name,$keyaws);
+    
+                $data = [
+                    'id' => $request->id,
+                    'select_file' => $upload
+                ];
+                
+                $this->emrperiodontieRepository->foto_ronsen_panoramik($request,$upload);
+                 
+              
+                DB::commit();
+    
+                unlink(storage_path() . "/app/". $new_name);
+                return $this->sendResponse($data, 'Foto Rontgen Panoramik berhasil di upload !');
+    
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    
+     
+
+    }
+    //soap
+    public function createsoap(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'terapi_s' => "required", 
+            'terapi_o' => "required",  
+            'terapi_a' => "required",          
+            'terapi_p' => "required",  
+            'user_entry' => "required", 
+            'user_entry_name' => "required",             
+            'idemr' => "required",    
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'datesoap' => Carbon::now(),
+                'terapi_s' => $request->terapi_s, 
+                'terapi_o' => $request->terapi_o,  
+                'terapi_a' => $request->terapi_a,                
+                'terapi_p' => $request->terapi_p,
+                'user_entry' => $request->user_entry, 
+                'user_entry_name' => $request->user_entry_name, 
+                'idemr' => $request->idemr  
+            ];
+            $execute = $this->emrperiodontieRepository->createsoap($data,$uuid);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'SOAP Berhasil dibuat !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function updatesoap(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'terapi_s' => "required", 
+            'terapi_o' => "required",  
+            'terapi_a' => "required",          
+            'terapi_p' => "required",  
+            'user_entry' => "required", 
+            'user_entry_name' => "required",             
+            'idemr' => "required",    
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $data = [
+                'id' => $request->id,                
+                'datesoap' => Carbon::now(),
+                'terapi_s' => $request->terapi_s, 
+                'terapi_o' => $request->terapi_o,  
+                'terapi_a' => $request->terapi_a,                
+                'terapi_p' => $request->terapi_p,
+                'user_entry' => $request->user_entry, 
+                'user_entry_name' => $request->user_entry_name, 
+                'idemr' => $request->idemr  
+            ];
+
+            $cekdata = $this->emrperiodontieRepository->showbyidsoap($request)->first();
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data SOAP tidak ditemukan !', []);
+            }
+            
+            $execute = $this->emrperiodontieRepository->updatesoap($data);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'SOAP Berhasil diedit !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function deletesoap(Request $request)
+    {
+         // validate 
+        $request->validate([  
+            'id' => "required", 
+            'active' => "required",    
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $data = [
+                'id' => $request->id,     
+                'active' => $request->active
+            ];
+
+            $cekdata = $this->emrperiodontieRepository->showbyidsoap($data);
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data SOAP tidak ditemukan !', []);
+            }
+
+            $execute = $this->emrperiodontieRepository->deletesoap($data);
+            DB::commit();
+         
+            if($execute){
+                return $this->sendResponse($data, 'SOAP Berhasil dihapus !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function showbyidsoap(Request $request)
+    {
+
+        // validate 
+        $request->validate([  
+            'id' => "required"    
+        ]);
+
+            try {
+                
+                $cekdata = $this->emrperiodontieRepository->showbyidsoap($request)->first();
+
+                if($cekdata->count() < 1 ){
+                    return $this->sendError('Data SOAP tidak ditemukan !', []);
+                }
+
+                return $this->sendResponse($cekdata, 'SOAP Berhasil ditemukan !');
+
+            } catch (Exception $e) { 
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+                
+    }
+
+    public function showallsoap(Request $request)
+    {
+             // validate 
+            $request->validate([  
+                'idemr' => "required"    
+            ]);
+
+            try {
+                
+                $cekdata = $this->emrperiodontieRepository->showallsoap($request);
+
+                if($cekdata->count() < 1 ){
+                    return $this->sendError('Data SOAP tidak ditemukan !', []);
+                }
+
+                return $this->sendResponse($cekdata, 'SOAP Berhasil ditemukan !');
+
+            } catch (Exception $e) { 
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    }
+    public function verifydpk(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'user_verify' => "required", 
+            'user_verify_name' => "required",    
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+  
+
+            $data = [
+                'id' => $request->id,                
+                'user_verify' => $request->user_verify, 
+                'user_verify_name' => $request->user_verify_name,  
+                'date_verify' => Carbon::now(),  
+            ];
+
+            $cekdata = $this->emrperiodontieRepository->showbyidsoap($request)->first();
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data SOAP tidak ditemukan !', []);
+            }
+
+            $execute = $this->emrperiodontieRepository->verifydpk($data);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'SOAP Berhasil diverifikasi !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

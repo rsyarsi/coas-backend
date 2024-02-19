@@ -3,11 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\emrperiodontie;
+use App\Models\emrperiodontie_soap;
+use App\Models\emrperiodontie_soaps;
 use App\Models\hospital;
 use App\Models\Year;
 use App\Repositories\Interfaces\EmrPeriodontieRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use Carbon\Carbon;
 
 class EmrPeriodontieRepository implements EmrPeriodontieRepositoryInterface
 {
@@ -982,8 +985,49 @@ class EmrPeriodontieRepository implements EmrPeriodontieRepositoryInterface
     public function foto_ronsen_panoramik($data,$awsurl)
     { 
         $updates = emrperiodontie::where('id', $data->id)->update([ 
-            'foto_klinis_after' => $awsurl 
+            'foto_ronsen_panoramik' => $awsurl 
         ]);
         return $updates;
+    }
+
+    //soap
+    public function createsoap($data)
+    { 
+        return  emrperiodontie_soap::insert($data);
+    }
+    public function updatesoap($data)
+    { 
+        $updates = emrperiodontie_soap::where('id', $data['id'])->update([ 
+            'terapi_s' => $data['terapi_s'],
+            'terapi_o' => $data['terapi_o'], 
+            'terapi_a' => $data['terapi_a'],         
+            'terapi_p' => $data['terapi_p'], 
+        ]);
+        return $updates;
+    }
+    public function verifydpk($data)
+    { 
+        $updates = emrperiodontie_soap::where('id', $data['id'])->update([ 
+            'user_verify' => $data['user_verify'],
+            'user_verify_name' => $data['user_verify_name'], 
+            'date_verify' => $data['date_verify'],    
+        ]);
+        return $updates;
+    }
+    public function deletesoap($data)
+    { 
+        $updates = emrperiodontie_soap::where('id', $data['id'])->update([ 
+            'active' => $data['active'], 
+        ]);
+        return $updates;
+  
+    }
+    public function showbyidsoap($data)
+    { 
+        return emrperiodontie_soap::where('id',$data->id)->where('active','1')->get();
+    }
+    public function showallsoap($data)
+    { 
+        return emrperiodontie_soap::where('idemr',$data->idemr)->where('active','1')->orderBy('id', 'DESC')->latest()->paginate(10);
     }
 }
