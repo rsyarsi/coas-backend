@@ -72,9 +72,15 @@ class EmrProstodontieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $repo =  new EmrProstodontieRepository(); 
+        $aReturBeliService = new EmrProstodontieService(
+            $repo
+        );
+        $execute =  $aReturBeliService->viewemrbyRegOperator($request);
+        return $execute;
     }
 
     /**

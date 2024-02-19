@@ -73,9 +73,13 @@ class EmrPeriodontieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $repo =  new EmrPeriodontieRepository();
+        $services = new EmrPeriodontieService($repo);
+        $execute =  $services->viewemrbyRegOperator($request);
+        return $execute;
     }
 
     /**

@@ -75,9 +75,15 @@ class EmrPedodontiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $yearRepository =  new EmrPedodontiRepository();
+        $aReturBeliService = new EmrPedodontiService(
+            $yearRepository
+        );
+        $execute =  $aReturBeliService->viewemrbyRegOperator($request);
+        return $execute;
     }
 
     /**

@@ -557,4 +557,28 @@ class EmrKonservasiService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewemrbyRegOperator(Request $request)
+    {
+        $request->validate([ 
+            "noregister" => "required",            
+            "nim" => "required"
+   
+        ]);
+      
+        try {    
+            
+            $cekdata = $this->emrkonservasiRepository->viewemrbyRegOperator($request);
+
+            if($cekdata->count() < 1){
+                return $this->sendError('Data EMR tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($cekdata, 'DataEMR ditemukan !');
+
+        } catch (Exception $e) {
+            
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
 }

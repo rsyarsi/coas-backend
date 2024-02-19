@@ -25,6 +25,10 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
     {
         return emrprostodontie::where('id', $data->id)->get();
     }
+    public function viewemrbyRegOperator($data)
+    {
+        return emrprostodontie::where('nim', $data->nim)->where('noregister', $data->noregister)->get(); 
+    }
     public function updatewaktuperawatan($data)
     {
 

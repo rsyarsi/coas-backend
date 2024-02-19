@@ -23,6 +23,10 @@ class EmrKonservasiRepository implements EmrKonservasiRepositoryInterface
     {
         return emrkonservasi::where('id', $data->id)->get();
     }
+    public function viewemrbyRegOperator($data)
+    {
+        return emrkonservasi::where('nim', $data->nim)->where('noregister', $data->noregister)->get(); 
+    }
     public function updatewaktuperawatan($data)
     {
 

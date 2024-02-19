@@ -259,6 +259,26 @@ class EmrOrtodonsiService extends Controller
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,
+                'operator' => $request->operator,
+                'nim' => $request->nim,
+                'pembimbing' => $request->pembimbing,
+                'tanggal' => $request->tanggal,
+                'namapasien' => $request->namapasien,
+                'suku' => $request->suku,
+                'umur' => $request->umur,
+                'jeniskelamin' => $request->jeniskelamin,
+                'alamat' => $request->alamat,
+                'telepon' => $request->telepon,
+                'pekerjaan' => $request->pekerjaan,
+                'rujukandari' => $request->rujukandari,
+                'namaayah' => $request->namaayah,
+                'sukuayah' => $request->sukuayah,
+                'umurayah' => $request->umurayah,
+                'namaibu' => $request->namaibu,
+                'sukuibu' => $request->sukuibu,
+                'umuribu' => $request->umuribu,
+                'pekerjaanorangtua' => $request->pekerjaanortu,
+                'alamatorangtua' => $request->alamatortu,
                 "noregister" => $request->noregister,
                 "noepisode" => $request->noepisode,
                 "pendaftaran" => $request->pendaftaran,
@@ -482,7 +502,8 @@ class EmrOrtodonsiService extends Controller
                 "prognosis_a" => $request->prognosis_a,
                 "prognosis_b" => $request->prognosis_b,
                 "prognosis_c" => $request->prognosis_c,
-                "indikasiperawatan" => $request->indikasiperawatan
+                "indikasiperawatan" => $request->indikasiperawatan,
+                "image_pemeriksaangigi" => $request->image_pemeriksaangigi
             ];
             $cekdata = $this->emrortodonsiRepository->findwaktuperawatan($request);
 
@@ -1248,6 +1269,31 @@ class EmrOrtodonsiService extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+    public function viewemrbyRegOperator(Request $request)
+    {
+        $request->validate([ 
+            "noregister" => "required",            
+            "nim" => "required"
+   
+        ]);
+      
+        try {   
+
+           
+            $cekdata = $this->emrortodonsiRepository->viewemrbyRegOperator($request);
+
+            if($cekdata->count() < 1){
+                return $this->sendError('Data EMR tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($cekdata, 'DataEMR ditemukan !');
+
+        } catch (Exception $e) {
+            
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }

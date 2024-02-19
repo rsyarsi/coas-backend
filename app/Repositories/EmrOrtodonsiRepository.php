@@ -23,6 +23,10 @@ class EmrOrtodonsiRepository implements EmrOrtodonsiRepositoryInterface
     {
         return emrortodonsie::where('id', $data->id)->get();
     }
+    public function viewemrbyRegOperator($data)
+    {
+        return emrortodonsie::where('nim', $data->nim)->where('noregister', $data->noregister)->get();
+    }
     public function updatewaktuperawatan($data)
     {
 

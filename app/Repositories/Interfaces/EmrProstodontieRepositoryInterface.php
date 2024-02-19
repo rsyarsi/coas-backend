@@ -8,7 +8,7 @@ interface EmrProstodontieRepositoryInterface
     // public function createbehaviorrating($data);
     public function findwaktuperawatan($data);
     public function updatewaktuperawatan($data);
-
+    public function viewemrbyRegOperator($data);
     public function logbookcreate($data);
     public function logbookupdate($data);    
     public function logbookdelete($data);  

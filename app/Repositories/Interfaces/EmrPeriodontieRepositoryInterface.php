@@ -6,6 +6,7 @@ interface EmrPeriodontieRepositoryInterface
 {
     public function createwaktuperawatan($data, $uuid);
     // public function createbehaviorrating($data);
-    public function findwaktuperawatan($data);
+    public function findwaktuperawatan($data);    
+    public function viewemrbyRegOperator($data); 
     public function updatewaktuperawatan($data);
 }
