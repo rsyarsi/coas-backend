@@ -27,7 +27,7 @@ interface EmrPedodontiRepositoryInterface
     public function findtreatmentplanAll($data);    
     
     public function viewemrbyRegOperator($data);    
-    public function uploadfoto($data);
+    public function uploadfoto($data,$awsurl);
 
 
 

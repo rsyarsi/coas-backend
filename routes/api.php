@@ -49,8 +49,8 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
         Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'auth'], function () { 
                 Route::post("refreshToken", [UserController::class, "refreshToken"]);
-                Route::post("showall", [UserController::class, "showall"]);
-                Route::post("allUserswithoutPaging", [UserController::class, "allUserswithoutPaging"]);
+                Route::get("viewall", [UserController::class, "showall"]);
+                Route::get("viewallallUserswithoutPaging", [UserController::class, "allUserswithoutPaging"]);
                 Route::post("profile", [UserController::class, "profile"]);                
                 Route::post("logout", [UserController::class, "logout"]);
 
