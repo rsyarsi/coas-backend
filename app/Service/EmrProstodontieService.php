@@ -28,7 +28,7 @@ class EmrProstodontieService extends Controller
         $request->validate([
             "noregister" => 'required',
             "noepisode" => 'required',
-            "nomorrekammedik" => 'required',
+            // "nomorrekammedik" => 'required',
             // "tanggal" => 'required',
             // "namapasien" => 'required',
             // "pekerjaan" => 'required',

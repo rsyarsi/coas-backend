@@ -1892,7 +1892,7 @@ class EmrPeriodontieService extends Controller
     {
       
             $request->validate([ 
-                "idemr" => "required",                  
+                "id" => "required",                  
                 "idfotoklinisintraoral" => "required",  
                 "select_file" => "required|max:10000" 
             ]);
