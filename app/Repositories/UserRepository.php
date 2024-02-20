@@ -19,7 +19,14 @@ class UserRepository implements UserRepositoryInterface
        
         return  User::create($request);
     } 
-
+    public function allUser()
+    {
+        return  User::orderBy('id', 'DESC')->latest()->paginate(10);
+    } 
+    public function allUserswithoutPaging()
+    {
+        return  User::all();
+    } 
     public function login($request)
     {
         return  DB::table("users")

@@ -594,7 +594,7 @@ class EmrPedodontiService extends Controller
         $request->validate([ 
             "id" => "required",  
             "select_file" => "required|max:10000",
-            "notes" => "required" 
+            "odontogramfoto" => "required" 
         ]);
       
         try {

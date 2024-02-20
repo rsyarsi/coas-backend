@@ -27,7 +27,9 @@ class UserService extends Controller
             "name" => "required",
             "email" => "required|email|unique:users",
             "username" => "required|unique:users",
-            "password" => "required|confirmed"
+            "password" => "required|confirmed",         
+            "role" => "required"
+
         ]);
 
         if ($validator->fails()){
@@ -50,8 +52,6 @@ class UserService extends Controller
             $createUser = $this->userRepository->storeUser($data,$uuid);
             DB::commit();
 
-            
-        
             if ($createUser) {
                 return $this->sendResponse($data,"Data Username Login berhasil dibuat.");
             } else {
@@ -165,6 +165,34 @@ class UserService extends Controller
 
         } catch (Exception $e) { 
             //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function showall()
+    {
+        try {
+            $find = $this->userRepository->allUser();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Universitas tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Universitas ditemukan !');
+        } catch (Exception $e) { 
+            // Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function allUserswithoutPaging()
+    {
+        try {
+            $find = $this->userRepository->allUserswithoutPaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Universitas tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Universitas ditemukan !');
+        } catch (Exception $e) { 
+            // Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }

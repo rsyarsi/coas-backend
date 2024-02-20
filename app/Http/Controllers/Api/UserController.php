@@ -128,4 +128,20 @@ class UserController extends Controller
         $execute =  $aReturBeliService->logout();
         return $execute;
     }
+    public function showall(){
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->showall();
+        return $execute;
+    }
+    public function allUserswithoutPaging(){
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->allUserswithoutPaging();
+        return $execute;
+    }
 }

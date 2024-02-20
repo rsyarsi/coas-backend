@@ -9,7 +9,11 @@ Interface UserRepositoryInterface{
     public function getTokenData($data);    
     public function refreshToken();    
     public function profile($data);
-    public function logout();
+    public function logout();    
+    public function allUser();    
+    public function allUserswithoutPaging();
+
+
 
 
    
