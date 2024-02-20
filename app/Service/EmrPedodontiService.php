@@ -27,6 +27,7 @@ class EmrPedodontiService extends Controller
     {
         // validate 
         $request->validate([
+            
             "noregister" => "required",
             "noepisode" => "required",
             "physicalgrowth" => "required",
@@ -78,6 +79,23 @@ class EmrPedodontiService extends Controller
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,
+                'nim' => $request->nim,
+                'namamahasiswa' => $request->namamahasiswa,
+                'tahunklinik' => $request->tahunklinik,
+                'namasupervisor' => $request->namasupervisor,
+                'tandatangan' => $request->tandatangan,
+                'namapasien' => $request->namapasien,
+                'jeniskelamin' => $request->jeniskelamin,
+                'usiapasien' => $request->usiapasien,
+                'pendidikan' => $request->pendidikan,
+                'tgllahirpasien' => $request->tgllahirpasien,
+                'namaorangtua' => $request->namaorangtua,
+                'telephone' => $request->telephone,
+                'pekerjaan' => $request->pekerjaan,
+                'dokteranak' => $request->dokteranak,
+                'alamatpekerjaan' => $request->alamatpekerjaan,
+                'telephonedranak' => $request->telephonedranak,
+                'anamnesis' => $request->anamnesis,
                 'noregister' => $request->noregister,
                 'noepisode' => $request->noepisode,
                 'physicalgrowth' => $request->physicalgrowth,

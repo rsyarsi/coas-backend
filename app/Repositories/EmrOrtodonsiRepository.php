@@ -407,7 +407,7 @@ class EmrOrtodonsiRepository implements EmrOrtodonsiRepositoryInterface
     public function uploadplakatrahangbawah($data,$awsurl)
     { 
         $updates = emrortodonsie::where('id', $data->id)->update([ 
-            'gambarplataktif_rahangatas' => $awsurl 
+            'gambarplataktif_rahangbawah' => $awsurl 
         ]);
         return $updates;
     }

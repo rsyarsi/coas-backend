@@ -27,6 +27,23 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     {
 
         $updates = emrpedodontie::where('id', $data->id)->update([
+            'nim' => $data->nim,
+            'namamahasiswa' => $data->namamahasiswa,
+            'tahunklinik' => $data->tahunklinik,
+            'namasupervisor' => $data->namasupervisor,
+            'tandatangan' => $data->tandatangan,
+            'namapasien' => $data->namapasien,
+            'jeniskelamin' => $data->jeniskelamin,
+            'usiapasien' => $data->usiapasien,
+            'pendidikan' => $data->pendidikan,
+            'tgllahirpasien' => $data->tgllahirpasien,
+            'namaorangtua' => $data->namaorangtua,
+            'telephone' => $data->telephone,
+            'pekerjaan' => $data->pekerjaan,
+            'dokteranak' => $data->dokteranak,
+            'alamatpekerjaan' => $data->alamatpekerjaan,
+            'telephonedranak' => $data->telephonedranak,
+            'anamnesis' => $data->anamnesis,
             'noregister' => $data->noregister,
             'noepisode' => $data->noepisode,
             'physicalgrowth' => $data->physicalgrowth,
