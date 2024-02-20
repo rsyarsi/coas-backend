@@ -41,13 +41,14 @@ Route::get('reset', function () {
     Artisan::call('optimize:clear');
 });
 
-Route::post("register", [UserController::class, "store"]);
+
 Route::post("login", [UserController::class, "create"]);
 
 Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
 
         Route::group(['prefix' => 'v1'], function () {
             Route::group(['prefix' => 'auth'], function () { 
+                Route::post("register", [UserController::class, "store"]);
                 Route::post("refreshToken", [UserController::class, "refreshToken"]);
                 Route::get("viewall", [UserController::class, "showall"]);
                 Route::get("viewallallUserswithoutPaging", [UserController::class, "allUserswithoutPaging"]);
