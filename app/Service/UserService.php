@@ -174,9 +174,9 @@ class UserService extends Controller
             $find = $this->userRepository->allUser();
              
             if($find->count() < 1){
-                return $this->sendError('Data Universitas tidak ditemukan !',[]);
+                return $this->sendError('Data Username tidak ditemukan !',[]);
             }
-            return $this->sendResponse($find, 'Universitas ditemukan !');
+            return $this->sendResponse($find, 'Username ditemukan !');
         } catch (Exception $e) { 
             // Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
@@ -188,9 +188,9 @@ class UserService extends Controller
             $find = $this->userRepository->allUserswithoutPaging();
              
             if($find->count() < 1){
-                return $this->sendError('Data Universitas tidak ditemukan !',[]);
+                return $this->sendError('Data Username tidak ditemukan !',[]);
             }
-            return $this->sendResponse($find, 'Universitas ditemukan !');
+            return $this->sendResponse($find, 'Username ditemukan !');
         } catch (Exception $e) { 
             // Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
