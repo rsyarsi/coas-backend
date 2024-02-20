@@ -25,7 +25,7 @@ class UserRepository implements UserRepositoryInterface
     } 
     public function allUserswithoutPaging()
     {
-        return  User::select('id','name','role','username','email')->all();
+        return  User::select('id','name','role','username','email')->get();
     } 
     public function login($request)
     {
