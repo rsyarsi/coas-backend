@@ -65,6 +65,47 @@ class UserService extends Controller
         }
 
     }
+    public function updateData(Request $request)
+    {
+        // validate 
+        $validator = Validator::make($request->all(), [
+            "name" => "required",
+            "email" => "required|email|unique:users",
+            "username" => "required|unique:users",
+            "password" => "required|confirmed",         
+            "role" => "required"
+
+        ]);
+
+        if ($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        try {
+            // Db Transaction
+            DB::beginTransaction();  
+            $data = [
+                'id' => $request->id,
+                'username' => $request->username,
+                'email' => $request->email, 
+                'name' => $request->name,
+                'role' => $request->role
+            ];
+            $createUser = $this->userRepository->updateData($data);
+            DB::commit();
+
+            if ($createUser) {
+                return $this->sendResponse($data,"Data Username Login berhasil dirubah.");
+            } else {
+                return $this->sendError("Data Username Login gagal dirubah.",[]); 
+            }
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
     public function login(Request $request)
     {
         try {

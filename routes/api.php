@@ -51,6 +51,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::post("refreshToken", [UserController::class, "refreshToken"]);
                 Route::get("viewall", [UserController::class, "showall"]);
                 Route::get("viewallallUserswithoutPaging", [UserController::class, "allUserswithoutPaging"]);
+                Route::get("update", [UserController::class, "update"]);
                 Route::post("profile", [UserController::class, "profile"]);                
                 Route::post("logout", [UserController::class, "logout"]);
 

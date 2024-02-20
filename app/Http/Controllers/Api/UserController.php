@@ -81,9 +81,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->updateData($request);
+        return $execute;
     }
 
     /**

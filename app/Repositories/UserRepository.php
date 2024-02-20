@@ -16,8 +16,13 @@ class UserRepository implements UserRepositoryInterface
     public function storeUser($request,$uuid)
     {
         
-       
         return  User::create($request);
+    } 
+    public function updateData($request)
+    {
+        
+        $updates = User::where('id', $request['id'])->update($request);
+        return $updates;
     } 
     public function allUser()
     {
