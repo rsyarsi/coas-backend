@@ -21,11 +21,11 @@ class UserRepository implements UserRepositoryInterface
     } 
     public function allUser()
     {
-        return  User::orderBy('id', 'DESC')->latest()->paginate(10);
+        return  User::select('id','name','role','username','email')->orderBy('id', 'DESC')->latest()->paginate(10);
     } 
     public function allUserswithoutPaging()
     {
-        return  User::all();
+        return  User::select('id','name','role','username','email')->all();
     } 
     public function login($request)
     {
