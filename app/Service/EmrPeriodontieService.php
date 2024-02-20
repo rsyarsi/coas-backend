@@ -1682,7 +1682,8 @@ class EmrPeriodontieService extends Controller
                 'p3_indekskalkulus_rb_el31_l' => $request->p3_indekskalkulus_rb_el31_l,
                 'p3_indekskalkulus_rb_el41_l' => $request->p3_indekskalkulus_rb_el41_l,
                 'p3_indekskalkulus_rb_el42_l' => $request->p3_indekskalkulus_rb_el42_l,
-                'p3_indekskalkulus_rb_el46_l' => $request->p3_indekskalkulus_rb_el46_l, 
+                'p3_indekskalkulus_rb_el46_l' => $request->p3_indekskalkulus_rb_el46_l,
+                 
                 'terapi_s' => $request->terapi_s,
                 'terapi_o' => $request->terapi_o,
                 'terapi_a' => $request->terapi_a,
@@ -1939,7 +1940,7 @@ class EmrPeriodontieService extends Controller
     {
       
             $request->validate([ 
-                "idemr" => "required",                  
+                "id" => "required",                  
                 "select_file" => "required|max:10000" 
             ]);
           
