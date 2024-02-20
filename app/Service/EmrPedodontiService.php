@@ -593,8 +593,7 @@ class EmrPedodontiService extends Controller
     {
         $request->validate([ 
             "id" => "required",  
-            "select_file" => "required|max:10000",
-            "odontogramfoto" => "required" 
+            "select_file" => "required|max:10000" 
         ]);
       
         try {
@@ -614,8 +613,8 @@ class EmrPedodontiService extends Controller
                 'select_file' => $upload
             ];
        
-        //    $this->emrpedodontiRepository->uploadfoto($request);
-        //     DB::commit();
+           $this->emrpedodontiRepository->uploadfoto($request);
+            DB::commit();
 
             unlink(storage_path() . "/app/". $new_name);
             return $this->sendResponse($data, 'Foto Pedodonti berhasil di upload !');

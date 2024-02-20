@@ -235,4 +235,11 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     {
         return emrpedodontie_treatmenplan::where('emrid', $data->emrid)->get();
     }
+    public function uploadfoto($data,$awsurl)
+    { 
+        $updates = emrpedodontie::where('id', $data->id)->update([ 
+            'odontogramfoto' => $awsurl 
+        ]);
+        return $updates;
+    }
 }
