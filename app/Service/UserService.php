@@ -70,9 +70,7 @@ class UserService extends Controller
         // validate 
         $validator = Validator::make($request->all(), [
             "name" => "required",
-            "email" => "required|email|unique:users",
-            "username" => "required|unique:users",
-            "password" => "required|confirmed",         
+            "email" => "required|email",        
             "role" => "required"
 
         ]);
@@ -86,7 +84,6 @@ class UserService extends Controller
             DB::beginTransaction();  
             $data = [
                 'id' => $request->id,
-                'username' => $request->username,
                 'email' => $request->email, 
                 'name' => $request->name,
                 'role' => $request->role
