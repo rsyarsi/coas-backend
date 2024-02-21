@@ -61,6 +61,12 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->show($id);
+        return $execute;
     }
 
     /**

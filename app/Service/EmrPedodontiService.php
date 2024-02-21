@@ -613,7 +613,7 @@ class EmrPedodontiService extends Controller
                 'select_file' => $upload
             ];
        
-           $this->emrpedodontiRepository->uploadfoto($request);
+           $this->emrpedodontiRepository->uploadfoto($request,$upload);
             DB::commit();
 
             unlink(storage_path() . "/app/". $new_name);

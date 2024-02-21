@@ -1844,7 +1844,8 @@ class EmrPeriodontieService extends Controller
     {
         $request->validate([ 
             "noregister" => "required",            
-            "nim" => "required"
+            "nim" => "required",
+            "noepisode" => null
    
         ]);
       

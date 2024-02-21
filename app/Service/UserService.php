@@ -234,4 +234,25 @@ class UserService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function show($id){
+        try {
+            // validator  
+             
+
+             //login
+            $user = $this->userRepository->showbyid($id);
+            
+            if ($user->count() > 1 ) {
+                
+                return $this->sendResponse($user ,"User ditemukan.");  
+            } else {
+                //response
+                return $this->sendError("User tidak ditemukan", []);
+            }
+
+        } catch (Exception $e) { 
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

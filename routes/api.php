@@ -53,6 +53,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::get("viewall", [UserController::class, "showall"]);
                 Route::get("viewallallUserswithoutPaging", [UserController::class, "allUserswithoutPaging"]);
                 Route::post("update", [UserController::class, "update"]);
+                Route::get("view/id/{id}", [UserController::class, "show"]);
                 Route::post("profile", [UserController::class, "profile"]);                
                 Route::post("logout", [UserController::class, "logout"]);
 
