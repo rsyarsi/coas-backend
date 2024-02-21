@@ -18,7 +18,7 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function viewallwithotpaging()
     {
-        return student::orderBy('id', 'DESC')->all();
+        return student::orderBy('id', 'DESC')->get();
     }
 
 
