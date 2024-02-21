@@ -107,7 +107,7 @@ class TransactionAssesmentService extends Controller
                 }
             }
             $verify = $this->transactionassesmentRepository->verifyTrsAssesment($request,$findassesmentgroup->first()->type);
-            
+            $dataspesialis = $findgroupspecialist->first();
             if($verify->count() < 1){
                 $uuid = Uuid::uuid4();
                 $data = [
@@ -119,6 +119,7 @@ class TransactionAssesmentService extends Controller
                     'semesterid' => $request->semesterid,  
                     'specialistid' => $request->specialistid,  
                     'grandotal' => $request->grandotal,                       
+                    'idspecialistsimrs' => $dataspesialis->simrsid,                       
                     'transactiondate' => $request->transactiondate,    
                     'assesmenttype' => $findassesmentgroup->first()->type,   
                     'active' => $request->active 
