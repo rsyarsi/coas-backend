@@ -34,7 +34,8 @@ class LectureService extends Controller
         $request->validate([ 
             "specialistid" => "required", 
             "name" => "required", 
-            "doctotidsimrs" => "required",   
+            "doctotidsimrs" => "required",            
+            "nim" => "required",   
             "active" => "required" 
         ]);
         
@@ -51,7 +52,8 @@ class LectureService extends Controller
             $data = [
                 'id' => $uuid,                
                 'specialistid' => $request->specialistid,
-                'name' => $request->name, 
+                'name' => $request->name,                 
+                'nim' => $request->nim, 
                 'doctotidsimrs' => $request->doctotidsimrs,  
                 'active' => $request->active 
             ];
@@ -75,7 +77,8 @@ class LectureService extends Controller
         $request->validate([ 
             "specialistid" => "required", 
             "name" => "required", 
-            "doctotidsimrs" => "required",   
+            "doctotidsimrs" => "required",              
+            "nim" => "required",    
             "active" => "required" 
         ]);
         
@@ -90,7 +93,8 @@ class LectureService extends Controller
             $data = [
                 'id' => $request->id,                
                 'specialistid' => $request->specialistid,
-                'name' => $request->name, 
+                'name' => $request->name,                 
+                'nim' => $request->nim, 
                 'doctotidsimrs' => $request->doctotidsimrs,  
                 'active' => $request->active 
             ];

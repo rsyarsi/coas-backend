@@ -235,9 +235,7 @@ class UserService extends Controller
         }
     }
     public function show($id){
-        try {
-            // validator  
-             
+        try {    
 
              //login
             $user = $this->userRepository->showbyid($id);

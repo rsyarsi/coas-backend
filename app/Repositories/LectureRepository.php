@@ -35,7 +35,8 @@ class LectureRepository implements LectureRepositoryInterface
     public function updateLecture($request)
     {
         $updates = Lecture::where('id', $request['id'])->update([
-            'specialistid' => $request['specialistid'],
+            'specialistid' => $request['specialistid'],            
+            'nim' => $request['nim'], 
             'name' => $request['name'],             
             'doctotidsimrs' => $request['doctotidsimrs'],  
             'active' => $request['active']
