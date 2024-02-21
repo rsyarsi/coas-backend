@@ -240,7 +240,7 @@ class UserService extends Controller
              //login
             $user = $this->userRepository->showbyid($id);
             
-            if ($user->count() > 1 ) {
+            if ($user->count() > 0 ) {
                 
                 return $this->sendResponse($user ,"User ditemukan.");  
             } else {
