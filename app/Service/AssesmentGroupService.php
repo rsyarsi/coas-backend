@@ -30,7 +30,7 @@ class AssesmentGroupService extends Controller
     {
         // validate 
         $request->validate([ 
-            "specialistID" => "required", 
+            "specialistid" => "required", 
             "assementgroupname" => "required", 
             "active" => "required" 
         ]);
@@ -39,14 +39,14 @@ class AssesmentGroupService extends Controller
 
             // Db Transaction
             DB::beginTransaction(); 
-            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistID);
+            $findspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
             if($findspecialist->count() < 1){
                 return $this->sendError('Spesialis tidak ditemukan !', []);
             }
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,                
-                'specialistid' => $request->specialistID,
+                'specialistid' => $request->specialistid,
                 'assementgroupname' => $request->assementgroupname, 
                 'type' => $request->type, 
                 'active' => $request->active 
