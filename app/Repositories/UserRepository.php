@@ -24,6 +24,13 @@ class UserRepository implements UserRepositoryInterface
         $updates = User::where('id', $request['id'])->update($request);
         return $updates;
     } 
+    public function changepassword($request)
+    {
+        $updates = User::where('username', $request['username'])->update([
+            'password' => $request['password'] 
+        ]);
+        return $updates;
+    } 
     public function allUser()
     {
         return  User::select('id','name','role','username','email')->orderBy('id', 'DESC')->latest()->paginate(10);
@@ -38,6 +45,14 @@ class UserRepository implements UserRepositoryInterface
         ->select('name','username','name' ,'role')
         ->where('username', $request->username)
         ->where('password', bcrypt($request->password))
+        ->get();
+    }
+    public function loginResetpassword($request)
+    {
+        return  DB::table("users")
+        ->select('name','username','name' ,'role')
+        ->where('username', $request->username)
+        ->where('password', bcrypt($request->passwordold))
         ->get();
     }
     public function getTokenData($request)

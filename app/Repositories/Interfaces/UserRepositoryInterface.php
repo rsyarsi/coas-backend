@@ -4,8 +4,10 @@ namespace App\Repositories\Interfaces;
 Interface UserRepositoryInterface{
  
     public function storeUser($data,$uuid);    
-    public function updateData($data);
+    public function updateData($data);    
+    public function changepassword($data); 
     public function login($data); 
+    public function loginResetpassword($data); 
     public function updateDateExpired($data,$access_token,$expired);
     public function getTokenData($data);    
     public function refreshToken();    

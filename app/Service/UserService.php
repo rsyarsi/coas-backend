@@ -253,4 +253,48 @@ class UserService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function changepassword(Request $request)
+    {
+        // validate 
+        $validator = Validator::make($request->all(), [
+            "username" => "required",        
+            "passwordold" => "required",
+            "password" => "required|confirmed"     
+
+        ]);
+
+        if ($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        try {
+            
+            // Db Transaction
+            DB::beginTransaction();  
+            $data = [
+                'username' => $request->email,             
+                'password' => $request->password,
+                'passwordold' => $request->passwordold       
+            ];
+
+            $find = $this->userRepository->loginResetpassword($request);
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Username tidak ditemukan !',[]);
+            }
+            $createUser = $this->userRepository->changepassword($data);
+            DB::commit();
+
+            if ($createUser) {
+                return $this->sendResponse([],"Password Berhasil di rubah.");
+            } else {
+                return $this->sendError("Data Username Login gagal dirubah.",[]); 
+            }
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            //Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

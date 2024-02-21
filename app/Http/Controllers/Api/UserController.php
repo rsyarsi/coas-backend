@@ -116,6 +116,14 @@ class UserController extends Controller
         $execute =  $aReturBeliService->getTokenData($request);
         return $execute;
     }
+    public function changepassword(Request $request){
+        $userRepository =  new UserRepository(); 
+        $aReturBeliService = new UserService(   
+            $userRepository
+        );
+        $execute =  $aReturBeliService->changepassword($request);
+        return $execute;
+    }
     public function refreshToken(){
         $userRepository =  new UserRepository(); 
         $aReturBeliService = new UserService(   
