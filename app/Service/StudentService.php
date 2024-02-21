@@ -17,6 +17,7 @@ use App\Repositories\UniversityRepository;
 use App\Repositories\Interfaces\LectureRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
+use App\Repositories\UserRepository;
 
 class StudentService extends Controller
 {
@@ -26,6 +27,7 @@ class StudentService extends Controller
     private $universityRepository;
     private $hospitalRepository;
     private $studentRepository;
+    private $userRepository;
 
 
     public function __construct(
@@ -34,7 +36,8 @@ class StudentService extends Controller
         SemesterRepository $semesterRepository,
         UniversityRepository $universityRepository,
         HospitalRepository $hospitalRepository,
-        StudentRepository $studentRepository
+        StudentRepository $studentRepository,
+        UserRepository $userRepository
         
         )
     {
@@ -44,6 +47,7 @@ class StudentService extends Controller
         $this->universityRepository = $universityRepository;
         $this->hospitalRepository = $hospitalRepository;
         $this->studentRepository = $studentRepository; 
+        $this->userRepository = $userRepository; 
     }
     public function storeData(Request $request)
     {
@@ -69,7 +73,10 @@ class StudentService extends Controller
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
 
-
+            $findStudentbyNIM = $this->studentRepository->findStudentbyNIM($request->nim);
+            if($findStudentbyNIM->count() > 0) {
+                return $this->sendError('NIM atas Mahasiswa ini sudah ada !', []);
+            }
 
             $uuid = Uuid::uuid4();
             $data = [
@@ -85,6 +92,18 @@ class StudentService extends Controller
                 'active' => $request->active 
             ];
             $execute = $this->studentRepository->storeStudent($data,$uuid);
+            if($execute){
+                $uuidx = Uuid::uuid4();
+                $dataUser = [
+                    'id' => $uuidx,                
+                    'username' => $request->nim,
+                    'email' => "-", 
+                    'name' => $request->name,
+                    'role' => "dosen", 
+                    'password'  => bcrypt('123456')
+                ];
+                $this->userRepository->storeUser($dataUser,$uuidx);
+            }
             DB::commit();
 
             if($execute){

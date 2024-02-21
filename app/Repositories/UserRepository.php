@@ -26,8 +26,9 @@ class UserRepository implements UserRepositoryInterface
     } 
     public function changepassword($request)
     {
-        $updates = User::where('username', $request['username'])->update([
-            'password' => $request['password'] 
+ 
+        $updates = User::where('username', $request->username)->update([
+            'password' =>  bcrypt($request->password)
         ]);
         return $updates;
     } 
@@ -49,10 +50,10 @@ class UserRepository implements UserRepositoryInterface
     }
     public function loginResetpassword($request)
     {
+        
         return  DB::table("users")
         ->select('name','username','name' ,'role')
-        ->where('username', $request->username)
-        ->where('password', bcrypt($request->passwordold))
+        ->where('username', $request->username) 
         ->get();
     }
     public function getTokenData($request)

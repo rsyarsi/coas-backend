@@ -13,20 +13,23 @@ use App\Repositories\LectureRepository;
 use App\Repositories\Interfaces\LectureRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
+use App\Repositories\UserRepository;
 
 class LectureService extends Controller
 {
     private $SpecialistRepository;
     private $lectureRepository;
+    private $userRepository;
 
     public function __construct(
         SpecialistRepositoryInterface $SpecialistRepository,
-        LectureRepositoryInterface $lectureRepository
-        
+        LectureRepositoryInterface $lectureRepository,
+        UserRepository $userRepository
         )
     {
         $this->SpecialistRepository = $SpecialistRepository;
         $this->lectureRepository = $lectureRepository;
+        $this->userRepository = $userRepository;
     }
     public function storeData(Request $request)
     {
@@ -48,6 +51,12 @@ class LectureService extends Controller
             if($findgroupspecialist->count() < 1){
                 return $this->sendError('Specialist tidak di temukan !', []);
             }
+
+            $finslecturebyNim = $this->lectureRepository->findLecturebyNIM($request->nim);
+            if($finslecturebyNim->count() > 0) {
+                return $this->sendError('NIM atas Dosen ini sudah ada !', []);
+            }
+
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,                
@@ -58,11 +67,25 @@ class LectureService extends Controller
                 'active' => $request->active 
             ];
             $execute = $this->lectureRepository->storeLecture($data,$uuid);
-            DB::commit();
 
             if($execute){
-                return $this->sendResponse($data, 'Dosen Berhasil dibuat !');
+                $uuidx = Uuid::uuid4();
+                $dataUser = [
+                    'id' => $uuidx,                
+                    'username' => $request->nim,
+                    'email' => "-", 
+                    'name' => $request->name,
+                    'role' => "dosen", 
+                    'password'  => bcrypt('123456')
+                ];
+                $this->userRepository->storeUser($dataUser,$uuidx);
             }
+
+            DB::commit();
+
+           
+            return $this->sendResponse($data, 'Dosen Berhasil dibuat !');
+            
             
 
         } catch (Exception $e) {

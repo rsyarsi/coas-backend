@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\LectureRepository;
 use App\Repositories\SpecialistRepository;
+use App\Repositories\UserRepository;
 use App\Service\LectureService;
 
 class LectureController extends Controller
@@ -31,10 +32,11 @@ class LectureController extends Controller
           //a
           $SpecialistRepository =  new SpecialistRepository(); 
           $LectureRepository =  new LectureRepository();  
+          $userRepository =  new UserRepository();  
           $Service = new LectureService(
               $SpecialistRepository,
-              $LectureRepository 
-  
+              $LectureRepository,
+              $userRepository  
           );
           $execute =  $Service->showall();
           return $execute;
@@ -45,10 +47,11 @@ class LectureController extends Controller
           //a
           $SpecialistRepository =  new SpecialistRepository(); 
           $LectureRepository =  new LectureRepository();  
+          $userRepository =  new UserRepository();  
           $Service = new LectureService(
               $SpecialistRepository,
-              $LectureRepository 
-  
+              $LectureRepository,
+              $userRepository  
           );
           $execute =  $Service->viewallwithotpaging();
           return $execute;
@@ -62,13 +65,14 @@ class LectureController extends Controller
     public function store(Request $request)
     {
         //
-            $SpecialistRepository =  new SpecialistRepository(); 
-            $LectureRepository =  new LectureRepository();  
-            $Service = new LectureService(
-                $SpecialistRepository,
-                $LectureRepository 
-    
-            );
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $LectureRepository =  new LectureRepository();  
+        $userRepository =  new UserRepository();  
+        $Service = new LectureService(
+            $SpecialistRepository,
+            $LectureRepository,
+            $userRepository  
+        );
             $execute =  $Service->storeData($request);
             return $execute;
     }
@@ -82,13 +86,14 @@ class LectureController extends Controller
     public function show($id)
     {
         //
-            $SpecialistRepository =  new SpecialistRepository(); 
-            $LectureRepository =  new LectureRepository();  
-            $Service = new LectureService(
-                $SpecialistRepository,
-                $LectureRepository 
-    
-            );
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $LectureRepository =  new LectureRepository();  
+        $userRepository =  new UserRepository();  
+        $Service = new LectureService(
+            $SpecialistRepository,
+            $LectureRepository,
+            $userRepository  
+        );
             $execute =  $Service->show($id);
             return $execute;
     }
@@ -115,12 +120,13 @@ class LectureController extends Controller
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
-            $LectureRepository =  new LectureRepository();  
-            $Service = new LectureService(
-                $SpecialistRepository,
-                $LectureRepository 
-    
-            );
+          $LectureRepository =  new LectureRepository();  
+          $userRepository =  new UserRepository();  
+          $Service = new LectureService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $userRepository  
+          );
             $execute =  $Service->update($request);
             return $execute;
     }

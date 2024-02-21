@@ -10,6 +10,7 @@ use App\Repositories\HospitalRepository;
 use App\Repositories\SemesterRepository;
 use App\Repositories\SpecialistRepository;
 use App\Repositories\UniversityRepository;
+use App\Repositories\UserRepository;
 use App\Service\StudentService;
 
 class StudentController extends Controller
@@ -38,13 +39,15 @@ class StudentController extends Controller
             $universityRepository = new UniversityRepository;
             $hospitalRepository = new HospitalRepository();
             $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
             $Service = new StudentService(
               $SpecialistRepository,
               $LectureRepository,
               $semesterRepository, 
               $universityRepository,
               $hospitalRepository, 
-              $studentRepository 
+              $studentRepository,
+              $userRepository
   
             );
             $execute =  $Service->showall();
@@ -60,21 +63,23 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
-            $SpecialistRepository =  new SpecialistRepository(); 
-            $LectureRepository =  new LectureRepository(); 
-            $semesterRepository = new SemesterRepository();
-            $universityRepository = new UniversityRepository;
-            $hospitalRepository = new HospitalRepository();
-            $studentRepository = new StudentRepository();
-            $Service = new StudentService(
-              $SpecialistRepository,
-              $LectureRepository,
-              $semesterRepository, 
-              $universityRepository,
-              $hospitalRepository, 
-              $studentRepository 
-  
-            );
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $LectureRepository =  new LectureRepository(); 
+        $semesterRepository = new SemesterRepository();
+        $universityRepository = new UniversityRepository;
+        $hospitalRepository = new HospitalRepository();
+        $studentRepository = new StudentRepository();
+        $userRepository = new UserRepository();
+        $Service = new StudentService(
+          $SpecialistRepository,
+          $LectureRepository,
+          $semesterRepository, 
+          $universityRepository,
+          $hospitalRepository, 
+          $studentRepository,
+          $userRepository
+
+        );
             $execute =  $Service->storeData($request);
             return $execute;
     }
@@ -94,13 +99,15 @@ class StudentController extends Controller
             $universityRepository = new UniversityRepository;
             $hospitalRepository = new HospitalRepository();
             $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
             $Service = new StudentService(
               $SpecialistRepository,
               $LectureRepository,
               $semesterRepository, 
               $universityRepository,
               $hospitalRepository, 
-              $studentRepository 
+              $studentRepository,
+              $userRepository
   
             );
             $execute =  $Service->show($id);
@@ -134,13 +141,15 @@ class StudentController extends Controller
             $universityRepository = new UniversityRepository;
             $hospitalRepository = new HospitalRepository();
             $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
             $Service = new StudentService(
               $SpecialistRepository,
               $LectureRepository,
               $semesterRepository, 
               $universityRepository,
               $hospitalRepository, 
-              $studentRepository 
+              $studentRepository,
+              $userRepository
   
             );
             $execute =  $Service->update($request);

@@ -5,5 +5,6 @@ Interface StudentRepositoryInterface{
     public function allStudent();
     public function storeStudent($data,$uuid);
     public function findStudent($id);     
+    public function findStudentbyNIM($id);     
     public function updateStudent($data);  
 }

@@ -271,18 +271,16 @@ class UserService extends Controller
             
             // Db Transaction
             DB::beginTransaction();  
-            $data = [
-                'username' => $request->email,             
-                'password' => $request->password,
-                'passwordold' => $request->passwordold       
-            ];
+            
 
             $find = $this->userRepository->loginResetpassword($request);
-             
+            
             if($find->count() < 1){
                 return $this->sendError('Data Username tidak ditemukan !',[]);
             }
-            $createUser = $this->userRepository->changepassword($data);
+            
+            $createUser = $this->userRepository->changepassword($request);
+           
             DB::commit();
 
             if ($createUser) {

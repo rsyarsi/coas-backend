@@ -26,7 +26,10 @@ class LectureRepository implements LectureRepositoryInterface
     {
         return Lecture::where('id',$id)->get();
     }
-
+    public function findLecturebyNIM($nim)
+    {
+        return Lecture::where('nim',$nim)->get();
+    }
     public function findAssesmentbyGroup($id)
     {
         return Lecture::where('assesmentgroupID',$id)->get();
