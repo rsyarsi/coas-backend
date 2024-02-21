@@ -29,47 +29,7 @@ class EmrPedodontiService extends Controller
         $request->validate([
             
             "noregister" => "required",
-            "noepisode" => "required",
-            "physicalgrowth" => "required",
-            "heartdesease" => "required",
-            'bruiseeasily' => "required",
-            'anemia' => "required",
-            'hepatitis' => "required",
-            'allergic' => "required",
-            'takinganymedicine' => "required",
-            'beenhospitalized' => "required",
-            'toothache' => "required",
-            'childtoothache' => "required",
-            'firstdental' => "required",
-            'unfavorabledentalexperience' => "required",
-            'ifyes' => "required",
-            'where' => "required",
-            'reason' => "required",
-            'fingersucking' => "required",
-            'diffycultyopeningsjaw' => "required",
-            'howoftenbrushtooth' => "required",
-            'usefluoridepasta' => "required",
-            'fluoridetreatmen' => "required",
-            'bilateralsymmetry' => "required",
-            'asymmetry' => "required",
-            'straight' => "required",
-            'convex' => "required",
-            'concave' => "required",
-            'lipsseal' => "required",
-            'clicking' => "required",
-            'clickingleft' => "required",
-            'clickingright' => "required",
-            'pain' => "required",
-            'painleft' => "required",
-            'painright' => "required",
-            'bodypostur' => "required",
-            'stageofdentition' => "required",
-            'gingivitis' => "required",
-            'stomatitis' => "required",
-            'gumboil' => "required",
-            'dentalanomali' => "required",
-            'prematurloss' => "required",
-            'overretainedprimarytooth' => "required"
+            "noepisode" => "required", 
         ]);
 
         try {
@@ -177,7 +137,7 @@ class EmrPedodontiService extends Controller
                 'BuccalPalatal_35_75'=> $request->BuccalPalatal_35_75,
                 'BuccalPalatal_36'=> $request->BuccalPalatal_36,
                 'BuccalPalatal_37'=> $request->BuccalPalatal_37,
-                'BuccalPalatal_38'=> $request->BuccalPalatal_38
+                'BuccalPalatal_38'=> $request->BuccalPalatal_38,
             ];
             $cekdata = $this->emrpedodontiRepository->findmedicaldentalhistory($request);
 

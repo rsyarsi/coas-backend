@@ -125,7 +125,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
             'BuccalPalatal_35_75'=> $data->BuccalPalatal_35_75,
             'BuccalPalatal_36'=> $data->BuccalPalatal_36,
             'BuccalPalatal_37'=> $data->BuccalPalatal_37,
-            'BuccalPalatal_38'=> $data->BuccalPalatal_38
+            'BuccalPalatal_38'=> $data->BuccalPalatal_38,
         
         ]);
         return $updates;;
