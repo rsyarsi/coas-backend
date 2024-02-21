@@ -53,6 +53,29 @@ class StudentController extends Controller
             $execute =  $Service->showall();
             return $execute;
     }
+    public function viewallwithotpaging()
+    {
+        //
+            $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $userRepository
+  
+            );
+            $execute =  $Service->viewallwithotpaging();
+            return $execute;
+    }
 
     /**
      * Store a newly created resource in storage.

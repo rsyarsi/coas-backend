@@ -16,6 +16,12 @@ class StudentRepository implements StudentRepositoryInterface
         return student::orderBy('id', 'DESC')->latest()->paginate(10);
     }
 
+    public function viewallwithotpaging()
+    {
+        return student::orderBy('id', 'DESC')->all();
+    }
+
+
     public function storeStudent($request,$uuid)
     {
         return  DB::table("students")->insert($request);
