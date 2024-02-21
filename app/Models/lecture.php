@@ -17,7 +17,8 @@ class lecture extends Model
      */
     protected $fillable = [
         'groupspecialistID',     
-        'name',
+        'name',        
+        'nim',
         'doctotidsimrs',        
         'active' 
     ];
