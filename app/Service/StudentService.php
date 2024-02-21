@@ -99,7 +99,7 @@ class StudentService extends Controller
                     'username' => $request->nim,
                     'email' => "-", 
                     'name' => $request->name,
-                    'role' => "dosen", 
+                    'role' => "mahasiswa", 
                     'password'  => bcrypt('123456')
                 ];
                 $this->userRepository->storeUser($dataUser,$uuidx);
