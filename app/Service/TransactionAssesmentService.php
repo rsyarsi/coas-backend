@@ -413,6 +413,10 @@ class TransactionAssesmentService extends Controller
                 } 
         
                 if($request->assesmenttype == "1"){
+
+                    if($request->assementvalue > $request->assesmentbobotvalue){
+                        return $this->sendError('Nilai yang anda masukan melebihi Bobot Nilai !', []);
+                    } 
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id)->first();
                 }else if($$request->assesmenttype == "3"){
