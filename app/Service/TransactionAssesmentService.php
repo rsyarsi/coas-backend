@@ -426,9 +426,12 @@ class TransactionAssesmentService extends Controller
             // update header
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
             $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata);
-       
+            $response = [
+                'id' => $request->id,  
+            ];
+
             DB::commit();
-            return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
+            return $this->sendResponse($response, 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
         }catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
