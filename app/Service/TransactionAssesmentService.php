@@ -294,8 +294,8 @@ class TransactionAssesmentService extends Controller
             if($findtrsbyid->count() < 1){
                 return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
             }
-
-            $findassesmentgroup = $this->groupAssesmentRepository->findAssesmentGroup($request->assesmentgroupid);
+            $assesmentgroup = $findtrsbyid->first()->assesmentgroupid;
+            $findassesmentgroup = $this->groupAssesmentRepository->findAssesmentGroup($assesmentgroup);
             if($findassesmentgroup->count() < 1){
                 return $this->sendError('Assesment group tidak di temukan !', []);
             }
