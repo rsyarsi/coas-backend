@@ -391,22 +391,22 @@ class TransactionAssesmentService extends Controller
         
     
                 if($request->assesmenttype == "1"){
-                    $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->iddetail);
+                    $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->id);
                     if($datadetail1->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
                 }else if($request->assesmenttype == "3"){
-                    $datadetail3 = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->iddetail);
+                    $datadetail3 = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->id);
                     if($datadetail3->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
                 }else if($request->assesmenttype == "4"){
-                    $datadetail4 = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->iddetail);
+                    $datadetail4 = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->id);
                     if($datadetail4->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
                 }else if($request->assesmenttype == "5"){
-                    $datadetail5 = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->iddetail);
+                    $datadetail5 = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->id);
                     if($datadetail5->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
