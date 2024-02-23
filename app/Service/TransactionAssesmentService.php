@@ -414,24 +414,31 @@ class TransactionAssesmentService extends Controller
         
                 if($request->assesmenttype == "1"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id);
                 }else if($$request->assesmenttype == "3"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailthreeSingle($request);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailthreebyId($request->id);
                 }else if($$request->assesmenttype == "4"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfourSingle($request);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfourbyId($request->id);
                 }else if($$request->assesmenttype == "5"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfiveSingle($request);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id);
                 } 
-      
+                
+                
 
             // update header
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
             $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata);
+
+
             $response = [
                 'id' => $request->id,  
             ];
 
             DB::commit();
-            return $this->sendResponse($response, 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
+            return $this->sendResponse($datadetail, 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
         }catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());
