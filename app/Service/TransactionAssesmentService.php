@@ -180,6 +180,7 @@ class TransactionAssesmentService extends Controller
                     'lectureid' => $request->lectureid,  
                     'yearid' => $request->yearid,  
                     'semesterid' => $request->semesterid,  
+                    'idspecialistsimrs' => $dataspesialis->simrsid,      
                     'specialistid' => $request->specialistid,  
                     'grandotal' => $request->grandotal,   
                     'assesmenttype' => $findassesmentgroup->first()->type,   
