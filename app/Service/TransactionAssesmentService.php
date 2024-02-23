@@ -332,7 +332,7 @@ class TransactionAssesmentService extends Controller
 
             // Db Transaction
     
-            $findtrsbyid = $this->transactionassesmentRepository->findtrsbyid($request);
+            $findtrsbyid = $this->transactionassesmentRepository->viewtrsassesmentheaderbyid($request);
             if($findtrsbyid->count() < 1){
                 return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
             }
