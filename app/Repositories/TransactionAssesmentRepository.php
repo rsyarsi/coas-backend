@@ -227,7 +227,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentDetailoneSingle($request)
     { 
    
-        $updates = type_one_trsdetailassesment::where('id', $request->iddetail)->update([
+        $updates = type_one_trsdetailassesment::where('id', $request->id)->update([
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,      
             'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
@@ -237,7 +237,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentDetailthreeSingle($request)
     { 
    
-        $updates = type_three_trsdetailassesment::where('id', $request->iddetail)->update([
+        $updates = type_three_trsdetailassesment::where('id', $request->id)->update([
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'konditevalue'=> $request->konditevalue,   
@@ -248,7 +248,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentDetailfourSingle($request)
     { 
    
-        $updates = type_four_trsdetailassesment::where('id', $request->iddetail)->update([
+        $updates = type_four_trsdetailassesment::where('id', $request->id)->update([
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'assesmentskala'=> $request->assesmentskala,   
@@ -259,7 +259,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentDetailfiveSingle($request)
     { 
    
-        $updates = type_four_trsdetailassesment::where('id', $request->iddetail)->update([
+        $updates = type_four_trsdetailassesment::where('id', $request->id)->update([
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,       
             'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
