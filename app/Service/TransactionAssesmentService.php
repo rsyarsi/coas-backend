@@ -381,7 +381,7 @@ class TransactionAssesmentService extends Controller
         $request->validate([ 
             "id" => "required",  
             "idhdr" => "required",  
-            "type" => "required",  
+            "assesmenttype" => "required",  
         ]);
         
         try {
@@ -390,35 +390,35 @@ class TransactionAssesmentService extends Controller
             DB::beginTransaction(); 
         
     
-                if($request->type == "1"){
+                if($request->assesmenttype == "1"){
                     $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->iddetail);
                     if($datadetail1->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
-                }else if($request->type == "3"){
+                }else if($request->assesmenttype == "3"){
                     $datadetail3 = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->iddetail);
                     if($datadetail3->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
-                }else if($request->type == "4"){
+                }else if($request->assesmenttype == "4"){
                     $datadetail4 = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->iddetail);
                     if($datadetail4->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
-                }else if($request->type == "5"){
+                }else if($request->assesmenttype == "5"){
                     $datadetail5 = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->iddetail);
                     if($datadetail5->count() < 1){
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
                 } 
         
-                if($$request->type == "1"){
+                if($$request->assesmenttype == "1"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailone($request);
-                }else if($$request->type == "3"){
+                }else if($$request->assesmenttype == "3"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailthree($request);
-                }else if($$request->type == "4"){
+                }else if($$request->assesmenttype == "4"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfour($request);
-                }else if($$request->type == "5"){
+                }else if($$request->assesmenttype == "5"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfive($request);
                 } 
       
