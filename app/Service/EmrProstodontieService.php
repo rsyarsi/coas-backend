@@ -423,6 +423,8 @@ class EmrProstodontieService extends Controller
                 'perawatanulanglainlain' => $request->perawatanulanglainlain,
                 'perawatanulanglainlaintanggal' => $request->perawatanulanglainlaintanggal,
                 'perawatanulangketerangan' => $request->perawatanulangketerangan,
+                'designngigitext' => $request->designngigitext,
+
 
             ];
             $cekdata = $this->emrprostodontieRepository->findwaktuperawatan($request);
@@ -709,6 +711,8 @@ class EmrProstodontieService extends Controller
                     'id' => $uuid,
                     'nim' => $request->nim,
                     "noregister" => $request->noregister,
+                                        "noepisode" => null,
+
                 ];
 
                 $this->emrprostodontieRepository->createwaktuperawatan($data, $uuid);

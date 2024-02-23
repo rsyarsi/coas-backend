@@ -107,6 +107,7 @@ class TransactionAssesmentService extends Controller
                 }
             }
             $verify = $this->transactionassesmentRepository->verifyTrsAssesment($request,$findassesmentgroup->first()->type);
+      
             $dataspesialis = $findgroupspecialist->first();
             if($verify->count() < 1){
                 $uuid = Uuid::uuid4();
@@ -156,6 +157,7 @@ class TransactionAssesmentService extends Controller
                 $response = [
                     'header' => $data, 
                     'detail' => $detail, 
+                    'id' =>  $verify->first()->id
                 ];
 
                 DB::commit();
@@ -185,7 +187,8 @@ class TransactionAssesmentService extends Controller
                     'active' => $request->active 
                 ];
                 $response = [
-                    'header' => $data, 
+                    'header' => $data,                    
+                    'header' => $data,  
                     'detail' => $detail , 
                 ];
 
@@ -270,6 +273,48 @@ class TransactionAssesmentService extends Controller
        
             DB::commit();
             return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
+        }catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function showdetail(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            $findtrsbyid = $this->transactionassesmentRepository->findtrsbyid($request);
+            if($findtrsbyid->count() < 1){
+                return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
+            }
+
+            $findassesmentgroup = $this->groupAssesmentRepository->findAssesmentGroup($request->assesmentgroupid);
+            if($findassesmentgroup->count() < 1){
+                return $this->sendError('Assesment group tidak di temukan !', []);
+            }
+                if($findassesmentgroup->first()->type == "1"){
+                    $datadetail = $this->transactionassesmentRepository->findFilledTrsAssesmentDetailonebyId($request->id);
+                }else if($findassesmentgroup->first()->type == "3"){
+                    $datadetail = $this->transactionassesmentRepository->findFilledTrsAssesmentDetailthreebyId($request->id);
+                }else if($findassesmentgroup->first()->type == "4"){
+                    $datadetail = $this->transactionassesmentRepository->findFilledTrsAssesmentDetailfourbyId($request->id);
+                }else if($findassesmentgroup->first()->type == "5"){
+                    $datadetail = $this->transactionassesmentRepository->findFilledTrsAssesmentDetailfivebyId($request->id);
+                } 
+           
+            // update header totalbobot
+            $this->transactionassesmentRepository->updateTrsAssesmentHeaderTotalBobot($request,$findassesmentgroup->first()->valuetotal);
+       
+            DB::commit();
+            return $this->sendResponse($datadetail, 'Transaksi Penilaian Mahasiswa detail ditemukan !');
+
         }catch (Exception $e) {
             DB::rollBack();
             Log::info($e->getMessage());

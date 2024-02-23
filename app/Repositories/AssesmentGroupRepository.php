@@ -30,7 +30,8 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     {
         $updates = AssesmentGroup::where('id', $request['id'])->update([
             'specialistid' => $request['specialistid'],
-            'assementgroupname' => $request['assementgroupname'], 
+            'assementgroupname' => $request['assementgroupname'],             
+            'valuetotal' => $request['valuetotal'],  
             'active' => $request['active']
         ]);
         return $updates;

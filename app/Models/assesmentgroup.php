@@ -18,6 +18,7 @@ class assesmentgroup extends Model
         'specialistID',
         'assementgroupname',         
         'type',
+        'valuetotal',
         'active' 
 
     ];

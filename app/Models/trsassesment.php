@@ -17,6 +17,7 @@ class trsassesment extends Model
         'semesterid',        
         'transactiondate',        
         'grandotal',        
+        'totalbobot',        
         'active'  
     ];
     public $incrementing = false;

@@ -187,4 +187,25 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ]);
         return $updates;
     }
+    // detail sudah oke
+    public function findFilledTrsAssesmentDetailonebyId($id){
+        return  DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+    }
+    public function findFilledTrsAssesmentDetailthreebyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+    }
+    public function findFilledTrsAssesmentDetailfourbyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+    }
+    public function findFilledTrsAssesmentDetailfivebyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+    }
+    public function updateTrsAssesmentHeaderTotalBobot($request,$totalbobot)
+    { 
+   
+        $updates = trsassesment::where('id', $request->id)->update([
+            'totalbobot'=> $totalbobot
+        ]);
+        return $updates;
+    }
 }

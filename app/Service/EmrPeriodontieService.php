@@ -1845,8 +1845,6 @@ class EmrPeriodontieService extends Controller
         $request->validate([ 
             "noregister" => "required",            
             "nim" => "required",
-            "noepisode" => null
-   
         ]);
       
         try {    
@@ -1860,6 +1858,7 @@ class EmrPeriodontieService extends Controller
                     'id' => $uuid,
                     'npm' => $request->nim,
                     "noregister" => $request->noregister,
+                    "noepisode" => null,
                 ];
 
                 $this->emrperiodontieRepository->createwaktuperawatan($data, $uuid);
@@ -2094,7 +2093,7 @@ class EmrPeriodontieService extends Controller
                 'active' => $request->active
             ];
 
-            $cekdata = $this->emrperiodontieRepository->showbyidsoap($data);
+            $cekdata = $this->emrperiodontieRepository->showbyidsoap($request);
 
             if($cekdata->count() < 1 ){
                 return $this->sendError('Data SOAP tidak ditemukan !', []);

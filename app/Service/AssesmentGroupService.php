@@ -31,7 +31,8 @@ class AssesmentGroupService extends Controller
         // validate 
         $request->validate([ 
             "specialistid" => "required", 
-            "assementgroupname" => "required", 
+            "assementgroupname" => "required",             
+            "valuetotal" => "required",   
             "active" => "required" 
         ]);
         
@@ -49,6 +50,7 @@ class AssesmentGroupService extends Controller
                 'specialistid' => $request->specialistid,
                 'assementgroupname' => $request->assementgroupname, 
                 'type' => $request->type, 
+                'valuetotal' => $request->valuetotal, 
                 'active' => $request->active 
             ];
 
@@ -72,6 +74,7 @@ class AssesmentGroupService extends Controller
         $request->validate([ 
             "specialistid" => "required", 
             "assementgroupname" => "required", 
+            'valuetotal' => "required", 
             "active" => "required" 
         ]);
         
@@ -94,6 +97,7 @@ class AssesmentGroupService extends Controller
                 'specialistid' => $request->specialistid,
                 'assementgroupname' => $request->assementgroupname, 
                 'type' => $request->type, 
+                'valuetotal' => $request->valuetotal, 
                 'active' => $request->active 
             ];
             $execute = $this->AssesmentGroupRepository->updateAssesmentGroup($data);

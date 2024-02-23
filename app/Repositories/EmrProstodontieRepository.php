@@ -276,10 +276,10 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
         ]);
         return $updates;
     }
-    public function uploadfoto($data,$upload)
+    public function uploadfoto($data,$awsurl)
     { 
         $updates = emrprostodontie::where('id', $data->id)->update([
-            'designngigitext' => $upload
+            'designngigitext' => $awsurl
         ]);
         return $updates;
     }
