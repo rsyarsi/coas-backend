@@ -179,10 +179,10 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function sumTrsAssesmentDetailonebyIdTransaksiHeader($uuid){
         return type_one_trsdetailassesment::where('trsassesmentid',$uuid)->sum('assementscore');
     }
-    public function updateTrsAssesmentHeader($request,$scoretotal)
+    public function updateTrsAssesmentHeader($id,$scoretotal)
     { 
    
-        $updates = trsassesment::where('id', $request->id)->update([
+        $updates = trsassesment::where('id', $id)->update([
             'grandotal'=> $scoretotal
         ]);
         return $updates;

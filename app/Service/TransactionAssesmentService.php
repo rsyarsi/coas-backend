@@ -269,7 +269,7 @@ class TransactionAssesmentService extends Controller
 
             // update header
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->id);
-            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request,$sumdata);
+            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->id,$sumdata);
        
             DB::commit();
             return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
@@ -425,7 +425,7 @@ class TransactionAssesmentService extends Controller
 
             // update header
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
-            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request,$sumdata);
+            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata);
        
             DB::commit();
             return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
