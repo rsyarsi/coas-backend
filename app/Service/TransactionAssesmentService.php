@@ -321,4 +321,63 @@ class TransactionAssesmentService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function viewtrsassesmentheaderbyid(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "id" => "required",  
+        ]);
+        
+        try {
+
+            // Db Transaction
+    
+            $findtrsbyid = $this->transactionassesmentRepository->findtrsbyid($request);
+            if($findtrsbyid->count() < 1){
+                return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
+            }
+            
+            return $this->sendResponse($findtrsbyid->first(), 'Data Penilaian ditemukan !');
+
+        }catch (Exception $e) {
+ 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function viewtrsassesmentdetalbyidandtype(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "id" => "required",            
+            "type" => "required", 
+        ]);
+        
+        try {
+
+            // Db Transaction
+    
+            $findtrsbyid = $this->transactionassesmentRepository->findtrsbyid($request);
+            if($findtrsbyid->count() < 1){
+                return $this->sendError('No. Transaksi Penilaian tidak di temukan !', []);
+            }
+
+                if($request->type == "1"){
+                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->id);
+                }else if($request->type == "3"){
+                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->id);
+                }else if($request->type == "4"){
+                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->id);
+                }else if($request->type == "5"){
+                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->id);
+                } 
+            
+            return $this->sendResponse($datadetail->first(), 'Data Penilaian detail ditemukan !');
+
+        }catch (Exception $e) {
+ 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }
