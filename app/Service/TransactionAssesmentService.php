@@ -107,7 +107,7 @@ class TransactionAssesmentService extends Controller
                 }
             }
             $verify = $this->transactionassesmentRepository->verifyTrsAssesment($request,$findassesmentgroup->first()->type);
-      
+            $idTransaksiPenilaian = $verify->first()->id;
             $dataspesialis = $findgroupspecialist->first();
             if($verify->count() < 1){
                 $uuid = Uuid::uuid4();
@@ -157,7 +157,7 @@ class TransactionAssesmentService extends Controller
                 $response = [
                     'header' => $data, 
                     'detail' => $detail, 
-                    'id' =>  $verify->first()->id
+                    'id' =>  $idTransaksiPenilaian
                 ];
 
                 DB::commit();
