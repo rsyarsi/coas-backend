@@ -211,4 +211,17 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function viewtrsassesmentheaderbyid($request){
         return  DB::table("viewtrsassesmentheader")->where('id',$request->id)->where('active','1');
     }
+    // detail sudah oke no paging
+    public function findFillednoPagingTrsAssesmentDetailonebyId($id){
+        return  DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+    }
+    public function findFillednoPagingTrsAssesmentDetailthreebyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+    }
+    public function findFillednoPagingTrsAssesmentDetailfourbyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+    }
+    public function findFillednoPagingTrsAssesmentDetailfivebyId($id){
+        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+    }
 }

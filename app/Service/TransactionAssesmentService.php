@@ -358,13 +358,13 @@ class TransactionAssesmentService extends Controller
             // Db Transaction
 
                 if($request->type == "1"){
-                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->id);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id);
                 }else if($request->type == "3"){
-                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->id);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailthreebyId($request->id);
                 }else if($request->type == "4"){
-                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->id);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfourbyId($request->id);
                 }else if($request->type == "5"){
-                    $datadetail = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->id);
+                    $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id);
                 } 
             
             return $this->sendResponse($datadetail->first(), 'Data Penilaian detail ditemukan !');
