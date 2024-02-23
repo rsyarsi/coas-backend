@@ -413,13 +413,13 @@ class TransactionAssesmentService extends Controller
                 } 
         
                 if($request->assesmenttype == "1"){
-                    $this->transactionassesmentRepository->updateTrsAssesmentDetailone($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
                 }else if($$request->assesmenttype == "3"){
-                    $this->transactionassesmentRepository->updateTrsAssesmentDetailthree($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailthreeSingle($request);
                 }else if($$request->assesmenttype == "4"){
-                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfour($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfourSingle($request);
                 }else if($$request->assesmenttype == "5"){
-                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfive($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfiveSingle($request);
                 } 
       
 

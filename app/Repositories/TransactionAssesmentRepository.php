@@ -224,4 +224,46 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function findFillednoPagingTrsAssesmentDetailfivebyId($id){
         return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
     }
+    public function updateTrsAssesmentDetailoneSingle($request)
+    { 
+   
+        $updates = type_one_trsdetailassesment::where('id', $request->iddetail)->update([
+            'assementvalue'=> $request->assementvalue,      
+            'transactiondate'=> $request->dateupdatedetail,      
+            'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentDetailthreeSingle($request)
+    { 
+   
+        $updates = type_three_trsdetailassesment::where('id', $request->iddetail)->update([
+            'assementvalue'=> $request->assementvalue,      
+            'transactiondate'=> $request->dateupdatedetail,              
+            'konditevalue'=> $request->konditevalue,   
+            'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentDetailfourSingle($request)
+    { 
+   
+        $updates = type_four_trsdetailassesment::where('id', $request->iddetail)->update([
+            'assementvalue'=> $request->assementvalue,      
+            'transactiondate'=> $request->dateupdatedetail,              
+            'assesmentskala'=> $request->assesmentskala,   
+            'assementscore'=> $request->assementvalue
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentDetailfiveSingle($request)
+    { 
+   
+        $updates = type_four_trsdetailassesment::where('id', $request->iddetail)->update([
+            'assementvalue'=> $request->assementvalue,      
+            'transactiondate'=> $request->dateupdatedetail,       
+            'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
+        ]);
+        return $updates;
+    }
 }
