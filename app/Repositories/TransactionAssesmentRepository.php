@@ -115,14 +115,14 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'active' => '1'
         ]);
     }
-    public function updateTrsAssesmentDetailfour($key)
+    public function updateTrsAssesmentDetailfour($request)
     { 
    
-        $updates = type_four_trsdetailassesment::where('id', $key['iddetail'])->update([
-            'assementvalue'=> $key['assementvalue'],      
-            'transactiondate'=> $key['dateupdatedetail'],              
-            'assesmentskala'=> $key['assesmentskala'],   
-            'assementscore'=> $key['assementvalue']
+        $updates = type_four_trsdetailassesment::where('id', $request->iddetail)->update([
+            'assementvalue'=> $request->assementvalue,      
+            'transactiondate'=> $request->dateupdatedetail,              
+            'assesmentskala'=> $request->assesmentskala,   
+            'assementscore'=> $request->assementvalue
         ]);
         return $updates;
     }

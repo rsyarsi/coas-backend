@@ -375,4 +375,64 @@ class TransactionAssesmentService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function updatedetailsbyitem(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "id" => "required",  
+            "idhdr" => "required",  
+            "type" => "required",  
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+        
+    
+                if($request->type == "1"){
+                    $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->iddetail);
+                    if($datadetail1->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($request->type == "3"){
+                    $datadetail3 = $this->transactionassesmentRepository->findTrsAssesmentDetailthreebyId($request->iddetail);
+                    if($datadetail3->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($request->type == "4"){
+                    $datadetail4 = $this->transactionassesmentRepository->findTrsAssesmentDetailfourbyId($request->iddetail);
+                    if($datadetail4->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                }else if($request->type == "5"){
+                    $datadetail5 = $this->transactionassesmentRepository->findTrsAssesmentDetailfivebyId($request->iddetail);
+                    if($datadetail5->count() < 1){
+                        return $this->sendError('Assesment Detail tidak ditemukan !', []);
+                    }
+                } 
+        
+                if($$request->type == "1"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailone($request);
+                }else if($$request->type == "3"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailthree($request);
+                }else if($$request->type == "4"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfour($request);
+                }else if($$request->type == "5"){
+                    $this->transactionassesmentRepository->updateTrsAssesmentDetailfive($request);
+                } 
+      
+
+            // update header
+            $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
+            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request,$sumdata);
+       
+            DB::commit();
+            return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
+        }catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

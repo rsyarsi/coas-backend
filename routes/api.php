@@ -141,6 +141,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                 Route::group(['prefix' => 'assesment'], function () {
                     Route::post("create", [TransactionAssesmentController::class, "store"]);
                     Route::post("updatedetails", [TransactionAssesmentController::class, "update"]);
+                    Route::post("updatedetailsbyitem", [TransactionAssesmentController::class, "updatedetailsbyitem"]);
                     Route::post("viewtrsassesmentheaderbyid", [TransactionAssesmentController::class, "viewtrsassesmentheaderbyid"]);
                     Route::post("viewtrsassesmentdetalbyidandtype", [TransactionAssesmentController::class, "viewtrsassesmentdetalbyidandtype"]);
                     Route::post("detail", [TransactionAssesmentController::class, "show"]);
