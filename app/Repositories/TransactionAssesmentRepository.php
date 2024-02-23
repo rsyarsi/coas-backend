@@ -209,6 +209,6 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         return $updates;
     }
     public function viewtrsassesmentheaderbyid($request){
-        return  DB::table("viewassesmentdetailbygrouptypes")->where('id',$request->id)->where('active','1');
+        return  DB::table("viewtrsassesmentheader")->where('id',$request->id)->where('active','1');
     }
 }
