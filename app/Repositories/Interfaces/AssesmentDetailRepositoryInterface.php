@@ -8,4 +8,5 @@ Interface AssesmentDetailRepositoryInterface{
     public function findAssesmentDetail($id);    
     public function findAssesmentbyGroup($id); 
     public function updateAssesmentDetail($data);  
+    public function validateSubAssesment($data);
 }

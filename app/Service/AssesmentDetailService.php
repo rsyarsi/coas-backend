@@ -58,6 +58,26 @@ class AssesmentDetailService extends Controller
             if($findassesmentgroup->count() < 1){
                 return $this->sendError('Grup Penilaian tidak ditemukan !', []);
             }
+
+            // validate kode sub
+            if($request->kodesub == 0 and $request->index_sub == 0){
+                return $this->sendError('Kode Sub dan Kode Index sub harus terisi salah satu !', []);
+            }
+            if($request->kodesub > 0 and $request->index_sub < 0){
+                return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
+            }
+
+            if($request->index_sub > 0 and $request->kodesub < 1){
+                return $this->sendError('Kode Idex Sub sudah terisi, Kode Sub tidak boleh Kosong !', []);
+            }
+
+            if($request->kodesub > 0 ){
+               $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
+                if($validatesub->count() > 1){
+                    return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
+                }
+            }
+
             $uuid = Uuid::uuid4(); 
            
             $data = [
@@ -127,7 +147,23 @@ class AssesmentDetailService extends Controller
             if($findspecialist->count() < 1){
                 return $this->sendError('Grup Penilaian tidak di temukan !', []);
             }  
-            
+            if($request->kodesub == 0 and $request->index_sub == 0){
+                return $this->sendError('Kode Sub dan Kode Index sub harus terisi salah satu !', []);
+            }
+            if($request->kodesub > 0 and $request->index_sub < 0){
+                return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
+            }
+
+            if($request->index_sub > 0 and $request->kodesub < 1){
+                return $this->sendError('Kode Idex Sub sudah terisi, Kode Sub tidak boleh Kosong !', []);
+            }
+
+            if($request->kodesub > 0 ){
+               $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
+                if($validatesub->count() > 1){
+                    return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
+                }
+            }
             $data = [
                 'id' => $request->id,                
                 'assesmentgroupid' => $request->assesmentgroupid,

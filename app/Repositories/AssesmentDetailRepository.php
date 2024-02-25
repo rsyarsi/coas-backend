@@ -54,4 +54,12 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
         $category = AssesmentDetail::find($id);
         $category->delete();
     }
+
+    public function validateSubAssesment($request){
+        return AssesmentDetail::where('assesmentgroupid', $request->assesmentgroupid)
+        ->where('kodesub', $request->kodesub)        
+        ->where('active', '1')
+        ->get();
+    }
+    
 }
