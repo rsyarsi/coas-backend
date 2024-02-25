@@ -17,7 +17,9 @@ class assesmentdetail extends Model
     protected $fillable = [
         'assesmentgroupID',     
         'assementdescription',
-        'assementbobotvalue',        
+        'assementbobotvalue',           
+        'kodesub',      
+        'index_sub', 
         'active' 
     ];
     public $incrementing = false;
