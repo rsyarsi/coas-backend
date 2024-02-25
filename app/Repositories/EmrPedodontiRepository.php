@@ -86,6 +86,14 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
             'dentalanomali' => $data->dentalanomali,
             'prematurloss' => $data->prematurloss,
             'overretainedprimarytooth' => $data->overretainedprimarytooth,
+            'dpalatal'  => $data->dpalatal,
+            'epalatal'  => $data->epalatal,
+            'fpalatal'  => $data->fpalatal,
+            'defpalatal'  => $data->defpalatal,
+            'dlingual'  => $data->dlingual,
+            'elingual'  => $data->elingual,
+            'dlingual'  => $data->dlingual,
+            'deflingual'  => $data->deflingual,
             'franklscale_definitelynegative_before_treatment'=> $data->franklscale_definitelynegative_before_treatment,
             'franklscale_definitelynegative_during_treatment'=> $data->franklscale_definitelynegative_during_treatment,
             'franklscale_negative_before_treatment'=> $data->franklscale_negative_before_treatment,
@@ -94,38 +102,38 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
             'franklscale_positive_during_treatment'=> $data->franklscale_positive_during_treatment,
             'franklscale_definitelypositive_before_treatment'=> $data->franklscale_definitelypositive_before_treatment,
             'franklscale_definitelypositive_during_treatment'=> $data->franklscale_definitelypositive_during_treatment,
-            'BuccalPalatal_18'=> $data->BuccalPalatal_18,
-            'BuccalPalatal_17'=> $data->BuccalPalatal_17,
-            'BuccalPalatal_16'=> $data->BuccalPalatal_16,
-            'BuccalPalatal_15_55'=> $data->BuccalPalatal_15_55,
-            'BuccalPalatal_14_54'=> $data->BuccalPalatal_14_54,
-            'BuccalPalatal_13_53'=> $data->BuccalPalatal_13_53,
-            'BuccalPalatal_12_52'=> $data->BuccalPalatal_12_52,
-            'BuccalPalatal_11_51'=> $data->BuccalPalatal_11_51,
-            'BuccalPalatal_21_61'=> $data->BuccalPalatal_21_61,
-            'BuccalPalatal_22_62'=> $data->BuccalPalatal_22_62,
-            'BuccalPalatal_23_63'=> $data->BuccalPalatal_23_63,
-            'BuccalPalatal_24_64'=> $data->BuccalPalatal_24_64,
-            'BuccalPalatal_25_65'=> $data->BuccalPalatal_25_65,
-            'BuccalPalatal_26'=> $data->BuccalPalatal_26,
-            'BuccalPalatal_27'=> $data->BuccalPalatal_27,
-            'BuccalPalatal_28'=> $data->BuccalPalatal_28,
-            'BuccalPalatal_48'=> $data->BuccalPalatal_48,
-            'BuccalPalatal_47'=> $data->BuccalPalatal_47,
-            'BuccalPalatal_46'=> $data->BuccalPalatal_46,
-            'BuccalPalatal_45_85'=> $data->BuccalPalatal_45_85,
-            'BuccalPalatal_44_84'=> $data->BuccalPalatal_44_84,
-            'BuccalPalatal_43_83'=> $data->BuccalPalatal_43_83,
-            'BuccalPalatal_42_82'=> $data->BuccalPalatal_42_82,
-            'BuccalPalatal_41_81'=> $data->BuccalPalatal_41_81,
-            'BuccalPalatal_31_71'=> $data->BuccalPalatal_31_71,
-            'BuccalPalatal_32_72'=> $data->BuccalPalatal_32_72,
-            'BuccalPalatal_33_73'=> $data->BuccalPalatal_33_73,
-            'BuccalPalatal_34_74'=> $data->BuccalPalatal_34_74,
-            'BuccalPalatal_35_75'=> $data->BuccalPalatal_35_75,
-            'BuccalPalatal_36'=> $data->BuccalPalatal_36,
-            'BuccalPalatal_37'=> $data->BuccalPalatal_37,
-            'BuccalPalatal_38'=> $data->BuccalPalatal_38,
+            'buccalpalatal_18'=> $data->buccalpalatal_18,
+            'buccalpalatal_17'=> $data->buccalpalatal_17,
+            'buccalpalatal_16'=> $data->buccalpalatal_16,
+            'buccalpalatal_15_55'=> $data->buccalpalatal_15_55,
+            'buccalpalatal_14_54'=> $data->buccalpalatal_14_54,
+            'buccalpalatal_13_53'=> $data->buccalpalatal_13_53,
+            'buccalpalatal_12_52'=> $data->buccalpalatal_12_52,
+            'buccalpalatal_11_51'=> $data->buccalpalatal_11_51,
+            'buccalpalatal_21_61'=> $data->buccalpalatal_21_61,
+            'buccalpalatal_22_62'=> $data->buccalpalatal_22_62,
+            'buccalpalatal_23_63'=> $data->buccalpalatal_23_63,
+            'buccalpalatal_24_64'=> $data->buccalpalatal_24_64,
+            'buccalpalatal_25_65'=> $data->buccalpalatal_25_65,
+            'buccalpalatal_26'=> $data->buccalpalatal_26,
+            'buccalpalatal_27'=> $data->buccalpalatal_27,
+            'buccalpalatal_28'=> $data->buccalpalatal_28,
+            'buccalpalatal_48'=> $data->buccalpalatal_48,
+            'buccalpalatal_47'=> $data->buccalpalatal_47,
+            'buccalpalatal_46'=> $data->buccalpalatal_46,
+            'buccalpalatal_45_85'=> $data->buccalpalatal_45_85,
+            'buccalpalatal_44_84'=> $data->buccalpalatal_44_84,
+            'buccalpalatal_43_83'=> $data->buccalpalatal_43_83,
+            'buccalpalatal_42_82'=> $data->buccalpalatal_42_82,
+            'buccalpalatal_41_81'=> $data->buccalpalatal_41_81,
+            'buccalpalatal_31_71'=> $data->buccalpalatal_31_71,
+            'buccalpalatal_32_72'=> $data->buccalpalatal_32_72,
+            'buccalpalatal_33_73'=> $data->buccalpalatal_33_73,
+            'buccalpalatal_34_74'=> $data->buccalpalatal_34_74,
+            'buccalpalatal_35_75'=> $data->buccalpalatal_35_75,
+            'buccalpalatal_36'=> $data->buccalpalatal_36,
+            'buccalpalatal_37'=> $data->buccalpalatal_37,
+            'buccalpalatal_38'=> $data->buccalpalatal_38,
         
         ]);
         return $updates;;
@@ -201,7 +209,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     }
     public function findtreatmentAll($data)
     {
-        return emrpedodontie_treatmen::where('emrid', $data->emrid)->get();
+        return emrpedodontie_treatmen::where('emrid', $data->emrid)->orderBy('id', 'DESC')->latest()->paginate(10);
     }
 
     // treatment
@@ -233,7 +241,7 @@ class EmrPedodontiRepository implements EmrPedodontiRepositoryInterface
     }
     public function findtreatmentplanAll($data)
     {
-        return emrpedodontie_treatmenplan::where('emrid', $data->emrid)->get();
+        return emrpedodontie_treatmenplan::where('emrid', $data->emrid)->orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function uploadfoto($data,$awsurl)
     { 

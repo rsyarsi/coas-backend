@@ -32,7 +32,7 @@ class AssesmentGroupService extends Controller
         $request->validate([ 
             "specialistid" => "required", 
             "assementgroupname" => "required",             
-            "valuetotal" => "required",   
+            // "valuetotal" => "required",   
             "active" => "required" 
         ]);
         
