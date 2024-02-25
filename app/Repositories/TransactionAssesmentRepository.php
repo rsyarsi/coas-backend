@@ -189,18 +189,18 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ]);
         return $updates;
     }
-    // detail sudah oke
+    // detail sudah oke4
     public function findFilledTrsAssesmentDetailonebyId($id){
-        return  DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return  DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailthreebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailfourbyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailfivebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function updateTrsAssesmentHeaderTotalBobot($request,$totalbobot)
     { 

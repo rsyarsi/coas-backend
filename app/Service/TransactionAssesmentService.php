@@ -389,7 +389,9 @@ class TransactionAssesmentService extends Controller
             // Db Transaction
             DB::beginTransaction(); 
         
-    
+                if($request->kodesub > "0" ){
+                    return $this->sendError('Sub Group Penilaian tidak bisa diisikan nilai !', []);
+                }
                 if($request->assesmenttype == "1"){
                     $datadetail1 = $this->transactionassesmentRepository->findTrsAssesmentDetailonebyId($request->id);
                     if($datadetail1->count() < 1){
