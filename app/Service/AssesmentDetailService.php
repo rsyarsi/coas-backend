@@ -61,7 +61,7 @@ class AssesmentDetailService extends Controller
 
             // validate kode sub
           
-            if($request->kodesub > 0 and $request->index_sub < 0){
+            if($request->kodesub > 0 and $request->index_sub < 1){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
  
@@ -144,10 +144,10 @@ class AssesmentDetailService extends Controller
                 return $this->sendError('Grup Penilaian tidak di temukan !', []);
             }  
            
-            if($request->kodesub > 0 and $request->index_sub < 0){
+            if($request->kodesub > 0 and $request->index_sub < 1){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
-            
+
             if($request->kodesub > 0 ){
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
                 if($validatesub->count() > 0){
