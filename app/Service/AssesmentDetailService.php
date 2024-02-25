@@ -74,13 +74,19 @@ class AssesmentDetailService extends Controller
             }
 
             $uuid = Uuid::uuid4(); 
-            $kode_sub_name = $validatesub->first()->kode_sub_name;
+           
+            if($validatesub->count() < 1){
+                $kode_sub_name = $request->assesmentdescription;
+            }else{
+                $kode_sub_name = $validatesub->first()->kode_sub_name;
+            }
+           
             $data = [
                 'id' => $uuid,                
                 'assesmentgroupid' => $request->assesmentgroupid,
                 'assesmentnumbers' => $request->assesmentnumbers,
                 'assesmentdescription' => $request->assesmentdescription,
-                'kode_sub_name' => $request->assesmentdescription,
+                'kode_sub_name' => $kode_sub_name,
                 'assesmentbobotvalue' => $request->assesmentbobotvalue, 
                 'assesmentskalavalue' => $request->assesmentskalavalue,  
                 'assesmentvaluestart' => $request->assesmentvaluestart,  
@@ -154,13 +160,17 @@ class AssesmentDetailService extends Controller
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
                 }
             }
-            $kode_sub_name = $validatesub->first()->kode_sub_name;
+            if($validatesub->count() < 1){
+                $kode_sub_name = $request->assesmentdescription;
+            }else{
+                $kode_sub_name = $validatesub->first()->kode_sub_name;
+            }
             $data = [
                 'id' => $request->id,                
                 'assesmentgroupid' => $request->assesmentgroupid,
                 'assesmentnumbers' => $request->assesmentnumbers,
                 'assesmentdescription' => $request->assesmentdescription, 
-                'kode_sub_name' => $request->assesmentdescription,
+                'kode_sub_name' => $kode_sub_name,
                 'assesmentbobotvalue' => $request->assesmentbobotvalue, 
                 'assesmentvaluestart' => $request->assesmentvaluestart, 
                 'assesmentvalueend' => $request->assesmentvalueend, 
