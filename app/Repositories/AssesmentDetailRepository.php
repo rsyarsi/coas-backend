@@ -56,7 +56,7 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 
     public function validateSubAssesment($request){
         return AssesmentDetail::where('assesmentgroupid', $request->assesmentgroupid)
-        ->where('kodesub', $request->kodesub)        
+        ->where('kodesub', $request->index_sub)        
         ->where('active', '1')
         ->get();
     }

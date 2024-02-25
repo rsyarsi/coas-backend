@@ -70,16 +70,26 @@ class AssesmentDetailService extends Controller
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
                 if($validatesub->count() > 0){
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
+                }else{
+                    if($validatesub->count() < 1){
+                        $kode_sub_name = $request->assesmentdescription;
+                    }else{
+                        $kode_sub_name = $validatesub->first()->kode_sub_name;
+                    }
+                }
+            }else{
+                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
+              
+                if($validatesub->count() < 1){
+                    $kode_sub_name = $request->assesmentdescription;
+                }else{
+                    $kode_sub_name = $validatesub->first()->kode_sub_name;
                 }
             }
-
+      
             $uuid = Uuid::uuid4(); 
            
-            if($validatesub->count() < 1){
-                $kode_sub_name = $request->assesmentdescription;
-            }else{
-                $kode_sub_name = $validatesub->first()->kode_sub_name;
-            }
+            
            
             $data = [
                 'id' => $uuid,                
@@ -158,13 +168,23 @@ class AssesmentDetailService extends Controller
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
                 if($validatesub->count() > 0){
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
+                }else{
+                    if($validatesub->count() < 1){
+                        $kode_sub_name = $request->assesmentdescription;
+                    }else{
+                        $kode_sub_name = $validatesub->first()->kode_sub_name;
+                    }
+                }
+            }else{
+                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
+                if($validatesub->count() < 1){
+                    $kode_sub_name = $request->assesmentdescription;
+                }else{
+                    $kode_sub_name = $validatesub->first()->kode_sub_name;
                 }
             }
-            if($validatesub->count() < 1){
-                $kode_sub_name = $request->assesmentdescription;
-            }else{
-                $kode_sub_name = $validatesub->first()->kode_sub_name;
-            }
+
+            
             $data = [
                 'id' => $request->id,                
                 'assesmentgroupid' => $request->assesmentgroupid,

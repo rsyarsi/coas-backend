@@ -34,7 +34,9 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ->where('activeassesmentdetails','1') 
         ->where('activespecialists','1') 
         ->where('assesmentgroupid',$request->assesmentgroupid)  
-        ->where('assesmentgrouptype',$type)    
+        ->where('assesmentgrouptype',$type)   
+        ->orderBy('index_sub', 'ASC')        
+        ->orderBy('assesmentnumbers', 'ASC') 
         ->get();
     }
     public function verifyTrsAssesment($request,$assesmenttype)
