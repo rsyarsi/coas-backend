@@ -71,7 +71,7 @@ class AssesmentDetailService extends Controller
 
             if($request->kodesub > 0 ){
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
-                if($validatesub->count() > 1){
+                if($validatesub->count() > 0){
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
                 }
             }
@@ -156,7 +156,7 @@ class AssesmentDetailService extends Controller
 
             if($request->kodesub > 0 ){
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
-                if($validatesub->count() > 1){
+                if($validatesub->count() > 0){
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
                 }
             }

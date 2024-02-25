@@ -41,9 +41,7 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
             'assesmentbobotvalue' => $request['assesmentbobotvalue'],  
             'assesmentskalavalue' => $request['assesmentskalavalue'],           
             'kodesub' => $request['kodesub'],            
-            'index_sub' => $request['index_sub'],
-
-  
+            'index_sub' => $request['index_sub'], 
             'active' => $request['active'] 
         ]);
         return $updates;
@@ -61,5 +59,5 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
         ->where('active', '1')
         ->get();
     }
-    
+
 }
