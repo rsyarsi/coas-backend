@@ -60,9 +60,7 @@ class AssesmentDetailService extends Controller
             }
 
             // validate kode sub
-            if($request->kodesub == 0 and $request->index_sub == 0){
-                return $this->sendError('Kode Sub dan Kode Index sub harus terisi salah satu !', []);
-            }
+          
             if($request->kodesub > 0 and $request->index_sub < 0){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
@@ -147,9 +145,7 @@ class AssesmentDetailService extends Controller
             if($findspecialist->count() < 1){
                 return $this->sendError('Grup Penilaian tidak di temukan !', []);
             }  
-            if($request->kodesub == 0 and $request->index_sub == 0){
-                return $this->sendError('Kode Sub dan Kode Index sub harus terisi salah satu !', []);
-            }
+           
             if($request->kodesub > 0 and $request->index_sub < 0){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
