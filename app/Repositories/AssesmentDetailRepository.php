@@ -40,8 +40,9 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
             'assesmentdescription' => $request['assesmentdescription'],             
             'assesmentbobotvalue' => $request['assesmentbobotvalue'],  
             'assesmentskalavalue' => $request['assesmentskalavalue'],           
-            'kodesub' => $request['kodesub'],            
-            'index_sub' => $request['index_sub'], 
+            'kodesub' => $request['kodesub'],
+            'kode_sub_name' => $request['kode_sub_name'], 
+            'index_sub' => $request['index_sub'],
             'active' => $request['active'] 
         ]);
         return $updates;

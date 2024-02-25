@@ -64,10 +64,7 @@ class AssesmentDetailService extends Controller
             if($request->kodesub > 0 and $request->index_sub < 0){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
-
-            if($request->index_sub > 0 and $request->kodesub < 1){
-                return $this->sendError('Kode Idex Sub sudah terisi, Kode Sub tidak boleh Kosong !', []);
-            }
+ 
 
             if($request->kodesub > 0 ){
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
@@ -77,7 +74,7 @@ class AssesmentDetailService extends Controller
             }
 
             $uuid = Uuid::uuid4(); 
-           
+            $kode_sub_name = $validatesub->first()->kode_sub_name;
             $data = [
                 'id' => $uuid,                
                 'assesmentgroupid' => $request->assesmentgroupid,
@@ -91,6 +88,7 @@ class AssesmentDetailService extends Controller
                 'assesmentskalavalueend' => $request->assesmentskalavalueend, 
                 'assesmentkonditevalue' => $request->assesmentkonditevalue,  
                 'kodesub' => $request->kodesub,  
+                'kode_sub_name' => $kode_sub_name,  
                 'index_sub' => $request->index_sub,  
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
                 'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
@@ -149,17 +147,14 @@ class AssesmentDetailService extends Controller
             if($request->kodesub > 0 and $request->index_sub < 0){
                 return $this->sendError('Kode Sub sudah terisi, Kode Index sub harus lebih besar dari 0 !', []);
             }
-
-            if($request->index_sub > 0 and $request->kodesub < 1){
-                return $this->sendError('Kode Idex Sub sudah terisi, Kode Sub tidak boleh Kosong !', []);
-            }
-
+            
             if($request->kodesub > 0 ){
                $validatesub = $this->AssesmentDetailRepository->validateSubAssesment($request);
                 if($validatesub->count() > 0){
                     return $this->sendError('Sub Kode Sudah ada, silahkan gunakan kode sub lain !', []);
                 }
             }
+            $kode_sub_name = $validatesub->first()->kode_sub_name;
             $data = [
                 'id' => $request->id,                
                 'assesmentgroupid' => $request->assesmentgroupid,
@@ -175,6 +170,7 @@ class AssesmentDetailService extends Controller
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
                 'assesmentkonditevalueend' => $request->assesmentkonditevalueend,
                 'kodesub' => $request->kodesub,  
+                'kode_sub_name' => $kode_sub_name,  
                 'index_sub' => $request->index_sub,   
                 'active' => $request->active 
             ];

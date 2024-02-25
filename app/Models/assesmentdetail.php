@@ -20,6 +20,7 @@ class assesmentdetail extends Model
         'assementbobotvalue',           
         'kodesub',      
         'index_sub', 
+        'kode_sub_name',
         'active' 
     ];
     public $incrementing = false;
