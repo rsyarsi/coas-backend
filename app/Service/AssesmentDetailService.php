@@ -88,8 +88,7 @@ class AssesmentDetailService extends Controller
                 'assesmentskalavaluestart' => $request->assesmentskalavaluestart, 
                 'assesmentskalavalueend' => $request->assesmentskalavalueend, 
                 'assesmentkonditevalue' => $request->assesmentkonditevalue,  
-                'kodesub' => $request->kodesub,  
-                'kode_sub_name' => $kode_sub_name,  
+                'kodesub' => $request->kodesub,   
                 'index_sub' => $request->index_sub,  
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
                 'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
@@ -171,8 +170,7 @@ class AssesmentDetailService extends Controller
                 'assesmentkonditevalue' => $request->assesmentkonditevalue, 
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
                 'assesmentkonditevalueend' => $request->assesmentkonditevalueend,
-                'kodesub' => $request->kodesub,  
-                'kode_sub_name' => $kode_sub_name,  
+                'kodesub' => $request->kodesub,   
                 'index_sub' => $request->index_sub,   
                 'active' => $request->active 
             ];
