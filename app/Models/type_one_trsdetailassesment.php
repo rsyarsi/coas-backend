@@ -16,7 +16,7 @@ class type_one_trsdetailassesment extends Model
      */
 
    
-    protected $fillable = [
+     protected $fillable = [
         'trsassesmentid',     
         'assesmentdetailid',
         'assesmentdescription',        
@@ -24,6 +24,7 @@ class type_one_trsdetailassesment extends Model
         'assesmentskala', 
         'assesmentbobotvalue', 
         'assementscore', 
+        'kodesub',
         'active' 
     ];
     public $incrementing = false;

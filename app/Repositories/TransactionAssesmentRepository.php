@@ -7,7 +7,6 @@ use App\Models\student;
 use App\Models\trsassesment;
 use App\Models\type_five_trsdetailassesment;
 use App\Models\type_four_trsdetailassesment;
-use App\Models\type_one_control_trsdetailassesment;
 use App\Models\type_one_trsdetailassesment;
 use App\Models\type_three_trsdetailassesment;
 use App\Models\Year; 
@@ -61,6 +60,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assesmentdescription'=> $key->assesmentdescription,    
             'assesmentskala'=> $key->assesmentskalavalue,   
             'assesmentbobotvalue'=> $key->assesmentbobotvalue,   
+            'kodesub'=> $key->kodesub,   
             'assementvalue'=> '0',            
             'assementscore'=> '0', 
             'active' => '1'
@@ -143,18 +143,6 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'active' => '1'
         ]);
     }
-    public function storeTrsAssesmentDetailoneKontrol($key,$uuidheader,$uuiddetail,$date)
-    { 
-   
-        return  type_one_control_trsdetailassesment::insert([
-            'id'=> $uuiddetail,      
-            'trsassesmentid'=> $uuidheader,  
-            'assesmentdetailid'=> $key->assesmentdetailid,   
-            'assesmentdescription'=> $key->assesmentdescription,     
-            'assementvalue'=> '0',    
-            'active' => '1'
-        ]);
-    }
     public function updateTrsAssesmentDetailfive($key)
     { 
    
@@ -177,10 +165,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function findTrsAssesmentDetailfive($uuid){
         return type_five_trsdetailassesment::where('trsassesmentid',$uuid)->get();
     }
-    public function findTrsAssesmentDetailonecontrol($uuid){
-        return type_five_trsdetailassesment::where('trsassesmentid',$uuid)->get();
-    }
-
+    
     public function findTrsAssesmentDetailonebyId($uuid){
         return type_one_trsdetailassesment::where('id',$uuid)->get();
     }
@@ -196,6 +181,21 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
 
     public function sumTrsAssesmentDetailonebyIdTransaksiHeader($uuid){
         return type_one_trsdetailassesment::where('trsassesmentid',$uuid)->sum('assementscore');
+    }
+    public function sumTrsAssesmentDetailonebyIdTransaksiSub($request){
+        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$request->idhdr)
+        ->where('index_sub', $request->index_sub)
+        ->where('kodesub', '0')
+        ->sum('assementscore');
+    }
+    public function updateTrsAssesmentsub($request,$scoretotal)
+    { 
+        $updates = type_one_trsdetailassesment::where('trsassesmentid', $request->idhdr)
+        ->where('kodesub', $request->index_sub)
+        ->update([
+            'assementscore'=> $scoretotal
+        ]);
+        return $updates;
     }
     public function updateTrsAssesmentHeader($id,$scoretotal)
     { 
