@@ -72,8 +72,8 @@ class AssesmentDetailService extends Controller
                 'assesmentskalavaluestart' => $request->assesmentskalavaluestart, 
                 'assesmentskalavalueend' => $request->assesmentskalavalueend, 
                 'assesmentkonditevalue' => $request->assesmentkonditevalue,  
-                'kodesub' => (int)$request->kodesub,  
-                'index_sub' => (int)$request->index_sub,  
+                'kodesub' => $request->kodesub,  
+                'index_sub' => $request->index_sub,  
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
                 'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
                 'active' => $request->active 
@@ -108,8 +108,8 @@ class AssesmentDetailService extends Controller
             "assesmentkonditevalue" => "required", 
             "assesmentkonditevaluestart" => "required",   
             "assesmentkonditevalueend" => "required", 
-            'kodesub' => (int)$request->kodesub,  
-            'index_sub' => (int)$request->index_sub,     
+            "kodesub" => "required", 
+            "index_sub" => "required", 
             "active" => "required" 
         ]);
         
@@ -141,7 +141,9 @@ class AssesmentDetailService extends Controller
                 'assesmentskalavalueend' => $request->assesmentskalavalueend, 
                 'assesmentkonditevalue' => $request->assesmentkonditevalue, 
                 'assesmentkonditevaluestart' => $request->assesmentkonditevaluestart, 
-                'assesmentkonditevalueend' => $request->assesmentkonditevalueend, 
+                'assesmentkonditevalueend' => $request->assesmentkonditevalueend,
+                'kodesub' => $request->kodesub,  
+                'index_sub' => $request->index_sub,   
                 'active' => $request->active 
             ];
             $execute = $this->AssesmentDetailRepository->updateAssesmentDetail($data);
