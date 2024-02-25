@@ -7,6 +7,7 @@ use App\Models\student;
 use App\Models\trsassesment;
 use App\Models\type_five_trsdetailassesment;
 use App\Models\type_four_trsdetailassesment;
+use App\Models\type_one_control_trsdetailassesment;
 use App\Models\type_one_trsdetailassesment;
 use App\Models\type_three_trsdetailassesment;
 use App\Models\Year; 
@@ -76,7 +77,19 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ]);
         return $updates;
     }
+    public function storeTrsAssesmentDetailoneControl($key,$uuidheader,$uuiddetail,$date)
+    { 
    
+        return  type_one_control_trsdetailassesment::insert([
+            'id'=> $uuiddetail,      
+            'trsassesmentid'=> $uuidheader,  
+            'assesmentdetailid'=> $key->assesmentdetailid,   
+            'assesmentdescription'=> $key->assesmentdescription,     
+            'controlaction'=> '',    
+            'assementvalue'=> '0', 
+            'active' => '1'
+        ]);
+    }
     public function storeTrsAssesmentDetailthree($key,$uuidheader,$uuiddetail,$date)
     { 
    
@@ -164,6 +177,9 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     }
     public function findTrsAssesmentDetailfive($uuid){
         return type_five_trsdetailassesment::where('trsassesmentid',$uuid)->get();
+    }
+    public function findTrsAssesmentDetailoneControl($uuid){
+        return type_one_control_trsdetailassesment::where('trsassesmentid',$uuid)->get();
     }
     
     public function findTrsAssesmentDetailonebyId($uuid){

@@ -141,6 +141,8 @@ class TransactionAssesmentService extends Controller
                         $this->transactionassesmentRepository->storeTrsAssesmentDetailfour($key,$uuid,$uuiddetail,$date);
                     }else if($findassesmentgroup->first()->type == "5"){
                         $this->transactionassesmentRepository->storeTrsAssesmentDetailfive($key,$uuid,$uuiddetail,$date);
+                    }else if($findassesmentgroup->first()->type == "6"){
+                        $this->transactionassesmentRepository->storeTrsAssesmentDetailoneControl($key,$uuid,$uuiddetail,$date);
                     }
                 }
 
@@ -152,6 +154,8 @@ class TransactionAssesmentService extends Controller
                     $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailfour($uuid);
                 }else if($findassesmentgroup->first()->type == "5"){
                     $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailfive($uuid);
+                }else if($findassesmentgroup->first()->type == "6"){
+                    $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailoneControl($uuid);
                 }
                 
                 $response = [
@@ -171,6 +175,8 @@ class TransactionAssesmentService extends Controller
                     $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailfour($request->id);
                 }else if($findassesmentgroup->first()->type == "5"){
                     $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailfive($request->id);
+                }else if($findassesmentgroup->first()->type == "6"){
+                    $detail = $this->transactionassesmentRepository->findTrsAssesmentDetailoneControl($request->id);
                 }
                 $idTransaksiPenilaian = $verify->first()->id;
                 $data = [
