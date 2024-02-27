@@ -820,14 +820,14 @@ class EmrPeriodontieRepository implements EmrPeriodontieRepositoryInterface
 'p3_indekskalkulus_rb_el41_l' => $data->p3_indekskalkulus_rb_el41_l,
 'p3_indekskalkulus_rb_el42_l' => $data->p3_indekskalkulus_rb_el42_l,
 'p3_indekskalkulus_rb_el46_l' => $data->p3_indekskalkulus_rb_el46_l,
-'foto_klinis_oklusi_arah_kiri' => $data->foto_klinis_oklusi_arah_kiri,
-'foto_klinis_oklusi_arah_kanan' => $data->foto_klinis_oklusi_arah_kanan,
-'foto_klinis_oklusi_arah_anterior' => $data->foto_klinis_oklusi_arah_anterior,
-'foto_klinis_oklusal_rahang_atas' => $data->foto_klinis_oklusal_rahang_atas,
-'foto_klinis_oklusal_rahang_bawah' => $data->foto_klinis_oklusal_rahang_bawah,
-'foto_klinis_before' => $data->foto_klinis_before,
-'foto_klinis_after' => $data->foto_klinis_after,
-'foto_ronsen_panoramik' => $data->foto_ronsen_panoramik,
+// 'foto_klinis_oklusi_arah_kiri' => $data->foto_klinis_oklusi_arah_kiri,
+// 'foto_klinis_oklusi_arah_kanan' => $data->foto_klinis_oklusi_arah_kanan,
+// 'foto_klinis_oklusi_arah_anterior' => $data->foto_klinis_oklusi_arah_anterior,
+// 'foto_klinis_oklusal_rahang_atas' => $data->foto_klinis_oklusal_rahang_atas,
+// 'foto_klinis_oklusal_rahang_bawah' => $data->foto_klinis_oklusal_rahang_bawah,
+// 'foto_klinis_before' => $data->foto_klinis_before,
+// 'foto_klinis_after' => $data->foto_klinis_after,
+// 'foto_ronsen_panoramik' => $data->foto_ronsen_panoramik,
 'terapi_s' => $data->terapi_s,
 'terapi_o' => $data->terapi_o,
 'terapi_a' => $data->terapi_a,
@@ -1006,7 +1006,7 @@ class EmrPeriodontieRepository implements EmrPeriodontieRepositoryInterface
     public function  foto_klinis_before($data,$awsurl)
     { 
         $updates = emrperiodontie::where('id', $data->id)->update([ 
-            ' foto_klinis_before' => $awsurl 
+            'foto_klinis_before' => $awsurl 
         ]);
         return $updates;
     }

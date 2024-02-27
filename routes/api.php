@@ -116,6 +116,7 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     Route::post("create", [StudentController::class, "store"]);
                     Route::post("update", [StudentController::class, "update"]);
                     Route::get("view/id/{id}", [StudentController::class, "show"]);
+                    Route::get("view/nim/{id}", [StudentController::class, "nim"]);
                     Route::get("viewall", [StudentController::class, "create"]); 
                     Route::get("viewallwithotpaging", [StudentController::class, "viewallwithotpaging"]); 
                 });

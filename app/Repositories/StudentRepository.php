@@ -31,6 +31,10 @@ class StudentRepository implements StudentRepositoryInterface
     {
         return Student::where('id',$id)->get();
     }
+    public function findStudentnim($id)
+    {
+        return Student::where('id',$id)->get();
+    }
     public function findStudentbyNIM($nim)
     {
         return Student::where('nim',$nim)->get();

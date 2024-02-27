@@ -136,7 +136,29 @@ class StudentController extends Controller
             $execute =  $Service->show($id);
             return $execute;
     }
-
+    public function nim($id)
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $userRepository
+  
+            );
+            $execute =  $Service->nim($id);
+            return $execute;
+    }
     /**
      * Show the form for editing the specified resource.
      *
