@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\emrkonservasi;
+use App\Models\emrkonservasi_job;
 use App\Models\hospital;
 use App\Models\Year;
 use App\Repositories\Interfaces\EmrKonservasiRepositoryInterface;
@@ -323,5 +324,46 @@ class EmrKonservasiRepository implements EmrKonservasiRepositoryInterface
 
         ]);
         return $updates;;
+    }
+
+    //konservasi
+    public function createjob($data)
+    { 
+        return  emrkonservasi_job::insert($data);
+    }
+    public function updatejob($data)
+    { 
+        $updates = emrkonservasi_job::where('id', $data['id'])->update([ 
+            'terapi_s' => $data['terapi_s'],
+            'terapi_o' => $data['terapi_o'], 
+            'terapi_a' => $data['terapi_a'],         
+            'terapi_p' => $data['terapi_p'], 
+        ]);
+        return $updates;
+    }
+    public function verifydpk($data)
+    { 
+        $updates = emrkonservasi_job::where('id', $data['id'])->update([ 
+            'user_verify' => $data['user_verify'],
+            'user_verify_name' => $data['user_verify_name'], 
+            'date_verify' => $data['date_verify'],    
+        ]);
+        return $updates;
+    }
+    public function deletejob($data)
+    { 
+        $updates = emrkonservasi_job::where('id', $data['id'])->update([ 
+            'active' => $data['active'], 
+        ]);
+        return $updates;
+  
+    }
+    public function showbyidjob($data)
+    { 
+        return emrkonservasi_job::where('id',$data->id)->where('active','1')->get();
+    }
+    public function showalljob($data)
+    { 
+        return emrkonservasi_job::where('idemr',$data->idemr)->where('active','1')->orderBy('id', 'DESC')->latest()->paginate(10);
     }
 }

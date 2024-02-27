@@ -91,4 +91,53 @@ class EmrKonservasiController extends Controller
     {
         //
     }
+    //soap
+    public function createjob(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->createjob($request);
+        return $execute;
+    }
+    public function updatejob(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->updatejob($request);
+        return $execute;
+    }
+    public function deletejob(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->deletejob($request);
+        return $execute;
+    }
+    public function showbyidjob(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->showbyidjob($request);
+        return $execute;
+    }
+    public function showalljob(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->showalljob($request);
+        return $execute;
+    }
+    public function verifydpk(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->verifydpk($request);
+        return $execute;
+    }
 }

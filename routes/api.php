@@ -248,6 +248,15 @@ Route::group(["middleware" => ["auth:api", "validate_header"]], function () {
                     Route::group(['prefix' => 'create'], function () {
                         Route::post("medicaldentalhistory", [EmrKonservasiController::class, "store"]);
                     });;
+                    Route::group(['prefix' => 'jobs'], function () {
+                        Route::post("create", [EmrKonservasiController::class, "createjobs"]);  
+                        Route::post("update", [EmrKonservasiController::class, "updatejobs"]);  
+                        Route::post("delete", [EmrKonservasiController::class, "deletejobs"]);  
+                        Route::post("showbyid", [EmrKonservasiController::class, "showbyidjobs"]);  
+                        Route::post("showall", [EmrKonservasiController::class, "showalljobs"]);  
+                        Route::post("verifydpk", [EmrKonservasiController::class, "verifydpk"]);  
+                        
+                    });
                 });
                 Route::group(['prefix' => 'periodonti'], function () {
                     Route::post("uploadfotopanoramik", [EmrPeriodontieController::class, "uploadfotopanoramik"]);  

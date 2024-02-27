@@ -637,4 +637,225 @@ class EmrKonservasiService extends Controller
         }
 
     }
+
+    //jobs
+    public function createjob(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'tindakan' => "required", 
+            'keadaangigi' => "required",  
+            'keterangan' => "required",      
+            'user_entry' => "required", 
+            'user_entry_name' => "required",             
+            'idemr' => "required",    
+        ]);
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $uuid = Uuid::uuid4();
+            $data = [
+                'id' => $uuid,                
+                'datejob' => Carbon::now(),
+                'tindakan' => $request->tindakan, 
+                'keadaangigi' => $request->keadaangigi,  
+                'keterangan' => $request->keterangan,   
+                'user_entry' => $request->user_entry, 
+                'user_entry_name' => $request->user_entry_name, 
+                'idemr' => $request->idemr  
+            ];
+            $execute = $this->emrkonservasiRepository->createjob($data,$uuid);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'Lembar Pekerjaan Berhasil dibuat !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
+
+    public function updatejob(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'tindakan' => "required", 
+            'keadaangigi' => "required",  
+            'keterangan' => "required",      
+            'user_entry' => "required", 
+            'user_entry_name' => "required",             
+            'idemr' => "required",  
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $data = [
+                'id' => $request->id,                
+                'datejob' => Carbon::now(),
+                'tindakan' => $request->tindakan, 
+                'keadaangigi' => $request->keadaangigi,  
+                'keterangan' => $request->keterangan,   
+                'user_entry' => $request->user_entry, 
+                'user_entry_name' => $request->user_entry_name, 
+                'idemr' => $request->idemr  
+            ];
+
+            $cekdata = $this->emrkonservasiRepository->showbyidjob($request)->first();
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data job tidak ditemukan !', []);
+            }
+            $execute = $this->emrkonservasiRepository->updatejob($data);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'job Berhasil diedit !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function deletejob(Request $request)
+    {
+         // validate 
+        $request->validate([  
+            'id' => "required", 
+            'active' => "required",    
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+            
+            $data = [
+                'id' => $request->id,     
+                'active' => $request->active
+            ];
+
+            $cekdata = $this->emrkonservasiRepository->showbyidjob($request);
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data job tidak ditemukan !', []);
+            }
+
+            $execute = $this->emrkonservasiRepository->deletejob($data);
+            DB::commit();
+         
+            if($execute){
+                return $this->sendResponse($data, 'job Berhasil dihapus !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function showbyidjob(Request $request)
+    {
+
+        // validate 
+        $request->validate([  
+            'id' => "required"    
+        ]);
+
+            try {
+                
+                $cekdata = $this->emrkonservasiRepository->showbyidjob($request)->first();
+
+                if($cekdata->count() < 1 ){
+                    return $this->sendError('Data job tidak ditemukan !', []);
+                }
+
+                return $this->sendResponse($cekdata, 'job Berhasil ditemukan !');
+
+            } catch (Exception $e) { 
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+                
+    }
+
+    public function showalljob(Request $request)
+    {
+             // validate 
+            $request->validate([  
+                'idemr' => "required"    
+            ]);
+
+            try {
+                
+                $cekdata = $this->emrkonservasiRepository->showalljob($request);
+
+                if($cekdata->count() < 1 ){
+                    return $this->sendError('Data job tidak ditemukan !', []);
+                }
+
+                return $this->sendResponse($cekdata, 'job Berhasil ditemukan !');
+
+            } catch (Exception $e) { 
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    }
+    public function verifydpk(Request $request)
+    {
+        // validate 
+        $request->validate([  
+            'user_verify' => "required", 
+            'user_verify_name' => "required",    
+        ]);
+
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+  
+
+            $data = [
+                'id' => $request->id,                
+                'user_verify' => $request->user_verify, 
+                'user_verify_name' => $request->user_verify_name,  
+                'date_verify' => Carbon::now(),  
+            ];
+
+            $cekdata = $this->emrkonservasiRepository->showbyidjob($request)->first();
+
+            if($cekdata->count() < 1 ){
+                return $this->sendError('Data job tidak ditemukan !', []);
+            }
+
+            $execute = $this->emrkonservasiRepository->verifydpk($data);
+            DB::commit();
+
+            if($execute){
+                return $this->sendResponse($data, 'job Berhasil diverifikasi !');
+            }
+            
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

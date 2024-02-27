@@ -9,4 +9,13 @@ interface EmrKonservasiRepositoryInterface
     public function findwaktuperawatan($data);    
     public function viewemrbyRegOperator($data); 
     public function updatewaktuperawatan($data);
+
+    
+    // jobs - 
+    public function createjob($data);   
+    public function updatejob($data);    
+    public function deletejob($data);   
+    public function showbyidjob($data);      
+    public function showalljob($data);   
+    public function verifydpk($data);  
 }
