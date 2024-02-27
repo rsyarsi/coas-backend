@@ -333,11 +333,12 @@ class EmrKonservasiRepository implements EmrKonservasiRepositoryInterface
     }
     public function updatejob($data)
     { 
+
+     
         $updates = emrkonservasi_job::where('id', $data['id'])->update([ 
-            'terapi_s' => $data['terapi_s'],
-            'terapi_o' => $data['terapi_o'], 
-            'terapi_a' => $data['terapi_a'],         
-            'terapi_p' => $data['terapi_p'], 
+            'tindakan' => $data['tindakan'],
+            'keadaangigi' => $data['keadaangigi'], 
+            'keterangan' => $data['keterangan'],   
         ]);
         return $updates;
     }
