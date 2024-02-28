@@ -22,7 +22,8 @@ class type_five_trsdetailassesment extends Model
         'assesmentdescription',        
         'transactiondate', 
         'assessmentvalue',  
-        'assementscore', 
+        'assementscore',
+        'kodesub',
         'active' 
     ];
     public $incrementing = false;

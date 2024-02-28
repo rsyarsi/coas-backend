@@ -24,7 +24,8 @@ class type_three_trsdetailassesment extends Model
         'assementskala', 
         'assementbobotvalue', 
         'konditevalue', 
-        'assementscore', 
+        'assementscore',        
+        'kodesub', 
         'active' 
     ];
     public $incrementing = false;

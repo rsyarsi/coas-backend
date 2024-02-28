@@ -100,7 +100,8 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assesmentdescription'=> $key->assesmentdescription,   
             'assesmentskala'=> $key->assesmentskalavalue,   
             'assesmentbobotvalue'=> $key->assesmentbobotvalue,    
-            'konditevalue'=> $key->assesmentkonditevalue,   
+            'konditevalue'=> $key->assesmentkonditevalue,
+            'kodesub'=> $key->kodesub,   
             'assementvalue'=> '0',  
             'assesmentscore'=> '0',
             'active' => '1'
@@ -125,7 +126,8 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
             'assesmentdescription'=> $key->assesmentdescription,    
-            'assesmentskala'=> $key->assesmentskalavalue, 
+            'assesmentskala'=> $key->assesmentskalavalue,
+            'kodesub'=> $key->kodesub,
             'assementvalue'=> '0',     
             'assementscore'=> '0', 
             'active' => '1'
@@ -150,7 +152,8 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'trsassesmentid'=> $uuidheader,  
             'assesmentdetailid'=> $key->assesmentdetailid,   
             'assesmentdescription'=> $key->assesmentdescription,       
-            'assesmentbobotvalue'=> $key->assesmentbobotvalue,  
+            'assesmentbobotvalue'=> $key->assesmentbobotvalue, 
+            'kodesub'=> $key->kodesub,
             'assementvalue'=> '0',    
             'assesmentscore'=> '0', 
             'active' => '1'
