@@ -32,6 +32,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
             'specialistid' => $request['specialistid'],
             'assementgroupname' => $request['assementgroupname'],             
             'valuetotal' => $request['valuetotal'],  
+            'type' => $request['type'],  
             'active' => $request['active']
         ]);
         return $updates;
