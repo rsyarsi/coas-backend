@@ -41,7 +41,7 @@ Route::get('reset', function () {
     Artisan::call('optimize:clear');
 });
 
-Route::group(["middleware" => ["CorsMiddleware"]], function () {
+// Route::group(["middleware" => ["CorsMiddleware"]], function () {
 
     Route::post("login", [UserController::class, "create"]);
 
@@ -284,4 +284,4 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
         
     });
 
-});
+// });
