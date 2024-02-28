@@ -92,7 +92,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     }
     public function storeTrsAssesmentDetailthree($key,$uuidheader,$uuiddetail,$date)
     { 
-   
+         
         return  type_three_trsdetailassesment::insert([
             'id'=> $uuiddetail,      
             'trsassesmentid'=> $uuidheader,  
@@ -278,7 +278,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'konditevalue'=> $request->konditevalue,   
-            'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
+            'assementscore'=> $request->assementvalue
         ]);
         return $updates;
     }
