@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        CorsMiddleware::class,
+        \App\Http\Middleware\CorsMiddleware::class
     ];
 
     /**
@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'validate_header' => \App\Http\Middleware\validate_header::class // baru
+        'validate_header' => \App\Http\Middleware\validate_header::class, // baru
+        'CorsMiddleware' => \App\Http\Middleware\CorsMiddleware::class // baru
     ];
 }
