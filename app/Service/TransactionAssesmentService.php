@@ -314,7 +314,7 @@ class TransactionAssesmentService extends Controller
                 }else if($findassesmentgroup->first()->type == "5"){
                     $datadetail = $this->transactionassesmentRepository->findFilledTrsAssesmentDetailfivebyId($request->id);
                 } 
-           
+                
             // update header totalbobot
             $this->transactionassesmentRepository->updateTrsAssesmentHeaderTotalBobot($request,$findassesmentgroup->first()->valuetotal);
        
