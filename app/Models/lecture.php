@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class lecture extends Model
+class Lecture extends Model
 {
     use HasFactory;
  
-    protected $table = "lectures";
+    protected $table = "Lectures";
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable.s
      *
      * @var array<int, string>
      */

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class assesmentdetail extends Model
+class AssesmentDetail extends Model
 {
     use HasFactory;
-    protected $table = "assesmentdetails";
+    protected $table = "AssesmentDetails";
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass aassignable.
      *
      * @var array<int, string>
      */

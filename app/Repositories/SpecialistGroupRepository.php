@@ -19,7 +19,7 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
 
     public function storeSpecialistGroup($request,$uuid)
     {
-        return  DB::table("specialistgroups")->insert($request);
+        return  DB::table("SpecialistGroups")->insert($request);
     }
 
     public function findSpecialistGroup($id)
