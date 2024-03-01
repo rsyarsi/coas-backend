@@ -149,6 +149,21 @@ class LectureService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function nim($id)
+    {
+        try {
+            
+            $find = $this->lectureRepository->findLecturebyNIM($id); 
+            if($find->count() < 1){
+                return $this->sendError('Data Dosen tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Dosen ditemukan !');
+
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
     public function showall()
     {
         try {

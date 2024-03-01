@@ -141,4 +141,18 @@ class LectureController extends Controller
     {
         //
     }
+    public function nim($id)
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $LectureRepository =  new LectureRepository();  
+        $userRepository =  new UserRepository();  
+        $Service = new LectureService(
+            $SpecialistRepository,
+            $LectureRepository,
+            $userRepository  
+        );
+            $execute =  $Service->nim($id);
+            return $execute;
+    }
 }

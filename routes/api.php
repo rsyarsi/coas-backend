@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AbsenceStudentController;
 use App\Http\Controllers\Api\AssesmentDetailController;
 use App\Http\Controllers\Api\AssesmentGroupController;
 use App\Http\Controllers\Api\EmrPedodontiController;
@@ -110,6 +111,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("create", [LectureController::class, "store"]);
                         Route::post("update", [LectureController::class, "update"]);
                         Route::get("view/id/{id}", [LectureController::class, "show"]);
+                        Route::get("view/nim/{id}", [LectureController::class, "nim"]);
                         Route::get("viewall", [LectureController::class, "create"]);
                         Route::get("viewallwithotpaging", [LectureController::class, "viewallwithotpaging"]);
                     });
@@ -152,6 +154,11 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("listksmgigi", [PatientListController::class, "create"]);
                         Route::post("listksmgigihistory", [PatientListController::class, "update"]);
                         Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);
+                        Route::group(['prefix' => 'absence'], function () {
+                            Route::post("create", [AbsenceStudentController::class, "store"]);
+                            Route::post("findbydate", [AbsenceStudentController::class, "update"]);
+                            Route::post("reportmonthbystudent", [AbsenceStudentController::class, "reportmonthbystudent"]);
+                        });
                     });
                 });
                 Route::group(['prefix' => 'emr'], function () {
