@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Repositories;
- 
-use App\Models\SpecialistGroup;
+
+use App\Models\specialistgroup;
 use Illuminate\Support\Facades\DB; 
 use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface; 
 
@@ -10,26 +10,26 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
 {
     public function allSpecialistGroup()
     {
-        return SpecialistGroup::orderBy('id', 'DESC')->latest()->paginate(10);
+        return specialistgroup::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {
-        return SpecialistGroup::all();
+        return specialistgroup::all();
     }
 
     public function storeSpecialistGroup($request,$uuid)
     {
-        return  DB::table("SpecialistGroups")->insert($request);
+        return  DB::table("specialistgroups")->insert($request);
     }
 
     public function findSpecialistGroup($id)
     {
-        return SpecialistGroup::where('id',$id)->get();
+        return specialistgroup::where('id',$id)->get();
     }
 
     public function updateSpecialistGroup($request)
     {
-        $updates = SpecialistGroup::where('id', $request->id)->update([
+        $updates = specialistgroup::where('id', $request->id)->update([
             'name' => $request->name,
             'active' => $request->active 
         ]);
@@ -38,7 +38,7 @@ class SpecialistGroupRepository implements SpecialistGroupRepositoryInterface
 
     public function destroySpecialistGroup($id)
     {
-        $category = SpecialistGroup::find($id);
+        $category = specialistgroup::find($id);
         $category->delete();
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Repositories;
- 
-use App\Models\Lecture;
+
+use App\Models\lecture;
 use App\Repositories\Interfaces\LectureRepositoryInterface; 
 use Illuminate\Support\Facades\DB;  
 
@@ -10,34 +10,34 @@ class LectureRepository implements LectureRepositoryInterface
 {
     public function allLecture()
     {
-        return Lecture::orderBy('id', 'DESC')->latest()->paginate(10);
+        return lecture::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {
-        return Lecture::all();
+        return lecture::all();
     }
 
     public function storeLecture($request,$uuid)
     {
-        return  Lecture::insert($request);
+        return  lecture::insert($request);
     }
 
     public function findLecture($id)
     {
-        return Lecture::where('id',$id)->get();
+        return lecture::where('id',$id)->get();
     }
     public function findLecturebyNIM($nim)
     {
-        return Lecture::where('nim',$nim)->get();
+        return lecture::where('nim',$nim)->get();
     }
     public function findAssesmentbyGroup($id)
     {
-        return Lecture::where('assesmentgroupID',$id)->get();
+        return lecture::where('assesmentgroupID',$id)->get();
     }
 
     public function updateLecture($request)
     {
-        $updates = Lecture::where('id', $request['id'])->update([
+        $updates = lecture::where('id', $request['id'])->update([
             'specialistid' => $request['specialistid'],            
             'nim' => $request['nim'], 
             'name' => $request['name'],             
@@ -49,7 +49,7 @@ class LectureRepository implements LectureRepositoryInterface
 
     public function destroyLecture($id)
     {
-        $category = Lecture::find($id);
+        $category = lecture::find($id);
         $category->delete();
     }
 }

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AssesmentGroup extends Model
+class assesmentgroup extends Model
 {
     use HasFactory;
-    protected $table = "AssesmentGroups";
+    protected $table = "assesmentgroups";
     /**
      * The attributes that are mass assignable.s
      *

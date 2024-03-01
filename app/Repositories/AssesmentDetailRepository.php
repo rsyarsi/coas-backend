@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Repositories;
- 
-use App\Models\AssesmentDetail;
+
+use App\Models\assesmentdetail;
 use App\Repositories\Interfaces\AssesmentDetailRepositoryInterface; 
 use Illuminate\Support\Facades\DB;  
 
@@ -10,31 +10,31 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 {
     public function allAssesmentDetail()
     {
-        return AssesmentDetail::orderBy('id', 'DESC')->latest()->paginate(10);
+        return assesmentdetail::orderBy('id', 'DESC')->latest()->paginate(10);
     }
     public function viewallwithotpaging()
     {
-        return AssesmentDetail::all();
+        return assesmentdetail::all();
     }
     public function storeAssesmentDetail($request,$uuid)
     {
-        return  AssesmentDetail::insert($request);
+        return  assesmentdetail::insert($request);
     }
 
     public function findAssesmentDetail($id)
     {
-        return AssesmentDetail::where('id',$id)->get();
+        return assesmentdetail::where('id',$id)->get();
     }
 
     public function findAssesmentbyGroup($id)
     {
-        return AssesmentDetail::where('assesmentgroupid',$id)->get();
+        return assesmentdetail::where('assesmentgroupid',$id)->get();
     }
 
     public function updateAssesmentDetail($request)
     {
       
-        $updates = AssesmentDetail::where('id', $request['id'])->update([
+        $updates = assesmentdetail::where('id', $request['id'])->update([
             'assesmentgroupid' => $request['assesmentgroupid'],
             'assesmentnumbers' => $request['assesmentnumbers'],
             'assesmentdescription' => $request['assesmentdescription'],             
@@ -50,12 +50,12 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
 
     public function destroyAssesmentDetail($id)
     {
-        $category = AssesmentDetail::find($id);
+        $category = assesmentdetail::find($id);
         $category->delete();
     }
 
     public function validateSubAssesment($request){
-        return AssesmentDetail::where('assesmentgroupid', $request->assesmentgroupid)
+        return assesmentdetail::where('assesmentgroupid', $request->assesmentgroupid)
         ->where('kodesub', $request->index_sub)        
         ->where('active', '1')
         ->get();

@@ -2,10 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\specialist;
-use App\Models\SpecialistGroup;
+use App\Models\specialist; 
 use Illuminate\Support\Facades\DB; 
-use App\Repositories\Interfaces\SpecialistGroupRepositoryInterface;
 use App\Repositories\Interfaces\SpecialistRepositoryInterface;
 
 class SpecialistRepository implements SpecialistRepositoryInterface
