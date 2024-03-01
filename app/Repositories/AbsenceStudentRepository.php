@@ -34,7 +34,7 @@ class AbsenceStudentRepository implements AbsenceStudentRepositoryInterface
     }
 
     public function absenceperiodemonth($request){
-        return absencestudent::where('periode',$request->periode)
+        return DB::table("viewabsencemonthreport")->where('periode',$request->periode)
         ->where('studentid',$request->studentid)        
         ->get();
     }
