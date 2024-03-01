@@ -9,7 +9,7 @@ class AssesmentDetail extends Model
 {
     use HasFactory;
     protected $table = "AssesmentDetails";
-    /**
+    /**sssss
      * The attributes that are mass aassignable.
      *
      * @var array<int, string>
