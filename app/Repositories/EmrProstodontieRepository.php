@@ -283,4 +283,11 @@ class EmrProstodontieRepository implements EmrProstodontieRepositoryInterface
         ]);
         return $updates;
     }
+    public function uploadodontogram($data,$awsurl)
+    { 
+        $updates = emrprostodontie::where('id', $data->id)->update([
+            'fotoodontogram' => $awsurl
+        ]);
+        return $updates;
+    }
 }

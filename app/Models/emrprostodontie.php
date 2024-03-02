@@ -15,6 +15,7 @@ class emrprostodontie extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        "fotoodontogram",
         "noregister",
         "noepisode",        
         "designngigi",

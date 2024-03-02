@@ -146,4 +146,14 @@ class EmrProstodontieController extends Controller
         $execute =  $services->validatelecture($request);
         return $execute;
     }
+    public function uploadodontogram(Request $request)
+    {
+        //
+        $repo =  new EmrProstodontieRepository(); 
+        $aReturBeliService = new EmrProstodontieService(
+            $repo
+        );
+        $execute =  $aReturBeliService->uploadodontogram($request);
+        return $execute;
+    }
 }

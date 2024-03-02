@@ -241,6 +241,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                             Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                             Route::post("uploadgigi", [EmrProstodontieController::class, "uploadfoto"]);   
+                            Route::post("uploadodontogram", [EmrProstodontieController::class, "uploadodontogram"]);   
                         });
                         Route::group(['prefix' => 'logbook'], function () {
                             Route::post("create", [EmrProstodontieController::class, "logbookcreate"]);

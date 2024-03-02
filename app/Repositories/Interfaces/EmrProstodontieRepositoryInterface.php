@@ -15,6 +15,7 @@ interface EmrProstodontieRepositoryInterface
     public function findlogbookbyId($data);
     public function findlogbookAll($data);
     public function validatelecture($data);     
-    public function uploadfoto($request,$upload); 
+    public function uploadfoto($request,$upload);
+    public function uploadodontogram($request,$upload);
 
 }

@@ -505,7 +505,44 @@ class EmrProstodontieService extends Controller
         }
 
     }
+    public function uploadodontogram(Request $request)
+    {
+        $request->validate([ 
+            "id" => "required",  
+            "select_file" => "required|max:10000",
+            "notes" => "required" 
+        ]);
+      
+        try {
+           
+            // Db Transaction
+            DB::beginTransaction(); 
+             
+            $image = $request->file('select_file');
+            $uuid = Uuid::uuid4();
+            $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+            $image->move(storage_path('app/'), $new_name);
+            $keyaws = 'emr/prostodonti/odontogram/';
+            $upload = $this->UploadtoAWS($new_name,$keyaws);
 
+            $data = [
+                'id' => $request->id,
+                'select_file' => $upload
+            ];
+ 
+           $this->emrprostodontieRepository->uploadodontogram($request,$upload);
+            DB::commit();
+
+            unlink(storage_path() . "/app/". $new_name);
+            return $this->sendResponse($data, 'Foto Odontogram berhasil di upload !');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
     //logbook 
     public function logbookcreate(Request $request)
     {
