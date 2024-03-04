@@ -920,7 +920,7 @@ class EmrKonservasiService extends Controller
                     'id' => $request->id,
                     'select_file' => $upload
                 ];
-                $this->emrkonservasiRepository->uploadrestorasibefore($request,$upload);
+                $this->emrkonservasiRepository->uploadrestorasiafter($request,$upload);
                 DB::commit();
     
                 unlink(storage_path() . "/app/". $new_name);
