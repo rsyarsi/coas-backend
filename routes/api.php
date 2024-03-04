@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AbsenceStudentController;
 use App\Http\Controllers\Api\AssesmentDetailController;
 use App\Http\Controllers\Api\AssesmentGroupController;
+use App\Http\Controllers\Api\AssesmentGroupFinalController;
 use App\Http\Controllers\Api\EmrPedodontiController;
 use App\Http\Controllers\Api\EmrOrtodonsiController;
 use App\Http\Controllers\Api\EmrProstodontieController;
@@ -99,6 +100,14 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("viewall", [AssesmentGroupController::class, "create"]);
                         Route::get("viewallwithotpaging", [AssesmentGroupController::class, "viewallwithotpaging"]);
                         Route::get("view/idspecialist/{id}", [AssesmentGroupController::class, "byspecialist"]); 
+                    });
+                    Route::group(['prefix' => 'assesmentgroupfinals'], function () { 
+                        Route::post("create", [AssesmentGroupFinalController::class, "store"]);
+                        Route::post("update", [AssesmentGroupFinalController::class, "update"]); 
+                        Route::get("view/id/{id}", [AssesmentGroupFinalController::class, "show"]);
+                        Route::get("viewall", [AssesmentGroupFinalController::class, "create"]);
+                        Route::get("viewallwithotpaging", [AssesmentGroupFinalController::class, "viewallwithotpaging"]);
+                        Route::get("view/idspecialist/{id}", [AssesmentGroupFinalController::class, "byspecialist"]); 
                     });
                     Route::group(['prefix' => 'assesmentdetails'], function () { 
                         Route::post("create", [AssesmentDetailController::class, "store"]);

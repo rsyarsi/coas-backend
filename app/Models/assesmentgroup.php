@@ -14,8 +14,14 @@ class assesmentgroup extends Model
      *
      * @var array<int, string>
      */
+
+   
+
+
     protected $fillable = [
         'specialistID',
+        'idassesmentgroupfinal',    
+        'isskala',
         'assementgroupname',         
         'type',
         'valuetotal',
