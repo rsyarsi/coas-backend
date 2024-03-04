@@ -5,15 +5,17 @@ namespace App\Service;
 use Exception;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
+use App\Traits\AwsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\EmrKonservasiRepositoryInterface;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use App\Repositories\Interfaces\EmrKonservasiRepositoryInterface;
 
 class EmrKonservasiService extends Controller
 {
+    use AwsTrait;
     private $emrkonservasiRepository;
 
     public function __construct(EmrKonservasiRepositoryInterface $emrkonservasiRepository)
