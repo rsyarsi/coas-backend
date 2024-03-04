@@ -509,8 +509,7 @@ class EmrProstodontieService extends Controller
     {
         $request->validate([ 
             "id" => "required",  
-            "select_file" => "required|max:10000",
-            "notes" => "required" 
+            "select_file" => "required|max:10000" 
         ]);
       
         try {
@@ -560,11 +559,7 @@ class EmrProstodontieService extends Controller
            
             // Db Transaction
             DB::beginTransaction(); 
-            // $findmedicalhistory = $this->emrpedodontiRepository->findmedicaldentalhistory($request->emrid);
-            // dd($findmedicalhistory);
-            // if($findmedicalhistory->count() < 1){
-            //     return $this->sendError('Medical History tidak ditemukan !', []);
-            // }
+  
             $uuid = Uuid::uuid4();
             $data = [
                 'id' => $uuid,                
