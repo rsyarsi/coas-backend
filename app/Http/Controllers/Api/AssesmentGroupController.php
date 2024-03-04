@@ -86,7 +86,18 @@ class AssesmentGroupController extends Controller
         $execute =  $Service->show($id);
         return $execute;
     }
-
+    public function byspecialist($id)
+    {
+        //
+        $Repository =  new SpecialistRepository(); 
+        $AssesmentRepository =  new AssesmentGroupRepository(); 
+        $Service = new AssesmentGroupService(
+            $Repository,
+            $AssesmentRepository
+        );
+        $execute =  $Service->byspecialist($id);
+        return $execute;
+    }
     /**
      * Show the form for editing the specified resource.
      *

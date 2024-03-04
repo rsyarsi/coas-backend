@@ -858,4 +858,76 @@ class EmrKonservasiService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function uploadrestorasibefore(Request $request)
+    {
+      
+            $request->validate([ 
+                "id" => "required",                   
+                "select_file" => "required|max:10000" 
+            ]);
+          
+            try {
+               
+                // Db Transaction
+                DB::beginTransaction(); 
+                 
+                $image = $request->file('select_file');
+                $uuid = Uuid::uuid4();
+                $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+                $image->move(storage_path('app/'), $new_name);
+                $keyaws = 'emr/konservasi/reparasi/beofre/';
+                $upload = $this->UploadtoAWS($new_name,$keyaws);
+    
+                $data = [
+                    'id' => $request->id,
+                    'select_file' => $upload
+                ];
+                $this->emrkonservasiRepository->uploadrestorasibefore($request,$upload);
+                DB::commit();
+    
+                unlink(storage_path() . "/app/". $new_name);
+                return $this->sendResponse($data, 'Foto Restorasi sebelum perawatan berhasil di upload !');
+    
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    }
+    public function uploadrestorasiafter(Request $request)
+    {
+      
+            $request->validate([ 
+                "id" => "required",                   
+                "select_file" => "required|max:10000" 
+            ]);
+          
+            try {
+               
+                // Db Transaction
+                DB::beginTransaction(); 
+                 
+                $image = $request->file('select_file');
+                $uuid = Uuid::uuid4();
+                $new_name = $uuid. '.' . $image->getClientOriginalExtension();
+                $image->move(storage_path('app/'), $new_name);
+                $keyaws = 'emr/konservasi/reparasi/beofre/';
+                $upload = $this->UploadtoAWS($new_name,$keyaws);
+    
+                $data = [
+                    'id' => $request->id,
+                    'select_file' => $upload
+                ];
+                $this->emrkonservasiRepository->uploadrestorasibefore($request,$upload);
+                DB::commit();
+    
+                unlink(storage_path() . "/app/". $new_name);
+                return $this->sendResponse($data, 'Foto Restorasi sebelum perawatan berhasil di upload !');
+    
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::info($e->getMessage());
+                return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+            }
+    }
 }

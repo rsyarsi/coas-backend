@@ -15,7 +15,9 @@ class emrkonservasi extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'noregister',
+        'noregister',        
+        'uploadrestorasibefore',
+        'uploadrestorasiafter', 
         'noepisode',
         'nomorrekammedik',
         'tanggal',

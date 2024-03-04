@@ -18,4 +18,7 @@ interface EmrKonservasiRepositoryInterface
     public function showbyidjob($data);      
     public function showalljob($data);   
     public function verifydpk($data);  
+    public function uploadrestorasibefore($data,$upload);    
+    public function uploadrestorasiafter($data,$upload);  
+  
 }

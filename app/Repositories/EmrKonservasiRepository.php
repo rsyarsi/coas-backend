@@ -367,4 +367,18 @@ class EmrKonservasiRepository implements EmrKonservasiRepositoryInterface
     { 
         return emrkonservasi_job::where('idemr',$data->idemr)->where('active','1')->orderBy('id', 'DESC')->latest()->paginate(10);
     }
+    public function uploadrestorasibefore($data,$awsurl)
+    { 
+        $updates = emrkonservasi::where('id', $data->id)->update([ 
+            'uploadrestorasibefore' => $awsurl 
+        ]);
+        return $updates;
+    }
+    public function uploadrestorasiafter($data,$awsurl)
+    { 
+        $updates = emrkonservasi::where('id', $data->id)->update([ 
+            'uploadrestorasiafter' => $awsurl 
+        ]);
+        return $updates;
+    }
 }

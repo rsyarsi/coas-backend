@@ -427,16 +427,16 @@ class TransactionAssesmentService extends Controller
                     } 
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id)->first();
-                }else if($$request->assesmenttype == "3"){
+                }else if($request->assesmenttype == "3"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailthreeSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailthreebyId($request->id)->first();
-                }else if($$request->assesmenttype == "4"){
+                }else if($request->assesmenttype == "4"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfourSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfourbyId($request->id)->first();
-                }else if($$request->assesmenttype == "5"){
+                }else if($request->assesmenttype == "5"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfiveSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id)->first();
-                } 
+                }  
                 
             // updatesub
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiSub($request);

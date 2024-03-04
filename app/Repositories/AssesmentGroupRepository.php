@@ -20,7 +20,7 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     {
         return  DB::table("assesmentgroups")->insert($request);
     }
-
+    
     public function findAssesmentGroup($id)
     {
         return assesmentgroup::where('id',$id)->get();
@@ -42,5 +42,9 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     {
         $category = assesmentgroup::find($id);
         $category->delete();
+    }
+    public function findAssesmentGroupbyspecialist($id)
+    {
+        return assesmentgroup::where('specialistid',$id)->get();
     }
 }

@@ -156,4 +156,18 @@ class AssesmentGroupService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function byspecialist($id)
+    {
+        try {
+            $find = $this->AssesmentGroupRepository->findAssesmentGroupbyspecialist($id);
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Group Penilaian ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

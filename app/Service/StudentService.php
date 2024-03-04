@@ -223,4 +223,19 @@ class StudentService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+    public function byspecialist($id)
+    {
+        try {
+            
+            $find = $this->studentRepository->findStudentbyspecialist($id); 
+            if($find->count() < 1){
+                return $this->sendError('Data Mahasiswa tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Mahasiswa ditemukan !');
+
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
 }

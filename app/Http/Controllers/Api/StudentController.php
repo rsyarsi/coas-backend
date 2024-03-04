@@ -212,4 +212,27 @@ class StudentController extends Controller
     {
         //
     }
+    public function byspecialist($id)
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $userRepository = new UserRepository();
+            $Service = new StudentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $userRepository
+  
+            );
+            $execute =  $Service->byspecialist($id);
+            return $execute;
+    }
 }

@@ -140,4 +140,20 @@ class EmrKonservasiController extends Controller
         $execute =  $services->verifydpk($request);
         return $execute;
     }
+    public function uploadrestorasibefore(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->uploadrestorasibefore($request);
+        return $execute;
+    }
+    public function uploadrestorasiafter(Request $request)
+    {
+        //
+        $repo =  new EmrKonservasiRepository();
+        $services = new EmrKonservasiService($repo);
+        $execute =  $services->uploadrestorasiafter($request);
+        return $execute;
+    }
 }

@@ -98,6 +98,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("view/id/{id}", [AssesmentGroupController::class, "show"]);
                         Route::get("viewall", [AssesmentGroupController::class, "create"]);
                         Route::get("viewallwithotpaging", [AssesmentGroupController::class, "viewallwithotpaging"]);
+                        Route::get("view/idspecialist/{id}", [AssesmentGroupController::class, "byspecialist"]); 
                     });
                     Route::group(['prefix' => 'assesmentdetails'], function () { 
                         Route::post("create", [AssesmentDetailController::class, "store"]);
@@ -122,6 +123,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("view/nim/{id}", [StudentController::class, "nim"]);
                         Route::get("viewall", [StudentController::class, "create"]); 
                         Route::get("viewallwithotpaging", [StudentController::class, "viewallwithotpaging"]); 
+                        Route::get("view/idspecialist/{id}", [StudentController::class, "byspecialist"]); 
                     });
                     Route::group(['prefix' => 'hospitals'], function () { 
                         Route::post("create", [HospitalController::class, "store"]);
@@ -256,7 +258,9 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("viewemrbyRegOperator", [EmrKonservasiController::class, "update"]);
                         Route::group(['prefix' => 'create'], function () {
                             Route::post("medicaldentalhistory", [EmrKonservasiController::class, "store"]);
-                        });;
+                        });
+                        Route::post("uploadrestorasibefore", [EmrKonservasiController::class, "uploadrestorasibefore"]);  
+                        Route::post("uploadrestorasiafter", [EmrKonservasiController::class, "uploadrestorasiafter"]);  
                         Route::group(['prefix' => 'jobs'], function () {
                             Route::post("create", [EmrKonservasiController::class, "createjobs"]);  
                             Route::post("update", [EmrKonservasiController::class, "updatejobs"]);  
@@ -264,7 +268,6 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::post("showbyid", [EmrKonservasiController::class, "showbyidjobs"]);  
                             Route::post("showall", [EmrKonservasiController::class, "showalljobs"]);  
                             Route::post("verifydpk", [EmrKonservasiController::class, "verifydpk"]);  
-                            
                         });
                     });
                     Route::group(['prefix' => 'periodonti'], function () {

@@ -114,7 +114,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assementvalue'=> $key['assementvalue'],      
             'transactiondate'=> $key['dateupdatedetail'],              
             'konditevalue'=> $key['konditevalue'],   
-            'assementscore'=> $key['assesmentbobotvalue']*$key['assementvalue']
+            'assesmentscore'=> $key['assesmentbobotvalue']*$key['assementvalue']
         ]);
         return $updates;
     }
@@ -129,7 +129,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assesmentskala'=> $key->assesmentskalavalue,
             'kodesub'=> $key->kodesub,
             'assementvalue'=> '0',     
-            'assementscore'=> '0', 
+            'assesmentscore'=> '0', 
             'active' => '1'
         ]);
     }
@@ -140,7 +140,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'assesmentskala'=> $request->assesmentskala,   
-            'assementscore'=> $request->assementvalue
+            'assesmentscore'=> $request->assementvalue
         ]);
         return $updates;
     }
@@ -162,10 +162,10 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentDetailfive($key)
     { 
    
-        $updates = type_four_trsdetailassesment::where('id', $key['iddetail'])->update([
+        $updates = type_five_trsdetailassesment::where('id', $key['iddetail'])->update([
             'assementvalue'=> $key['assementvalue'],      
             'transactiondate'=> $key['dateupdatedetail'],       
-            'assementscore'=> $key['assesmentbobotvalue']*$key['assementvalue']
+            'assesmentscore'=> $key['assesmentbobotvalue']*$key['assementvalue']
         ]);
         return $updates;
     }
@@ -229,13 +229,13 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         return  DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailthreebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypethree")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailfourbyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypefour")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function findFilledTrsAssesmentDetailfivebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
+        return DB::table("trsassesmentdetailtypefive")->where('trsassesmentid',$id)->orderBy('index_sub', 'ASC')->orderBy('assesmentnumbers', 'ASC')->latest()->paginate(10);
     }
     public function updateTrsAssesmentHeaderTotalBobot($request,$totalbobot)
     { 
@@ -253,13 +253,13 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         return  DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
     }
     public function findFillednoPagingTrsAssesmentDetailthreebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+        return DB::table("trsassesmentdetailtypethree")->where('id',$id)->get();
     }
     public function findFillednoPagingTrsAssesmentDetailfourbyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+        return DB::table("trsassesmentdetailtypefour")->where('id',$id)->get();
     }
     public function findFillednoPagingTrsAssesmentDetailfivebyId($id){
-        return DB::table("trsassesmentdetailtypeone")->where('id',$id)->get();
+        return DB::table("trsassesmentdetailtypefive")->where('id',$id)->get();
     }
     public function updateTrsAssesmentDetailoneSingle($request)
     { 
@@ -278,7 +278,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'konditevalue'=> $request->konditevalue,   
-            'assementscore'=> $request->assementvalue
+            'assesmentscore'=> $request->assementvalue
         ]);
         return $updates;
     }
@@ -289,17 +289,17 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,              
             'assesmentskala'=> $request->assesmentskala,   
-            'assementscore'=> $request->assementvalue
+            'assesmentscore'=> $request->assementvalue
         ]);
         return $updates;
     }
     public function updateTrsAssesmentDetailfiveSingle($request)
     { 
    
-        $updates = type_four_trsdetailassesment::where('id', $request->id)->update([
+        $updates = type_five_trsdetailassesment::where('id', $request->id)->update([
             'assementvalue'=> $request->assementvalue,      
             'transactiondate'=> $request->dateupdatedetail,       
-            'assementscore'=> $request->assesmentbobotvalue*$request->assementvalue
+            'assesmentscore'=> $request->assesmentbobotvalue*$request->assementvalue
         ]);
         return $updates;
     }

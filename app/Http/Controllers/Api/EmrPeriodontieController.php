@@ -90,7 +90,7 @@ class EmrPeriodontieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //a
     }
 
     public function uploadfotoklinisintraoral(Request $request)

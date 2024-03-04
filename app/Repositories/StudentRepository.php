@@ -54,5 +54,8 @@ class StudentRepository implements StudentRepositoryInterface
         ]);
         return $updates;
     }
- 
+    public function findStudentbyspecialist($id)
+    {
+        return Student::where('specialistid',$id)->get();
+    }
 }
