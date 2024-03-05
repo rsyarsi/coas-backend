@@ -275,7 +275,7 @@ class TransactionAssesmentService extends Controller
 
             // update header
             $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->id);
-            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->id,$sumdata);
+          //  $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->id,$sumdata);
        
             DB::commit();
             return $this->sendResponse([], 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
@@ -419,7 +419,6 @@ class TransactionAssesmentService extends Controller
                         return $this->sendError('Assesment Detail tidak ditemukan !', []);
                     }
                 } 
-        
                 if($request->assesmenttype == "1"){
 
                     if($request->assementvalue > $request->assesmentbobotvalue){
@@ -427,24 +426,50 @@ class TransactionAssesmentService extends Controller
                     } 
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id)->first();
+
+                    // updatesub
+                    $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiSub($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentsub($request,$sumdata);
+
+                    // update header
+                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
+                    $totalnilai = ($sumdata_hdr*$datadetail->bobotprosenfinal)/100;
+                    $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata_hdr,$totalnilai);
                 }else if($request->assesmenttype == "3"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailthreeSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailthreebyId($request->id)->first();
+
+                    // updatesub
+                    $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailthreebyIdTransaksiSub($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentsub($request,$sumdata);
+
+                    // update header
+                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
+                    $totalnilai = ($sumdata_hdr*$datadetail->bobotprosenfinal)/100;
+                    $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata_hdr,$totalnilai);
                 }else if($request->assesmenttype == "4"){
+                    if ($request->assementvalue > $request->assesmentskalavalueend || $request->assementvalue < $request->assesmentskalavaluestart){
+                        return $this->sendError('Nilai yang anda masukan diluar Skala Nilai !', []);
+                    }
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfourSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfourbyId($request->id)->first();
+
+                    // updatesub
+                    $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailfourbyIdTransaksiSub($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentsubfour($request,$sumdata);
+
+                    // update header
+                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailfourbyIdTransaksiHeader($request->idhdr);
+                    $totalnilai = (($sumdata_hdr/2)*$datadetail->bobotprosenfinal)/100;
+                    $this->transactionassesmentRepository->updateTrsAssesmentHeaderfour($request->idhdr,$sumdata_hdr,$totalnilai);
                 }else if($request->assesmenttype == "5"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfiveSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id)->first();
                 }  
                 
             // updatesub
-            $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiSub($request);
-            $this->transactionassesmentRepository->updateTrsAssesmentsub($request,$sumdata);
+            //$this->transactionassesmentRepository->updateTrsAssesmentsub($request,$sumdata);
 
-            // update header
-            $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
-            $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata);
 
 
             $response = [

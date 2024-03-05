@@ -199,10 +199,34 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     }
 
     public function sumTrsAssesmentDetailonebyIdTransaksiHeader($uuid){
-        return type_one_trsdetailassesment::where('trsassesmentid',$uuid)->sum('assementscore');
+        return type_one_trsdetailassesment::where('trsassesmentid',$uuid)
+        ->where('kodesub', '0')
+        ->sum('assementscore');
+    }
+    public function sumTrsAssesmentDetailthreebyIdTransaksiHeader($uuid){
+        return type_three_trsdetailassesment::where('trsassesmentid',$uuid)
+        ->where('kodesub', '0')
+        ->sum('assesmentscore');
+    }
+    public function sumTrsAssesmentDetailfourbyIdTransaksiHeader($uuid){
+        return type_four_trsdetailassesment::where('trsassesmentid',$uuid)
+        ->where('kodesub', '0')
+        ->sum('assesmentscore');
     }
     public function sumTrsAssesmentDetailonebyIdTransaksiSub($request){
         return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$request->idhdr)
+        ->where('index_sub', $request->index_sub)
+        ->where('kodesub', '0')
+        ->sum('assementscore');
+    }
+    public function sumTrsAssesmentDetailthreebyIdTransaksiSub($request){
+        return DB::table("trsassesmentdetailtypethree")->where('trsassesmentid',$request->idhdr)
+        ->where('index_sub', $request->index_sub)
+        ->where('kodesub', '0')
+        ->sum('assementscore');
+    }
+    public function sumTrsAssesmentDetailfourbyIdTransaksiSub($request){
+        return DB::table("trsassesmentdetailtypefour")->where('trsassesmentid',$request->idhdr)
         ->where('index_sub', $request->index_sub)
         ->where('kodesub', '0')
         ->sum('assementscore');
@@ -216,11 +240,39 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ]);
         return $updates;
     }
-    public function updateTrsAssesmentHeader($id,$scoretotal)
+    public function updateTrsAssesmentsubthree($request,$scoretotal)
+    { 
+        $updates = type_three_trsdetailassesment::where('trsassesmentid', $request->idhdr)
+        ->where('kodesub', $request->index_sub)
+        ->update([
+            'assesmentscore'=> $scoretotal
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentsubfour($request,$scoretotal)
+    { 
+        $updates = type_four_trsdetailassesment::where('trsassesmentid', $request->idhdr)
+        ->where('kodesub', $request->index_sub)
+        ->update([
+            'assesmentscore'=> $scoretotal
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentHeader($id,$scoretotal,$totalnilai)
     { 
    
         $updates = trsassesment::where('id', $id)->update([
-            'grandotal'=> $scoretotal
+            'grandotal'=> $scoretotal,
+            'assesmentfinalvalue'=> $totalnilai,
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentHeaderfour($id,$scoretotal,$totalnilai)
+    { 
+   
+        $updates = trsassesment::where('id', $id)->update([
+            'grandotal'=> $scoretotal,
+            'assesmentfinalvalue'=> $totalnilai,
         ]);
         return $updates;
     }

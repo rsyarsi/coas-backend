@@ -37,12 +37,19 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
         $updates = assesmentdetail::where('id', $request['id'])->update([
             'assesmentgroupid' => $request['assesmentgroupid'],
             'assesmentnumbers' => $request['assesmentnumbers'],
-            'assesmentdescription' => $request['assesmentdescription'],             
-            'assesmentbobotvalue' => $request['assesmentbobotvalue'],  
-            'assesmentskalavalue' => $request['assesmentskalavalue'],           
-            'kodesub' => $request['kodesub'],
-            'kode_sub_name' => $request['kode_sub_name'], 
-            'index_sub' => $request['index_sub'],
+            'assesmentdescription' => $request['assesmentdescription'], 
+            'kode_sub_name' =>['kode_sub_name'],
+            'assesmentbobotvalue' => $request['assesmentbobotvalue'], 
+            'assesmentvaluestart' => $request['assesmentvaluestart'], 
+            'assesmentvalueend' => $request['assesmentvalueend'], 
+            'assesmentskalavalue' => $request['assesmentskalavalue'],  
+            'assesmentskalavaluestart' => $request['assesmentskalavaluestart'], 
+            'assesmentskalavalueend' => $request['assesmentskalavalueend'], 
+            'assesmentkonditevalue' => $request['assesmentkonditevalue'], 
+            'assesmentkonditevaluestart' => $request['assesmentkonditevaluestart'], 
+            'assesmentkonditevalueend' => $request['assesmentkonditevalueend'],
+            'kodesub' => $request['kodesub'],   
+            'index_sub' => $request['index_sub'],   
             'active' => $request['active'] 
         ]);
         return $updates;
