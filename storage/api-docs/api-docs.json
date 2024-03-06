@@ -1,104 +1,291 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Dokumentasi API SIKMFKG YARSI",
-        "description": "Lorem Ipsum",
-        "contact": {
-            "email": "muchsin@rsyarsi.co.id"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "title": "SIKMFKG YARSI",
+        "description": "Sistem Informasi Kepaniteraan Mahasiswa",
         "version": "1.0.0"
     },
-    "servers": [
-        {
-            "url": "http://127.0.0.1:8000/api/v1",
-            "description": "Demo API Server"
-        }
-    ],
     "paths": {
-        "/kategori-berita": {
+        "/api/v2/master/hospitals/select": {
             "get": {
                 "tags": [
-                    "Berita"
+                    "Master Hospital"
                 ],
-                "summary": "Kategori Berita",
-                "description": "Mengambil Data Kategori Berita",
-                "operationId": "kategoriBerita",
+                "summary": "Select",
+                "operationId": "227a5cf0f2264e24bd66959f1630e4f0",
                 "responses": {
                     "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "success": true,
-                                    "message": "Berhasil mengambil Kategori Berita",
-                                    "data": [
-                                        {
-                                            "id": "1",
-                                            "nama_kategori": "Pendidikan"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
+                        "description": "Success."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/masterdata/create": {
+        "/api/v2/master/hospitals": {
             "get": {
                 "tags": [
-                    "Year"
+                    "Master Hospital"
                 ],
-                "summary": "Tambah Tahun",
-                "description": "Untuk Input data Master Tahun",
-                "operationId": "tambahTahun",
+                "summary": "Index",
+                "operationId": "402e0624d902a99dd1e5efe5a41af399",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Hospital's Pagination Limit.",
+                        "required": false
+                    },
+                    {
+                        "name": "current_page",
+                        "in": "query",
+                        "description": "Hospital's Pagination Current Page.",
+                        "required": false
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Hospital's Pagination Order.",
+                        "required": false
+                    },
+                    {
+                        "name": "filter[]",
+                        "in": "query",
+                        "description": "Hospital's Pagination Filter.",
+                        "required": false
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": true,
-                                    "code": 200,
-                                    "message": "Tahun Berhasil dibuat !",
-                                    "data": true
-                                }
+                        "description": "Success."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Master Hospital"
+                ],
+                "summary": "Store",
+                "operationId": "19b0afaa6a32c6f1f93c40432e94cc7c",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Hospital's Name.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
-                }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/masterdata/update": {
+        "/api/v2/master/hospitals/{id}": {
             "get": {
                 "tags": [
-                    "Year"
+                    "Master Hospital"
                 ],
-                "summary": "Update Tahun",
-                "description": "Untuk Update data Master Tahun",
-                "operationId": "updateTahun",
+                "summary": "Show",
+                "operationId": "a17c82936336224fedac7b324d2abba5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Hospital's Identifier.",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": true,
-                                    "code": 200,
-                                    "message": "Tahun Berhasil diupdate !",
-                                    "data": 1
-                                }
+                        "description": "Success."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Master Hospital"
+                ],
+                "summary": "Update",
+                "operationId": "91c915bd59409f246ce67a3f625663cc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Hospital's Identifier.",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Hospital's Name.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
-                }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Master Hospital"
+                ],
+                "summary": "Destroy",
+                "operationId": "9421397a938068270fdce2c63f689b31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Hospital's Identifier.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/master/hospitals/activate/{id}": {
+            "put": {
+                "tags": [
+                    "Master Hospital"
+                ],
+                "summary": "Activate",
+                "operationId": "ac1882e609ed95b16b7b267b771c1823",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Hospital's Identifier.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/master/hospitals/deactivate/{id}": {
+            "put": {
+                "tags": [
+                    "Master Hospital"
+                ],
+                "summary": "Deactivate",
+                "operationId": "2c7468e54fdaa238c621b30bfee06be6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Hospital's Identifier.",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created."
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity."
+                    },
+                    "404": {
+                        "description": "Not Found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

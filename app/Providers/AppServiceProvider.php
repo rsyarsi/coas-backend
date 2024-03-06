@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        \Tripteki\RequestResponseQuery\Providers\RequestResponseQueryServiceProvider::ignoreConfig();
         //
         $this->app->bind(YearRepositoryInterface::class, YearRepository::class);
         $this->app->bind(EmrPedodontiRepositoryInterface::class, EmrPedodontiRepository::class);
