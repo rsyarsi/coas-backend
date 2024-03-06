@@ -176,7 +176,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Aws\Laravel\AwsServiceProvider::class
+        Aws\Laravel\AwsServiceProvider::class,
+
+        /**
+         * V2
+         */
+
+        Src\V2\Hospitals\Providers\RouteServiceProvider::class,
     ],
 
     /*
