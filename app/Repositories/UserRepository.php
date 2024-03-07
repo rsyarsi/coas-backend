@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\YearRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -34,7 +35,22 @@ class UserRepository implements UserRepositoryInterface
     } 
     public function allUser()
     {
-        return  User::select('id','name','role','username','email')->orderBy('id', 'DESC')->latest()->paginate(10);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(User::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "name", "role", "username", "email", "updated_at", ])->
+        allowedFilters([ "id", "name", "role", "username", "email", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     } 
     public function allUserswithoutPaging()
     {
