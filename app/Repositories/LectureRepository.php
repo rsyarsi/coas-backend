@@ -5,12 +5,27 @@ namespace App\Repositories;
 use App\Models\lecture;
 use App\Repositories\Interfaces\LectureRepositoryInterface; 
 use Illuminate\Support\Facades\DB;  
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class LectureRepository implements LectureRepositoryInterface
 {
     public function allLecture()
     {
-        return lecture::orderBy('id', 'DESC')->latest()->paginate(10);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(lecture::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "nim", "specialistid", "name", "active", "updated_at", ])->
+        allowedFilters([ "id", "nim", "specialistid", "name", "active", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
     }
     public function viewallwithotpaging()
     {

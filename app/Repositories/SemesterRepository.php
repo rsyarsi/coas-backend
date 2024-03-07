@@ -5,12 +5,28 @@ namespace App\Repositories;
 use App\Models\Semester;
 use Illuminate\Support\Facades\DB; 
 use App\Repositories\Interfaces\SemesterRepositoryInterface;
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class SemesterRepository implements SemesterRepositoryInterface
 {
     public function allSemester()
     {
-        return Semester::orderBy('id', 'DESC')->latest()->paginate(10);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(Semester::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "semestername", "active", "updated_at", ])->
+        allowedFilters([ "id", "semestername", "active", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function allSemesterwithoutpaging()
     {

@@ -4,13 +4,29 @@ namespace App\Repositories;
 
 use App\Models\assesmentgroup;
 use App\Repositories\Interfaces\AssesmentGroupRepositoryInterface;
-use Illuminate\Support\Facades\DB;  
+use Illuminate\Support\Facades\DB;
+use Tripteki\RequestResponseQuery\QueryBuilder;  
 
 class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
 {
     public function allAssesmentGroup()
     {
-        return assesmentgroup::orderBy('id', 'DESC')->latest()->paginate(20);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(assesmentgroup::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "specialistid", "assementgroupname", "active", "type", "updated_at", ])->
+        allowedFilters([ "id", "specialistid", "assementgroupname", "active", "type", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function viewallwithotpaging()
     {

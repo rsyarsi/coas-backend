@@ -6,15 +6,30 @@ use App\Models\hospital;
 use App\Models\Year; 
 use Illuminate\Support\Facades\DB; 
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class HospitalRepository implements HospitalRepositoryInterface
 {
 
     public function allHospital()
     {
-        return hospital::orderBy('id', 'DESC')->latest()->paginate(10);
-    }
+        $querystring = [];
 
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(hospital::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "name", "active", "updated_at", ])->
+        allowedFilters([ "id", "name", "active", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
+    }
 
     public function viewallwithotpaging()
     {
