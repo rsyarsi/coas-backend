@@ -7,13 +7,26 @@ use App\Models\student;
 use App\Models\Year; 
 use Illuminate\Support\Facades\DB;  
 use App\Repositories\Interfaces\StudentRepositoryInterface;
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class StudentRepository implements StudentRepositoryInterface
 {
-
     public function allStudent()
     {
-        return student::orderBy('id', 'DESC')->latest()->paginate(10);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(student::class)->
+        defaultSort("-id")->
+        allowedSorts([ "id", "nim", "specialistid", "semesterid", "university", "name", "active", "updated_at", ])->
+        allowedFilters([ "id", "nim", "specialistid", "semesterid", "university", "name", "active", ])->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
     }
 
     public function viewallwithotpaging()
