@@ -27,6 +27,8 @@ class StudentRepository implements StudentRepositoryInterface
         allowedSorts([ "id", "nim", "specialistid", "semesterid", "university", "name", "active", "updated_at", ])->
         allowedFilters([ "id", "nim", "specialistid", "semesterid", "university", "name", "active", ])->
         paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
 
     public function viewallwithotpaging()

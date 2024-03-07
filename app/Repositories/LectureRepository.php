@@ -26,6 +26,7 @@ class LectureRepository implements LectureRepositoryInterface
         allowedFilters([ "id", "nim", "specialistid", "name", "active", ])->
         paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
 
+        return $content;
     }
     public function viewallwithotpaging()
     {
