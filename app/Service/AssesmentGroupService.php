@@ -55,6 +55,7 @@ class AssesmentGroupService extends Controller
                 'idassesmentgroupfinal' => $request->idassesmentgroupfinal,                
                 'isskala' => $request->isskala,                
                 'valuetotal' => $request->valuetotal,  
+                'bobotprosenfinal' => $request->bobotprosenfinal,
                 'active' => $request->active 
             ];
 
@@ -105,7 +106,8 @@ class AssesmentGroupService extends Controller
                 'type' => $request->type, 
                 'valuetotal' => $request->valuetotal, 
                 'idassesmentgroupfinal' => $request->idassesmentgroupfinal,                
-                'isskala' => $request->isskala,    
+                'isskala' => $request->isskala,                
+                'bobotprosenfinal' => $request->bobotprosenfinal,
                 'active' => $request->active 
             ];
             $execute = $this->AssesmentGroupRepository->updateAssesmentGroup($data);

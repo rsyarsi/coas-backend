@@ -73,4 +73,11 @@ class StudentRepository implements StudentRepositoryInterface
     {
         return Student::where('specialistid',$id)->get();
     }
+    public function findStudentbyspecialistandsemeter($specialistid,$semesterid)
+    {
+        return Student::where('specialistid',$specialistid)
+        ->where('semesterid',$semesterid)
+        ->where('active','1')
+        ->get();
+    }
 }

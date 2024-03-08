@@ -25,6 +25,7 @@ class assesmentgroup extends Model
         'assementgroupname',         
         'type',
         'valuetotal',
+        'bobotprosenfinal',
         'active' 
 
     ];

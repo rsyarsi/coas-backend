@@ -213,6 +213,11 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ->where('kodesub', '0')
         ->sum('assesmentscore');
     }
+    public function sumTrsAssesmentDetailfivebyIdTransaksiHeader($uuid){
+        return type_three_trsdetailassesment::where('trsassesmentid',$uuid)
+        ->where('kodesub', '0')
+        ->sum('assesmentscore');
+    }
     public function sumTrsAssesmentDetailonebyIdTransaksiSub($request){
         return DB::table("trsassesmentdetailtypeone")->where('trsassesmentid',$request->idhdr)
         ->where('index_sub', $request->index_sub)
@@ -227,6 +232,12 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     }
     public function sumTrsAssesmentDetailfourbyIdTransaksiSub($request){
         return DB::table("trsassesmentdetailtypefour")->where('trsassesmentid',$request->idhdr)
+        ->where('index_sub', $request->index_sub)
+        ->where('kodesub', '0')
+        ->sum('assementscore');
+    }
+    public function sumTrsAssesmentDetailfivebyIdTransaksiSub($request){
+        return DB::table("trsassesmentdetailtypefive")->where('trsassesmentid',$request->idhdr)
         ->where('index_sub', $request->index_sub)
         ->where('kodesub', '0')
         ->sum('assementscore');
@@ -252,6 +263,15 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     public function updateTrsAssesmentsubfour($request,$scoretotal)
     { 
         $updates = type_four_trsdetailassesment::where('trsassesmentid', $request->idhdr)
+        ->where('kodesub', $request->index_sub)
+        ->update([
+            'assesmentscore'=> $scoretotal
+        ]);
+        return $updates;
+    }
+    public function updateTrsAssesmentsubfive($request,$scoretotal)
+    { 
+        $updates = type_five_trsdetailassesment::where('trsassesmentid', $request->idhdr)
         ->where('kodesub', $request->index_sub)
         ->update([
             'assesmentscore'=> $scoretotal
@@ -353,6 +373,32 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
             'transactiondate'=> $request->dateupdatedetail,       
             'assesmentscore'=> $request->assesmentbobotvalue*$request->assementvalue
         ]);
+        return $updates;
+    }
+    public function viewRecapOrtodonsi()
+    {
+        return DB::table("finalassesment_orthodonties")->paginate(10);
+    }
+    public function viewRecapPedodonsi()
+    {
+        //store procedure, dan table final blm ada
+        return null;
+    }
+    public function viewRecapProstodonsi()
+    {
+        return DB::table("finalassesment_prostodonties")->paginate(10);
+    }
+    public function viewRecapPeriodonsi()
+    {
+        return DB::table("finalassesment_periodonties")->paginate(10);
+    }
+    public function viewRecapKonservasi()
+    {
+        return DB::table("finalassesment_konservasis")->paginate(10);
+    }
+    public function generateRecapAssesment($request,$procedure)
+    { 
+        $updates= DB::select('CALL generatefinal_konservasi(?, ?, ?)', [$request->studentid,$request->semesterid,$request->yearid]);
         return $updates;
     }
 }

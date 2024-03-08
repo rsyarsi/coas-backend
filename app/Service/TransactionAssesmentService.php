@@ -441,10 +441,10 @@ class TransactionAssesmentService extends Controller
 
                     // updatesub
                     $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailthreebyIdTransaksiSub($request);
-                    $this->transactionassesmentRepository->updateTrsAssesmentsub($request,$sumdata);
+                    $this->transactionassesmentRepository->updateTrsAssesmentsubthree($request,$sumdata);
 
                     // update header
-                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailonebyIdTransaksiHeader($request->idhdr);
+                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailthreebyIdTransaksiHeader($request->idhdr);
                     $totalnilai = ($sumdata_hdr*$datadetail->bobotprosenfinal)/100;
                     $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata_hdr,$totalnilai);
                 }else if($request->assesmenttype == "4"){
@@ -461,10 +461,19 @@ class TransactionAssesmentService extends Controller
                     // update header
                     $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailfourbyIdTransaksiHeader($request->idhdr);
                     $totalnilai = (($sumdata_hdr/2)*$datadetail->bobotprosenfinal)/100;
-                    $this->transactionassesmentRepository->updateTrsAssesmentHeaderfour($request->idhdr,$sumdata_hdr,$totalnilai);
+                    $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata_hdr,$totalnilai);
                 }else if($request->assesmenttype == "5"){
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailfiveSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id)->first();
+
+                    // updatesub
+                    $sumdata = $this->transactionassesmentRepository->sumTrsAssesmentDetailfivebyIdTransaksiSub($request);
+                    $this->transactionassesmentRepository->updateTrsAssesmentsubfive($request,$sumdata);
+
+                    // update header
+                    $sumdata_hdr = $this->transactionassesmentRepository->sumTrsAssesmentDetailfivebyIdTransaksiHeader($request->idhdr);
+                    $totalnilai = ($sumdata_hdr*$datadetail->bobotprosenfinal)/100;
+                    $this->transactionassesmentRepository->updateTrsAssesmentHeader($request->idhdr,$sumdata_hdr,$totalnilai);
                 }  
                 
             // updatesub
@@ -480,6 +489,118 @@ class TransactionAssesmentService extends Controller
             return $this->sendResponse($datadetail, 'Transaksi Penilaian Mahasiswa detail berhasil disimpan !');
         }catch (Exception $e) {
             DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function generateRecap(Request $request)
+    {
+        // validate 
+        $request->validate([ 
+            "studentid" => "required", 
+            "lectureid" => "required", 
+            "yearid" => "required", 
+            "semesterid" => "required",   
+            "specialistid" => "required",  
+        ]);
+
+        
+        try {
+
+            // Db Transaction
+            DB::beginTransaction(); 
+
+            $findstudent = $this->studentRepository->findStudent($request->studentid);
+            if($findstudent->count() < 1){
+                return $this->sendError('Mahasiswa tidak di temukan !', []);
+            }
+            $findlecture = $this->lectureRepository->findLecture($request->lectureid);
+            if($findlecture->count() < 1){
+                return $this->sendError('Dosen tidak di temukan !', []);
+            }
+            $findsemester = $this->semesterRepository->findSemester($request->semesterid);
+            if($findsemester->count() < 1){
+                return $this->sendError('Semester tidak di temukan !', []);
+            }
+            $findyear = $this->yearRepository->findYears($request->yearid);
+            if($findyear->count() < 1){
+                return $this->sendError('Tahun tidak di temukan !', []);
+            }
+            $findgroupspecialist = $this->SpecialistRepository->findSpecialist($request->specialistid);
+            if($findgroupspecialist->count() < 1){
+                return $this->sendError('Specialist tidak di temukan !', []);
+            }
+            
+            // $getstudent = $this->studentRepository->findStudentbyspecialistandsemeter($request->specialistid,$request->semesterid);
+            //     foreach ($getstudent as $key ) {
+            //         $request['studentid'] = $key->id;
+            //         $this->transactionassesmentRepository->generateRecapAssesment($request,'finalassesment_periodonties');
+            //     }
+
+                $this->transactionassesmentRepository->generateRecapAssesment($request,'finalassesment_periodonties');
+       
+            DB::commit();
+            return $this->sendResponse([], 'Rekapitulasi Berhasil Dibuat !');
+
+        }catch (Exception $e) {
+            DB::rollBack();
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function viewRecapKonservasi()
+    {
+        try {
+            $find = $this->transactionassesmentRepository->viewRecapKonservasi();
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function viewRecapPeriodonsi()
+    {
+        try {
+            $find = $this->transactionassesmentRepository->viewRecapPeriodonsi();
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function viewRecapProstodonsi()
+    {
+        try {
+            $find = $this->transactionassesmentRepository->viewRecapProstodonsi();
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function viewRecapPedodonsi()
+    {
+        try {
+            $find = $this->transactionassesmentRepository->viewRecapPedodonsi();
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+    public function viewRecapOrtodonsi()
+    {
+        try {
+            $find = $this->transactionassesmentRepository->viewRecapOrtodonsi();
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }

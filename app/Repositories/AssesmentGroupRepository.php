@@ -50,7 +50,8 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
             'idassesmentgroupfinal' => $request['idassesmentgroupfinal'],            
             'isskala' => $request['isskala'],  
             'valuetotal' => $request['valuetotal'],   
-            'type' => $request['type'],  
+            'type' => $request['type'], 
+            'bobotprosenfinal' => $request['bobotprosenfinal'], 
             'active' => $request['active']
         ]);
         return $updates;

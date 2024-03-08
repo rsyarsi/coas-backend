@@ -29,7 +29,9 @@ class AssesmentGroupFinalService extends Controller
         // validate 
         $request->validate([ 
             "name" => "required",  
-            "active" => "required" 
+            "active" => "required" ,
+            "specialistid" => "required",  
+            "bobotvaluefinal" => "required",  
         ]);
         
         try {
@@ -41,7 +43,9 @@ class AssesmentGroupFinalService extends Controller
             $data = [
                 'id' => $uuid,                
                 'name' => $request->name, 
-                'active' => $request->active 
+                'active' => $request->active ,
+                'specialistid' => $request->specialistid,
+                'bobotvaluefinal' => $request->bobotvaluefinal,
             ];
 
             $execute = $this->AssesmentGroupFinalRepository->storeAssesmentGroupFinal($data,$uuid);
@@ -63,7 +67,9 @@ class AssesmentGroupFinalService extends Controller
     {
         $request->validate([ 
             "name" => "required",  
-            "active" => "required" 
+            "active" => "required" ,
+            "specialistid" => "required",  
+            "bobotvaluefinal" => "required",  
         ]);
         
         try {
@@ -80,7 +86,9 @@ class AssesmentGroupFinalService extends Controller
             $data = [
                 'id' => $request->id,         
                 'name' => $request->name, 
-                'active' => $request->active 
+                'active' => $request->active,
+                'specialistid' => $request->specialistid,
+                'bobotvaluefinal' => $request->bobotvaluefinal,
             ];
             $execute = $this->AssesmentGroupFinalRepository->updateAssesmentGroupFinal($data);
             DB::commit();
@@ -128,6 +136,21 @@ class AssesmentGroupFinalService extends Controller
     {
         try {
             $find = $this->AssesmentGroupFinalRepository->viewallwithotpaging();
+             
+            if($find->count() < 1){
+                return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);
+            }
+            return $this->sendResponse($find, 'Group Penilaian ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function byspecialist($id)
+    {
+        try {
+            $find = $this->AssesmentGroupFinalRepository->findAssesmentGroupbyspecialist($id);
              
             if($find->count() < 1){
                 return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);

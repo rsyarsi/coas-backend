@@ -249,4 +249,174 @@ class TransactionAssesmentController extends Controller
             $execute =  $Service->updatedetailsbyitem($request);
             return $execute;
     }
+
+    public function generateRecap(Request $request)
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->generateRecap($request);
+            return $execute;
+    }
+
+    public function viewRecapKonservasi()
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapKonservasi();
+            return $execute;
+    }
+    public function viewRecapPeriodonsi()
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapPeriodonsi();
+            return $execute;
+    }
+    public function viewRecapProstodonsi()
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapProstodonsi();
+            return $execute;
+    }
+    public function viewRecapPedodonsi()
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapPedodonsi();
+            return $execute;
+    }
+    public function viewRecapOrtodonsi()
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapOrtodonsi();
+            return $execute;
+    }
 }

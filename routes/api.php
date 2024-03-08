@@ -171,6 +171,25 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::post("reportmonthbystudent", [AbsenceStudentController::class, "reportmonthbystudent"]);
                         });
                     });
+                    Route::group(['prefix' => 'recapitulation'], function () {
+                        Route::post("generate", [TransactionAssesmentController::class, "generateRecap"]);
+                            Route::group(['prefix' => 'konservasi'], function () {
+                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapKonservasi"]);
+                            });
+                            Route::group(['prefix' => 'periodonti'], function () {
+                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapPeriodonsi"]);
+                            });
+                            Route::group(['prefix' => 'prostodonti'], function () {
+                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapProstodonsi"]);
+                            });
+                            Route::group(['prefix' => 'pedodonti'], function () {
+                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapPedodonsi"]);
+                            });
+                            Route::group(['prefix' => 'ortodonti'], function () {
+                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapOrtodonsi"]);
+                            });
+                        //Route::get("view/{id}", [TransactionAssesmentController::class, "showrecap"]);
+                    });
                 });
                 Route::group(['prefix' => 'emr'], function () {
                     Route::group(['prefix' => 'pedodointi'], function () {

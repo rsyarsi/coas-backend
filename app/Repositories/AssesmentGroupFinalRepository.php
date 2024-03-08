@@ -48,7 +48,9 @@ class AssesmentGroupFinalRepository implements AssesmentGroupFinalRepositoryInte
     {
         $updates = assesmentgroupfinal::where('id', $request['id'])->update([
             'name' => $request['name'], 
-            'active' => $request['active']
+            'active' => $request['active'],
+            'specialistid' => $request['specialistid'],
+            'bobotvaluefinal' => $request['bobotvaluefinal'],
         ]);
         return $updates;
     }
@@ -57,6 +59,10 @@ class AssesmentGroupFinalRepository implements AssesmentGroupFinalRepositoryInte
     {
         $category = assesmentgroupfinal::find($id);
         $category->delete();
+    }
+    public function findAssesmentGroupbyspecialist($id)
+    {
+        return assesmentgroupfinal::where('specialistid',$id)->get();
     }
      
 }
