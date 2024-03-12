@@ -140,6 +140,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("view/id/{id}", [HospitalController::class, "show"]);
                         Route::get("viewall", [HospitalController::class, "create"]);
                         Route::get("viewallwithotpaging", [HospitalController::class, "viewallwithotpaging"]);
+                        Route::get("export", [HospitalController::class, "export"]);
                     });
                     Route::group(['prefix' => 'universities'], function () { 
                         Route::post("create", [UniversityController::class, "store"]);

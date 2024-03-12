@@ -117,4 +117,16 @@ class HospitalController extends Controller
     {
         //
     }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Request $request)
+    {
+        $repository = new HospitalRepository();
+        $service = new HospitalService($repository);
+
+        return $service->export($request);
+    }
 }
