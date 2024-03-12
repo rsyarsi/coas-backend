@@ -321,7 +321,12 @@ class EmrKonservasiRepository implements EmrKonservasiRepositoryInterface
             'evaluasi_gelsetiapminggu' => $data->evaluasi_gelsetiapminggu,
             'evaluasi_perlu' => $data->evaluasi_perlu,
             'evaluasi_tidakperlu' => $data->evaluasi_tidakperlu,
-
+            'sblmperawatanfaktorrisikokaries_fluor_airminum' => $data->sblmperawatanfaktorrisikokaries_fluor_airminum,
+            'sblmperawatanfaktorrisikokaries_fluor_topikal' => $data->sblmperawatanfaktorrisikokaries_fluor_topikal,
+            'sblmperawatanfaktorrisikokaries_diet_asam' => $data->sblmperawatanfaktorrisikokaries_diet_asam,
+            'ssdhperawatanfaktorrisikokaries_fluor_airminum' => $data->ssdhperawatanfaktorrisikokaries_fluor_airminum,
+            'ssdhperawatanfaktorrisikokaries_fluor_topikal' => $data->ssdhperawatanfaktorrisikokaries_fluor_topikal,
+            'ssdhperawatanfaktorrisikokaries_diet_asam' => $data->ssdhperawatanfaktorrisikokaries_diet_asam
         ]);
         return $updates;;
     }

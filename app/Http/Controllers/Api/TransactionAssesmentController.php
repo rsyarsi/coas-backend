@@ -279,7 +279,7 @@ class TransactionAssesmentController extends Controller
             return $execute;
     }
 
-    public function viewRecapKonservasi()
+    public function viewRecapKonservasi(Request $request)
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
@@ -304,10 +304,10 @@ class TransactionAssesmentController extends Controller
               $assesmentGroupRepository 
   
             );
-            $execute =  $Service->viewRecapKonservasi();
+            $execute =  $Service->viewRecapKonservasi($request);
             return $execute;
     }
-    public function viewRecapPeriodonsi()
+    public function viewRecapPeriodonsi(Request $request)
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
@@ -332,10 +332,10 @@ class TransactionAssesmentController extends Controller
               $assesmentGroupRepository 
   
             );
-            $execute =  $Service->viewRecapPeriodonsi();
+            $execute =  $Service->viewRecapPeriodonsi($request);
             return $execute;
     }
-    public function viewRecapProstodonsi()
+    public function viewRecapProstodonsi(Request $request)
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
@@ -360,10 +360,10 @@ class TransactionAssesmentController extends Controller
               $assesmentGroupRepository 
   
             );
-            $execute =  $Service->viewRecapProstodonsi();
+            $execute =  $Service->viewRecapProstodonsi($request);
             return $execute;
     }
-    public function viewRecapPedodonsi()
+    public function viewRecapPedodonsi(Request $request)
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
@@ -388,10 +388,10 @@ class TransactionAssesmentController extends Controller
               $assesmentGroupRepository 
   
             );
-            $execute =  $Service->viewRecapPedodonsi();
+            $execute =  $Service->viewRecapPedodonsi($request);
             return $execute;
     }
-    public function viewRecapOrtodonsi()
+    public function viewRecapOrtodonsi(Request $request)
     {
         //
         $SpecialistRepository =  new SpecialistRepository(); 
@@ -416,7 +416,7 @@ class TransactionAssesmentController extends Controller
               $assesmentGroupRepository 
   
             );
-            $execute =  $Service->viewRecapOrtodonsi();
+            $execute =  $Service->viewRecapOrtodonsi($request);
             return $execute;
     }
 }

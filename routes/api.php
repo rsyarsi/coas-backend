@@ -166,6 +166,8 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::get("listksmgigi", [PatientListController::class, "create"]);
                         Route::post("listksmgigihistory", [PatientListController::class, "update"]);
                         Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);
+                        //Route::get("view/idspecialist/{id}/nim/{nim}", [PatientListController::class, "bySpecialistAndNim"]); 
+                        Route::post("view/bystudent", [PatientListController::class, "bystudent"]); 
                         Route::group(['prefix' => 'absence'], function () {
                             Route::post("create", [AbsenceStudentController::class, "store"]);
                             Route::post("findbydate", [AbsenceStudentController::class, "update"]);
@@ -175,19 +177,19 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                     Route::group(['prefix' => 'recapitulation'], function () {
                         Route::post("generate", [TransactionAssesmentController::class, "generateRecap"]);
                             Route::group(['prefix' => 'konservasi'], function () {
-                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapKonservasi"]);
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapKonservasi"]);
                             });
                             Route::group(['prefix' => 'periodonti'], function () {
-                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapPeriodonsi"]);
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapPeriodonsi"]);
                             });
                             Route::group(['prefix' => 'prostodonti'], function () {
-                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapProstodonsi"]);
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapProstodonsi"]);
                             });
                             Route::group(['prefix' => 'pedodonti'], function () {
-                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapPedodonsi"]);
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapPedodonsi"]);
                             });
                             Route::group(['prefix' => 'ortodonti'], function () {
-                                Route::get("viewall", [TransactionAssesmentController::class, "viewRecapOrtodonsi"]);
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapOrtodonsi"]);
                             });
                         //Route::get("view/{id}", [TransactionAssesmentController::class, "showrecap"]);
                     });

@@ -8,6 +8,7 @@ use App\Models\Semester;
 use Illuminate\Support\Facades\DB; 
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Repositories\Interfaces\SemesterRepositoryInterface;
+use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class PatientRepository implements PatientRepositoryInterface
 {
@@ -51,5 +52,51 @@ class PatientRepository implements PatientRepositoryInterface
     public function findbyNoregistrasi($id)
     {
         return patient::where('noregistrasi',$id)->get();
+    }
+
+    public function listByEmrAndNimOrto($nim)
+    {
+        $query =  DB::table('patients')
+        ->select('patients.*')
+        ->join('emrortodonsies','emrortodonsies.noregister','=','patients.noregistrasi')
+        ->where('emrortodonsies.nim',$nim)
+        ->paginate();
+        return $query;
+    }
+    public function listByEmrAndNimPedo($nim)
+    {
+        $query =  DB::table('patients')
+        ->select('patients.*')
+        ->join('emrpedodonties','emrpedodonties.noregister','=','patients.noregistrasi')
+        ->where('emrpedodonties.nim',$nim)
+        ->paginate();
+        return $query;
+    }
+    public function listByEmrAndNimPerio($nim)
+    {
+        $query =  DB::table('patients')
+        ->select('patients.*')
+        ->join('emrperiodonties','emrperiodonties.noregister','=','patients.noregistrasi')
+        ->where('emrperiodonties.npm',$nim)
+        ->paginate();
+        return $query;
+    }
+    public function listByEmrAndNimProsto($nim)
+    {
+        $query =  DB::table('patients')
+        ->select('patients.*')
+        ->join('emrprostodonties','emrprostodonties.noregister','=','patients.noregistrasi')
+        ->where('emrprostodonties.npm',$nim)
+        ->paginate();
+        return $query;
+    }
+    public function listByEmrAndNimKonser($nim)
+    {
+        $query =  DB::table('patients')
+        ->select('patients.*')
+        ->join('emrkonservasis','emrkonservasis.noregister','=','patients.noregistrasi')
+        ->where('emrkonservasis.nim',$nim)
+        ->paginate();
+        return $query;
     }
 }

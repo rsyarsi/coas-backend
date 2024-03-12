@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\PatientRepository;
 use App\Service\PatientService;
 use Illuminate\Http\Request;
+use App\Repositories\SpecialistRepository;
+use App\Repositories\StudentRepository;
 
 class PatientListController extends Controller
 {
@@ -29,7 +31,9 @@ class PatientListController extends Controller
         //
         //
         $repo = new PatientRepository;
-        $services = new PatientService($repo);
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+        $services = new PatientService($SpecialistRepository,$repo,$studentRepository);
         $execute =  $services->listksmgigi();
         return $execute;
     }
@@ -44,7 +48,9 @@ class PatientListController extends Controller
     {
         //
         $repo = new PatientRepository;
-        $services = new PatientService($repo);
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+        $services = new PatientService($SpecialistRepository,$repo,$studentRepository);
         $execute =  $services->detail($request);
         return $execute;
     }
@@ -82,7 +88,9 @@ class PatientListController extends Controller
     {
         //
         $repo = new PatientRepository;
-        $services = new PatientService($repo);
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+        $services = new PatientService($SpecialistRepository,$repo,$studentRepository);
         $execute =  $services->listksmgigihistory($request);
         return $execute;
     }
@@ -96,5 +104,24 @@ class PatientListController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // public function bySpecialistAndNim($idspecialist,$nim)
+    // {
+    //     $repo = new PatientRepository;
+    //     $SpecialistRepository =  new SpecialistRepository(); 
+    //     $services = new PatientService($SpecialistRepository,$repo);
+    //     $execute =  $services->listbyspecialistandnim($idspecialist,$nim);
+    //     return $execute;
+    // }
+
+    public function bystudent(Request $request)
+    {
+        $repo = new PatientRepository;
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+        $services = new PatientService($SpecialistRepository,$repo,$studentRepository);
+        $execute =  $services->bystudent($request);
+        return $execute;
     }
 }
