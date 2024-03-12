@@ -14,6 +14,7 @@ use App\Models\Year;
 use Illuminate\Support\Facades\DB;  
 use App\Repositories\Interfaces\StudentRepositoryInterface;
 use App\Repositories\Interfaces\TransactionAssesmentRepositoryInterface;
+use Carbon\Carbon;
 
 class TransactionAssesmentRepository implements TransactionAssesmentRepositoryInterface
 {
@@ -21,8 +22,8 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
     {
         return  DB::table("trsassesments")->insert($request);
     } 
-    public function findtrsbyid($request){
-        return trsassesment::where('id',$request->id);
+    public function findtrsbyid($id){
+        return trsassesment::where('id',$id);
     }
     public function findtrsassesmentbyidandGroupId($request){
         return trsassesment::where('id',$request->id)
@@ -214,7 +215,7 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ->sum('assesmentscore');
     }
     public function sumTrsAssesmentDetailfivebyIdTransaksiHeader($uuid){
-        return type_three_trsdetailassesment::where('trsassesmentid',$uuid)
+        return type_five_trsdetailassesment::where('trsassesmentid',$uuid)
         ->where('kodesub', '0')
         ->sum('assesmentscore');
     }
@@ -375,30 +376,70 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ]);
         return $updates;
     }
-    public function viewRecapOrtodonsi()
-    {
-        return DB::table("finalassesment_orthodonties")->paginate(10);
+    public function updateTrsAssesmentDetailfiveSinglePlak($request)
+    { 
+        $updates = type_five_trsdetailassesment::where('id', $request->id)->update([
+            'nilaitindakan_awal'=> $request->nilaitindakan_awal,      
+            'nilaitindakan_akhir'=> $request->nilaitindakan_akhir_fix,   
+            'nilaisikap_awal'=> $request->nilaisikap_awal,     
+            'nilaisikap_akhir'=> $request->nilaisikap_akhir_fix,         
+            'assesmentscore'=> $request->nilaitindakan_akhir_fix+$request->nilaisikap_akhir_fix
+        ]);
+        return $updates;
     }
-    public function viewRecapPedodonsi()
+    public function viewRecapOrtodonsi($request)
+    {
+        return DB::table("finalassesment_orthodonties")
+        ->where('yearid',$request->yearid)
+        ->where('semesterid',$request->semesterid)
+        ->paginate(10);
+    }
+    public function viewRecapPedodonsi($request)
     {
         //store procedure, dan table final blm ada
         return null;
     }
-    public function viewRecapProstodonsi()
+    public function viewRecapProstodonsi($request)
     {
-        return DB::table("finalassesment_prostodonties")->paginate(10);
+        return DB::table("finalassesment_prostodonties")
+        ->where('yearid',$request->yearid)
+        ->where('semesterid',$request->semesterid)
+        ->paginate(10);
     }
-    public function viewRecapPeriodonsi()
+    public function viewRecapPeriodonsi($request)
     {
-        return DB::table("finalassesment_periodonties")->paginate(10);
+        return DB::table("finalassesment_periodonties")
+        ->where('yearid',$request->yearid)
+        ->where('semesterid',$request->semesterid)
+        ->paginate(10);
     }
-    public function viewRecapKonservasi()
+    public function viewRecapKonservasi($request)
     {
-        return DB::table("finalassesment_konservasis")->paginate(10);
+        return DB::table("finalassesment_konservasis")
+        ->where('yearid',$request->yearid)
+        ->where('semesterid',$request->semesterid)
+        ->paginate(10);
     }
     public function generateRecapAssesment($request,$procedure)
     { 
-        $updates= DB::select('CALL generatefinal_konservasi(?, ?, ?)', [$request->studentid,$request->semesterid,$request->yearid]);
+        $updates= DB::select('CALL '.$procedure.'(?, ?, ?)', [$request->studentid,$request->semesterid,$request->yearid]);
         return $updates;
+    }
+    public function lockAssesments($request)
+    { 
+        $updates = trsassesment::where('id', $request->id)->update([
+            'lock'=> '1',      
+            'usernamelock'=> $request->userlock,      
+            'datelock'=> Carbon::now(),
+        ]);
+        return $updates;
+    }
+    public function findEmrByNimStudent($data){
+        $query = DB::table('emrperiodonties')
+        ->select('emrperiodonties.id','students.id','students.name','students.nim')
+        ->join('students','emrperiodonties.npm','=','students.nim')
+        ->leftjoin('type_five_trsdetailassesments','type_five_trsdetailassesments.norm','=','emrperiodonties.no_rekammedik')
+        ->where('students.id',$data);
+        return $query;
     }
 }

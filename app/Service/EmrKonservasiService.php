@@ -500,8 +500,8 @@ class EmrKonservasiService extends Controller
                 'sblmperawatanfaktorrisikokaries_saliva_denganstimulasi_pH' => $request->sblmperawatanfaktorrisikokaries_saliva_denganstimulasi_pH,
                 'sblmperawatanfaktorrisikokaries_plak_pH' => $request->sblmperawatanfaktorrisikokaries_plak_pH,
                 'sblmperawatanfaktorrisikokaries_plak_aktivitas' => $request->sblmperawatanfaktorrisikokaries_plak_aktivitas,
-                'sblmperawatanfaktorrisikokaries_fluor' => $request->sblmperawatanfaktorrisikokaries_fluor,
-                'sblmperawatanfaktorrisikokaries_diet' => $request->sblmperawatanfaktorrisikokaries_diet,
+                'sblmperawatanfaktorrisikokaries_fluor_pastagigi' => $request->sblmperawatanfaktorrisikokaries_fluor_pastagigi,
+                'sblmperawatanfaktorrisikokaries_diet_gula' => $request->sblmperawatanfaktorrisikokaries_diet_gula,
                 'sblmperawatanfaktorrisikokaries_faktormodifikasi_obatpeningkata' => $request->sblmperawatanfaktorrisikokaries_faktormodifikasi_obatpeningkata,
                 'sblmperawatanfaktorrisikokaries_faktormodifikasi_penyakitpenyeb' => $request->sblmperawatanfaktorrisikokaries_faktormodifikasi_penyakitpenyeb,
                 'sblmperawatanfaktorrisikokaries_faktormodifikasi_protesa' => $request->sblmperawatanfaktorrisikokaries_faktormodifikasi_protesa,
@@ -524,8 +524,8 @@ class EmrKonservasiService extends Controller
                 'ssdhperawatanfaktorrisikokaries_saliva_denganstimulasi_pH' => $request->ssdhperawatanfaktorrisikokaries_saliva_denganstimulasi_pH,
                 'ssdhperawatanfaktorrisikokaries_plak_pH' => $request->ssdhperawatanfaktorrisikokaries_plak_pH,
                 'ssdhperawatanfaktorrisikokaries_plak_aktivitas' => $request->ssdhperawatanfaktorrisikokaries_plak_aktivitas,
-                'ssdhperawatanfaktorrisikokaries_fluor' => $request->ssdhperawatanfaktorrisikokaries_fluor,
-                'ssdhperawatanfaktorrisikokaries_diet' => $request->ssdhperawatanfaktorrisikokaries_diet,
+                'ssdhperawatanfaktorrisikokaries_fluor_pastagigi' => $request->ssdhperawatanfaktorrisikokaries_fluor_pastagigi,
+                'ssdhperawatanfaktorrisikokaries_diet_gula' => $request->ssdhperawatanfaktorrisikokaries_diet_gula,
                 'ssdhperawatanfaktorrisikokaries_faktormodifikasi_obatpeningkata' => $request->ssdhperawatanfaktorrisikokaries_faktormodifikasi_obatpeningkata,
                 'ssdhperawatanfaktorrisikokaries_faktormodifikasi_penyakitpenyeb' => $request->ssdhperawatanfaktorrisikokaries_faktormodifikasi_penyakitpenyeb,
                 'ssdhperawatanfaktorrisikokaries_faktormodifikasi_protesa' => $request->ssdhperawatanfaktorrisikokaries_faktormodifikasi_protesa,
@@ -575,6 +575,12 @@ class EmrKonservasiService extends Controller
                 'evaluasi_gelsetiapminggu' => $request->evaluasi_gelsetiapminggu,
                 'evaluasi_perlu' => $request->evaluasi_perlu,
                 'evaluasi_tidakperlu' => $request->evaluasi_tidakperlu,
+                'sblmperawatanfaktorrisikokaries_fluor_airminum' => $request->sblmperawatanfaktorrisikokaries_fluor_airminum,
+                'sblmperawatanfaktorrisikokaries_fluor_topikal' => $request->sblmperawatanfaktorrisikokaries_fluor_topikal,
+                'sblmperawatanfaktorrisikokaries_diet_asam' => $request->sblmperawatanfaktorrisikokaries_diet_asam,
+                'ssdhperawatanfaktorrisikokaries_fluor_airminum' => $request->ssdhperawatanfaktorrisikokaries_fluor_airminum,
+                'ssdhperawatanfaktorrisikokaries_fluor_topikal' => $request->ssdhperawatanfaktorrisikokaries_fluor_topikal,
+                'ssdhperawatanfaktorrisikokaries_diet_asam' => $request->ssdhperawatanfaktorrisikokaries_diet_asam
 
             ];
             $cekdata = $this->emrkonservasiRepository->findwaktuperawatan($request);

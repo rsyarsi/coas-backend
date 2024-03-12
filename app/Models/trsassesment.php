@@ -18,7 +18,10 @@ class trsassesment extends Model
         'transactiondate',        
         'grandotal',        
         'totalbobot',        
-        'active'  
+        'active'  ,
+        'lock'  ,
+        'usernamelock'  ,
+        'datelock'  ,
     ];
     public $incrementing = false;
     protected $casts = [
