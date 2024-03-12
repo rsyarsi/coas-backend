@@ -8,6 +8,8 @@ use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\HospitalExport;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\HospitalRepositoryInterface; 
 
@@ -127,5 +129,14 @@ class HospitalService extends Controller
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
+    }
+
+    public function export(Request $request)
+    {
+        $file = $request->query("file", "csv");
+
+        if ($file == "csv") return Excel::download(new HospitalExport(), "Hospital.csv", \Maatwebsite\Excel\Excel::CSV);
+        else if ($file == "xls") return Excel::download(new HospitalExport(), "Hospital.xls", \Maatwebsite\Excel\Excel::XLS);
+        else if ($file == "xlsx") return Excel::download(new HospitalExport(), "Hospital.xlsx", \Maatwebsite\Excel\Excel::XLSX);
     }
 }
