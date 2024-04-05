@@ -14,9 +14,25 @@ class PatientRepository implements PatientRepositoryInterface
 {
     public function findpatients()
     {
-        return patient::orderBy('noepisode', 'DESC')->latest()
-        ->whereBetween(DB::raw("CAST(Visit_Date as DATE)"),
-        [Carbon::now()->format('Y-m-d'),Carbon::now()->format('Y-m-d')])->paginate(10);
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        whereBetween(DB::raw("CAST(Visit_Date as DATE)"), [ Carbon::now()->format('Y-m-d'), Carbon::now()->format('Y-m-d'), ])->
+        defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function listksmgigiwithoutpaging()
     {
@@ -56,47 +72,117 @@ class PatientRepository implements PatientRepositoryInterface
 
     public function listByEmrAndNimOrto($nim)
     {
-        $query =  DB::table('patients')
-        ->select('patients.*')
-        ->join('emrortodonsies','emrortodonsies.noregister','=','patients.noregistrasi')
-        ->where('emrortodonsies.nim',$nim)
-        ->paginate();
-        return $query;
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        join("emrortodonsies", "emrortodonsies.noregister", "=", "patients.noregistrasi")->
+        where("emrortodonsies.nim", $nim)->
+        // defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function listByEmrAndNimPedo($nim)
     {
-        $query =  DB::table('patients')
-        ->select('patients.*')
-        ->join('emrpedodonties','emrpedodonties.noregister','=','patients.noregistrasi')
-        ->where('emrpedodonties.nim',$nim)
-        ->paginate();
-        return $query;
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        join("emrpedodonties", "emrpedodonties.noregister", "=", "patients.noregistrasi")->
+        where("emrpedodonties.nim", $nim)->
+        // defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function listByEmrAndNimPerio($nim)
     {
-        $query =  DB::table('patients')
-        ->select('patients.*')
-        ->join('emrperiodonties','emrperiodonties.noregister','=','patients.noregistrasi')
-        ->where('emrperiodonties.npm',$nim)
-        ->paginate();
-        return $query;
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        join("emrperiodonties", "emrperiodonties.noregister", "=", "patients.noregistrasi")->
+        where("emrperiodonties.npm", $nim)->
+        // defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function listByEmrAndNimProsto($nim)
     {
-        $query =  DB::table('patients')
-        ->select('patients.*')
-        ->join('emrprostodonties','emrprostodonties.noregister','=','patients.noregistrasi')
-        ->where('emrprostodonties.npm',$nim)
-        ->paginate();
-        return $query;
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        join("emrprostodonties", "emrprostodonties.noregister", "=", "patients.noregistrasi")->
+        where("emrprostodonties.npm", $nim)->
+        // defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
     public function listByEmrAndNimKonser($nim)
     {
-        $query =  DB::table('patients')
-        ->select('patients.*')
-        ->join('emrkonservasis','emrkonservasis.noregister','=','patients.noregistrasi')
-        ->where('emrkonservasis.nim',$nim)
-        ->paginate();
-        return $query;
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $content = QueryBuilder::for(patient::class);
+
+        $content = $content->
+        join("emrkonservasis", "emrkonservasis.noregister", "=", "patients.noregistrasi")->
+        where("emrkonservasis.nim", $nim)->
+        // defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
     }
 }
