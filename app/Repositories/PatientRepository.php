@@ -23,10 +23,18 @@ class PatientRepository implements PatientRepositoryInterface
         ];
         extract($querystringed);
 
+        $idunit = request()->query("idunit");
+
         $content = QueryBuilder::for(patient::class);
 
+        if ($idunit) {
+
+            $content = $content->
+            where("idunit", request()->query("idunit"))->
+            whereBetween(DB::raw("CAST(visit_date as DATE)"), [ Carbon::now()->format('Y-m-d'), Carbon::now()->format('Y-m-d'), ]);
+        }
+
         $content = $content->
-        whereBetween(DB::raw("CAST(Visit_Date as DATE)"), [ Carbon::now()->format('Y-m-d'), Carbon::now()->format('Y-m-d'), ])->
         defaultSort("-noepisode")->
         allowedSorts($content->getSubject()->getModel()->getFillable())->
         allowedFilters($content->getSubject()->getModel()->getFillable())->
