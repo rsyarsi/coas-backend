@@ -43,7 +43,9 @@ class PatientRepository implements PatientRepositoryInterface
             'iddokter'=> $request['IdDokter'],
             'namadokter'=> $request['NamaDokter'],
             'patienttype'=> $request['PatientType'],
-            'statusid'=> $request['StatusID']
+            'statusid'=> $request['StatusID'],
+            'status_emr'=> 'OPEN',
+            'status_penilaian'=> 'OPEN'
 
         ]);
 
@@ -98,5 +100,24 @@ class PatientRepository implements PatientRepositoryInterface
         ->where('emrkonservasis.nim',$nim)
         ->paginate();
         return $query;
+    }
+    public function updateStatusEmrWrite($noregistrasi)
+    { 
+        $updates = DB::table('patients')
+        ->where('noregistrasi', $noregistrasi)
+        ->where('status_emr','<>','FINISH')
+        ->update([ 
+            'status_emr' => 'WRITE',
+        ]);
+        return $updates;
+    }
+    public function updateStatusEmrFinish($noregistrasi)
+    { 
+        $updates = DB::table('patients')
+        ->where('noregistrasi', $noregistrasi)
+        ->update([ 
+            'status_emr' => 'FINISH',
+        ]);
+        return $updates;
     }
 }

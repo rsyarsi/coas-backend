@@ -12,15 +12,20 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
 use App\Repositories\Interfaces\EmrOrtodonsiRepositoryInterface;
+use App\Repositories\Interfaces\PatientRepositoryInterface;
 
 class EmrOrtodonsiService extends Controller
 {
     use AwsTrait;
     private $emrortodonsiRepository;
 
-    public function __construct(EmrOrtodonsiRepositoryInterface $emrortodonsiRepository)
+    public function __construct(
+        EmrOrtodonsiRepositoryInterface $emrortodonsiRepository,
+        PatientRepositoryInterface $patientRepository
+        )
     {
         $this->emrortodonsiRepository = $emrortodonsiRepository;
+        $this->patientRepository = $patientRepository;
     }
     public function createwaktuperawatan(Request $request)
     {
@@ -1078,6 +1083,9 @@ class EmrOrtodonsiService extends Controller
                 ];
                  $this->emrortodonsiRepository->createwaktuperawatan($data, $uuid);
                 $message = 'Assesment Orthodonsi Berhasil Dibuat !';
+                
+                //update status_emr to write
+                $this->patientRepository->updateStatusEmrWrite($request->noregister);
 
                  DB::commit();
  

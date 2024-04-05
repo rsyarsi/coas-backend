@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EmrKonservasiRepository;
 use App\Service\EmrKonservasiService;
 use Illuminate\Http\Request;
+use App\Repositories\PatientRepository;
 
 class EmrKonservasiController extends Controller
 {
@@ -38,7 +39,8 @@ class EmrKonservasiController extends Controller
     public function store(Request $request)
     {
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->createwaktuperawatan($request);
         return $execute;
     }
@@ -76,7 +78,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->viewemrbyRegOperator($request);
         return $execute;
     }
@@ -96,7 +99,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->createjob($request);
         return $execute;
     }
@@ -104,7 +108,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->updatejob($request);
         return $execute;
     }
@@ -112,7 +117,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->deletejob($request);
         return $execute;
     }
@@ -120,7 +126,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->showbyidjob($request);
         return $execute;
     }
@@ -128,7 +135,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->showalljob($request);
         return $execute;
     }
@@ -136,7 +144,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->verifydpk($request);
         return $execute;
     }
@@ -144,7 +153,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->uploadrestorasibefore($request);
         return $execute;
     }
@@ -152,7 +162,8 @@ class EmrKonservasiController extends Controller
     {
         //
         $repo =  new EmrKonservasiRepository();
-        $services = new EmrKonservasiService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrKonservasiService($repo,$patientService);
         $execute =  $services->uploadrestorasiafter($request);
         return $execute;
     }

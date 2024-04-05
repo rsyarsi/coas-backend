@@ -13,15 +13,20 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\HospitalRepositoryInterface;
 use App\Repositories\Interfaces\EmrPedodontiRepositoryInterface;
+use App\Repositories\Interfaces\PatientRepositoryInterface;
 
 class EmrPedodontiService extends Controller
 {
     use AwsTrait;
     private $emrpedodontiRepository;
 
-    public function __construct(EmrPedodontiRepositoryInterface $emrpedodontiRepository)
+    public function __construct(
+        EmrPedodontiRepositoryInterface $emrpedodontiRepository,
+        PatientRepositoryInterface $patientRepository
+        )
     {
         $this->emrpedodontiRepository = $emrpedodontiRepository;
+        $this->patientRepository = $patientRepository;
     }
     public function createmedicaldentalhistory(Request $request)
     {
@@ -813,6 +818,9 @@ class EmrPedodontiService extends Controller
 
                 $this->emrpedodontiRepository->createmedicaldentalhistory($data, $uuid);
                 $message = 'Assesment Pedodonsi Berhasil Dibuat !';
+                
+                //update status_emr to write
+                $this->patientRepository->updateStatusEmrWrite($request->noregister);
 
                  DB::commit();
  

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EmrPedodontiRepository;
 use App\Service\EmrPedodontiService;
 use Illuminate\Http\Request;
+use App\Repositories\PatientRepository;
 
 class EmrPedodontiController extends Controller
 {
@@ -39,8 +40,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->createmedicaldentalhistory($request);
         return $execute;
@@ -79,8 +82,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->viewemrbyRegOperator($request);
         return $execute;
@@ -102,8 +107,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->behaviorratingcreate($request);
         return $execute;
@@ -112,8 +119,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->behaviorratingupdate($request);
         return $execute;
@@ -122,8 +131,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->behaviorratingdelete($request);
         return $execute;
@@ -132,8 +143,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->behaviorratingviewbyid($request);
         return $execute;
@@ -142,8 +155,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->behaviorratingviewall($request);
         return $execute;
@@ -154,8 +169,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentcreate($request);
         return $execute;
@@ -164,8 +181,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentupdate($request);
         return $execute;
@@ -174,8 +193,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentdelete($request);
         return $execute;
@@ -184,8 +205,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentviewbyid($request);
         return $execute;
@@ -194,8 +217,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentviewall($request);
         return $execute;
@@ -204,8 +229,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->validatesupervisor($request);
         return $execute;
@@ -216,8 +243,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentplancreate($request);
         return $execute;
@@ -226,8 +255,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentplanupdate($request);
         return $execute;
@@ -236,8 +267,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentplandelete($request);
         return $execute;
@@ -246,8 +279,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentplanviewbyid($request);
         return $execute;
@@ -256,8 +291,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->treatmentplanviewall($request);
         return $execute;
@@ -267,8 +304,10 @@ class EmrPedodontiController extends Controller
     {
         //
         $yearRepository =  new EmrPedodontiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrPedodontiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfoto($request);
         return $execute;

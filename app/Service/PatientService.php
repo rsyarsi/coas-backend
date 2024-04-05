@@ -137,4 +137,30 @@ class PatientService extends Controller
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
         }
     }
+
+    public function updateStatusEmrFinish(Request $request)
+    {
+        $request->validate([ 
+            "noregister" => "required",   
+        ]);
+      
+        try {    
+            DB::beginTransaction();
+            $cekdata = $this->patientRepository->findbyNoregistrasi($request->noregister);
+
+            if ($cekdata->count() < 1){
+                return $this->sendError('Data tidak ditemukan !',[]);
+            }
+           
+            //update status_emr to finish
+            $this->patientRepository->updateStatusEmrFinish($request->noregister);
+            
+            DB::commit();
+            return $this->sendResponse([], 'Status berhasil diperbarui menjadi FINISH');
+        } catch (Exception $e) {
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+
+    }
 }

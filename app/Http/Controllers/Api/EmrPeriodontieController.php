@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EmrPeriodontieRepository;
 use App\Service\EmrPeriodontieService;
 use Illuminate\Http\Request;
+use App\Repositories\PatientRepository;
 
 class EmrPeriodontieController extends Controller
 {
@@ -39,7 +40,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->createwaktuperawatan($request);
         return $execute;
     }
@@ -77,7 +79,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->viewemrbyRegOperator($request);
         return $execute;
     }
@@ -97,7 +100,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->uploadfotoklinisintraoral($request);
         return $execute;
     }
@@ -105,7 +109,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->uploadfotopanoramik($request);
         return $execute;
     }
@@ -116,7 +121,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->createsoap($request);
         return $execute;
     }
@@ -124,7 +130,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->updatesoap($request);
         return $execute;
     }
@@ -132,7 +139,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->deletesoap($request);
         return $execute;
     }
@@ -140,7 +148,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->showbyidsoap($request);
         return $execute;
     }
@@ -148,7 +157,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->showallsoap($request);
         return $execute;
     }
@@ -156,7 +166,8 @@ class EmrPeriodontieController extends Controller
     {
         //
         $repo =  new EmrPeriodontieRepository();
-        $services = new EmrPeriodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrPeriodontieService($repo,$patientService);
         $execute =  $services->verifydpk($request);
         return $execute;
     }

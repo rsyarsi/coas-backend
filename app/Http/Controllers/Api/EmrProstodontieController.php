@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EmrProstodontieRepository;
 use App\Service\EmrProstodontieService;
 use Illuminate\Http\Request;
+use App\Repositories\PatientRepository;
 
 class EmrProstodontieController extends Controller
 {
@@ -38,7 +39,8 @@ class EmrProstodontieController extends Controller
     public function store(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->createwaktuperawatan($request);
         return $execute;
     }
@@ -75,9 +77,11 @@ class EmrProstodontieController extends Controller
     public function update(Request $request)
     {
         //
-        $repo =  new EmrProstodontieRepository(); 
+        $repo =  new EmrProstodontieRepository();
+        $patientService = new PatientRepository; 
         $aReturBeliService = new EmrProstodontieService(
-            $repo
+            $repo,
+            $patientService
         );
         $execute =  $aReturBeliService->viewemrbyRegOperator($request);
         return $execute;
@@ -96,9 +100,11 @@ class EmrProstodontieController extends Controller
     public function uploadfoto(Request $request)
     {
         //
-        $repo =  new EmrProstodontieRepository(); 
+        $repo =  new EmrProstodontieRepository();
+        $patientService = new PatientRepository; 
         $aReturBeliService = new EmrProstodontieService(
-            $repo
+            $repo,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfoto($request);
         return $execute;
@@ -107,51 +113,59 @@ class EmrProstodontieController extends Controller
     public function logbookcreate(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->logbookcreate($request);
         return $execute;
     }
     public function logbookupdate(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->logbookupdate($request);
         return $execute;
     }
     public function logbookdelete(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->logbookdelete($request);
         return $execute;
     }
     public function logbookviewbyid(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->logbookviewbyid($request);
         return $execute;
     }
     public function logbookviewall(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->logbookviewall($request);
         return $execute;
     }
     public function validatelecture(Request $request)
     {
         $repo =  new EmrProstodontieRepository();
-        $services = new EmrProstodontieService($repo);
+        $patientService = new PatientRepository;
+        $services = new EmrProstodontieService($repo,$patientService);
         $execute =  $services->validatelecture($request);
         return $execute;
     }
     public function uploadodontogram(Request $request)
     {
         //
-        $repo =  new EmrProstodontieRepository(); 
+        $repo =  new EmrProstodontieRepository();
+        $patientService = new PatientRepository; 
         $aReturBeliService = new EmrProstodontieService(
-            $repo
+            $repo,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadodontogram($request);
         return $execute;

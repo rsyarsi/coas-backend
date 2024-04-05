@@ -587,7 +587,7 @@ class TransactionAssesmentService extends Controller
                 $callsp = 'generatefinal_konservasi';
             }elseif ($simrsid=='59'){
                 $callsp = 'generatefinal_periodonties';
-            }elseif ($simrsid=='46'){
+            }elseif ($simrsid=='58'){
                 $callsp = 'generatefinal_pedodonti';
             }
             else{

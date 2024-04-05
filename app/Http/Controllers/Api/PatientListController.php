@@ -124,4 +124,14 @@ class PatientListController extends Controller
         $execute =  $services->bystudent($request);
         return $execute;
     }
+
+    public function updateStatusEmrFinish(Request $request)
+    {
+        $repo = new PatientRepository;
+        $SpecialistRepository =  new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+        $services = new PatientService($SpecialistRepository,$repo,$studentRepository);
+        $execute =  $services->updateStatusEmrFinish($request);
+        return $execute;
+    }
 }

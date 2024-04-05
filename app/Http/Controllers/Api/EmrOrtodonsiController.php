@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EmrOrtodonsiRepository;
 use App\Service\EmrOrtodonsiService;
 use Illuminate\Http\Request;
+use App\Repositories\PatientRepository;
 
 class EmrOrtodonsiController extends Controller
 {
@@ -39,8 +40,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->createwaktuperawatan($request);
         return $execute;
@@ -79,8 +82,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->viewemrbyRegOperator($request);
         return $execute;
@@ -100,8 +105,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfoto($request);
         return $execute;
@@ -111,8 +118,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampakdepan($request);
         return $execute;
@@ -121,8 +130,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfotosenyum($request);
         return $execute;
@@ -131,8 +142,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfotosamping($request);
         return $execute;
@@ -141,8 +154,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadfotomiring($request);
         return $execute;
@@ -153,8 +168,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampaksampingkanan($request);
         return $execute;
@@ -163,8 +180,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampakdepangeli($request);
         return $execute;
@@ -173,8 +192,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampaksampingkiri($request);
         return $execute;
@@ -183,8 +204,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampakoklusalatas($request);
         return $execute;
@@ -193,8 +216,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadtampakoklusalbawah($request);
         return $execute;
@@ -204,8 +229,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadmodelstudi($request);
         return $execute;
@@ -215,8 +242,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadsefalometri($request);
         return $execute;
@@ -226,8 +255,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadpanoramik($request);
         return $execute;
@@ -236,8 +267,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadanalisaetiologi($request);
         return $execute;
@@ -248,8 +281,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadpencarianruang($request);
         return $execute;
@@ -258,8 +293,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadrahangatas($request);
         return $execute;
@@ -268,8 +305,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadrahangbawah($request);
         return $execute;
@@ -278,8 +317,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadretainer($request);
         return $execute;
@@ -290,8 +331,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadplakatrahangatas($request);
         return $execute;
@@ -300,8 +343,10 @@ class EmrOrtodonsiController extends Controller
     {
         //
         $yearRepository =  new EmrOrtodonsiRepository();
+        $patientService = new PatientRepository;
         $aReturBeliService = new EmrOrtodonsiService(
-            $yearRepository
+            $yearRepository,
+            $patientService
         );
         $execute =  $aReturBeliService->uploadplakatrahangbawah($request);
         return $execute;

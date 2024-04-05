@@ -165,7 +165,8 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                     Route::group(['prefix' => 'patient'], function () {
                         Route::get("listksmgigi", [PatientListController::class, "create"]);
                         Route::post("listksmgigihistory", [PatientListController::class, "update"]);
-                        Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);
+                        Route::post("updateStatusEmrFinish/", [PatientListController::class, "updateStatusEmrFinish"]);
+                        Route::post("listksmgigihistory", [PatientListController::class, "update"]);
                         //Route::get("view/idspecialist/{id}/nim/{nim}", [PatientListController::class, "bySpecialistAndNim"]); 
                         Route::post("view/bystudent", [PatientListController::class, "bystudent"]); 
                         Route::group(['prefix' => 'absence'], function () {
