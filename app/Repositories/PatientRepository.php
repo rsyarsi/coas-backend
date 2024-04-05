@@ -12,6 +12,16 @@ use Tripteki\RequestResponseQuery\QueryBuilder;
 
 class PatientRepository implements PatientRepositoryInterface
 {
+    protected $table_unit =
+    [
+        "46" => "emrortodonsies",
+        "58" => "emrpedodonties",
+        "59" => "emrperiodonties",
+        "60" => "emrprostodonties",
+        "137" => "emrkonservasis",
+        "10" => "emrradiologies",
+    ];
+
     public function findpatients()
     {
         $querystring = [];
@@ -24,15 +34,24 @@ class PatientRepository implements PatientRepositoryInterface
         extract($querystringed);
 
         $idunit = request()->query("idunit");
+        $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
+        $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
 
         $content = QueryBuilder::for(patient::class);
 
         if ($idunit) {
 
             $content = $content->
-            where("idunit", request()->query("idunit"))->
-            whereBetween(DB::raw("CAST(visit_date as DATE)"), [ Carbon::now()->format('Y-m-d'), Carbon::now()->format('Y-m-d'), ]);
+            where("idunit", $idunit)->
+            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+            select("patients.*",
+            $this->table_unit[$idunit].".id as id_emr",
+            $this->table_unit[$idunit].".status_emr as status_emr",
+            $this->table_unit[$idunit].".status_penilaian as status_penilaian");
         }
+
+        $content = $content->
+        whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
 
         $content = $content->
         defaultSort("-noepisode")->
@@ -45,6 +64,40 @@ class PatientRepository implements PatientRepositoryInterface
     public function listksmgigiwithoutpaging()
     {
         return patient::all();
+    }
+
+    public function updateStatus($data)
+    {
+        $result = [];
+
+        $user = auth()->user();
+        $emr = DB::table($this->table_unit[$data["idunit"]])->
+        where("id", $data["id"]);
+
+        if ($user->role == "dosen") {
+
+            $emr->update(
+            [
+                "status_penilaian" => $data["status"],
+            ]);
+
+            $result = $emr->get();
+
+        } else if ($user->role == "mahasiswa") {
+
+            $emr->update(
+            [
+                "status_emr" => $data["status"],
+            ]);
+
+            $result = $emr->get();
+
+        } else {
+
+            $result = 0;
+        }
+
+        return $result;
     }
 
     public function storePatient($request)

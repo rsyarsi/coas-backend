@@ -163,6 +163,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("detail", [TransactionAssesmentController::class, "show"]);
                     });
                     Route::group(['prefix' => 'patient'], function () {
+                        Route::post("update_status", [ PatientListController::class, "updateStatus" ]);
                         Route::get("listksmgigi", [PatientListController::class, "create"]);
                         Route::post("listksmgigihistory", [PatientListController::class, "update"]);
                         Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);

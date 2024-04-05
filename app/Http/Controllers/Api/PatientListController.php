@@ -21,6 +21,19 @@ class PatientListController extends Controller
         //
     }
 
+    public function updateStatus(Request $request)
+    {
+        $repository = new PatientRepository;
+
+        $specialistRepository = new SpecialistRepository(); 
+        $studentRepository = new StudentRepository();
+
+        $services = new PatientService($specialistRepository, $repository, $studentRepository);
+        $execute = $services->updateStatus($request);
+
+        return $execute;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

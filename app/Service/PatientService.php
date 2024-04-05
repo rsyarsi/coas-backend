@@ -34,27 +34,31 @@ class PatientService extends Controller
     }
     public function listksmgigi()
     {
+        $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
+        $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
+
         try {
  
             $list =  $this->GuzzleClientRequestPost(
                 env('API_URL_YARSI') . "registrations/getRegistrationRajalActiveCoas",
                 "POST",
                 json_encode([
-                    'tglPeriodeBerobatAwal' => Carbon::now()->format('Y-m-d'),
-                    'tglPeriodeBerobatAkhir' =>  Carbon::now()->format('Y-m-d'),
+                    'tglPeriodeBerobatAwal' => $datetime_start,
+                    'tglPeriodeBerobatAkhir' =>  $datetime_to,
                 ]) 
             );
        
-            foreach ($list['data'] as $key  ) {
-                # code...
+            if (@$list['data']) {
+                foreach ($list['data'] as $key  ) {
+                    # code...
+                    
+                    $cek = $this->patientRepository->findbyNoregistrasi($key['NoRegistrasi']);
                 
-                $cek = $this->patientRepository->findbyNoregistrasi($key['NoRegistrasi']);
-               
-                if($cek->count() < 1){
-                    $this->patientRepository->storePatient($key);
+                    if($cek->count() < 1){
+                        $this->patientRepository->storePatient($key);
 
+                    }
                 }
-                
             }
 
             $datalistreg = $this->patientRepository->findpatients();
@@ -135,6 +139,42 @@ class PatientService extends Controller
         } catch (Exception $e) { 
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function updateStatus($request)
+    {
+        $request->validate(
+        [
+            "status" => "required",
+        ]);
+
+        $data =
+        [
+            "id" => $request->id,
+            "idunit" => $request->idunit,
+            "status" => $request->status,
+        ];
+
+        try {
+
+            DB::beginTransaction();
+
+            $execute = $this->patientRepository->updateStatus($data);
+
+            DB::commit();
+
+            if ($execute) {
+
+                return $this->sendResponse($data, "Status berhasil diupdate!");
+            }
+
+        } catch (Exception $x) {
+
+            DB::rollBack();
+            Log::info($x->getMessage());
+
+            return $this->sendError("Status gagal diproses!", $x->getMessage());
         }
     }
 }
