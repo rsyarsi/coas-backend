@@ -109,28 +109,32 @@ class PatientService extends Controller
             if($findstudent->count() < 1){
                 return $this->sendError('Mahasiswa tidak di temukan !', []);
             }
+
             $nim = $findstudent->first()->nim;
 
             $unitsimrsid = $findgroupspecialist->first()->simrsid;
 
-            if ($unitsimrsid == '46'){
+            if ($unitsimrsid) $find = $this->patientRepository->findpatientsByEmr($unitsimrsid, $nim);
+            else return $this->sendError('Data tidak ditemukan !', []);
+
+            //if ($unitsimrsid == '46'){
                 //ortodonti
-                 $find = $this->patientRepository->listByEmrAndNimOrto($nim);
-            }elseif($unitsimrsid == '58'){
+                 //$find = $this->patientRepository->listByEmrAndNimOrto($nim);
+            //}elseif($unitsimrsid == '58'){
                 //pedodonti
-                 $find = $this->patientRepository->listByEmrAndNimPedo($nim);
-            }elseif($unitsimrsid == '59'){
+                 //$find = $this->patientRepository->listByEmrAndNimPedo($nim);
+            //}elseif($unitsimrsid == '59'){
                 //periodonti
-                 $find = $this->patientRepository->listByEmrAndNimPerio($nim);
-            }elseif($unitsimrsid == '60'){
+                 //$find = $this->patientRepository->listByEmrAndNimPerio($nim);
+            //}elseif($unitsimrsid == '60'){
                 //prostodonti
-                 $find = $this->patientRepository->listByEmrAndNimProsto($nim);
-            }elseif($unitsimrsid == '137'){
+                 //$find = $this->patientRepository->listByEmrAndNimProsto($nim);
+            //}elseif($unitsimrsid == '137'){
                 //konservasi
-                 $find = $this->patientRepository->listByEmrAndNimKonser($nim);
-            }else{
-                return $this->sendError('Data tidak ditemukan !',[]);
-            }
+                 //$find = $this->patientRepository->listByEmrAndNimKonser($nim);
+            //}else{
+                //return $this->sendError('Data tidak ditemukan !',[]);
+            //}
              
             if($find->count() < 1){
                 return $this->sendError('Data tidak ditemukan !',[]);

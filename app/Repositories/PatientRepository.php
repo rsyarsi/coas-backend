@@ -61,6 +61,46 @@ class PatientRepository implements PatientRepositoryInterface
 
         return $content;
     }
+
+    public function findpatientsByEmr($idunit, $nim)
+    {
+        $querystring = [];
+
+        $querystringed =
+        [
+            "limit" => $querystring["limit"] ?? request()->query("limit", 10),
+            "current_page" => $querystring["current_page"] ?? request()->query("current_page", 1),
+        ];
+        extract($querystringed);
+
+        $datetime_start = request()->input("from", Carbon::now()->format('Y-m-d'));
+        $datetime_to = request()->input("to", Carbon::now()->format('Y-m-d'));
+
+        $content = QueryBuilder::for(patient::class);
+
+        if ($idunit) {
+
+            $content = $content->
+            where("idunit", $idunit)->
+            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+            select("patients.*",
+            $this->table_unit[$idunit].".id as id_emr",
+            $this->table_unit[$idunit].".status_emr as status_emr",
+            $this->table_unit[$idunit].".status_penilaian as status_penilaian");
+        }
+
+        $content = $content->
+        whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
+
+        $content = $content->
+        defaultSort("-noepisode")->
+        allowedSorts($content->getSubject()->getModel()->getFillable())->
+        allowedFilters($content->getSubject()->getModel()->getFillable())->
+        paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
+
+        return $content;
+    }
+
     public function listksmgigiwithoutpaging()
     {
         return patient::all();
