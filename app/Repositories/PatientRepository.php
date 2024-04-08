@@ -34,6 +34,7 @@ class PatientRepository implements PatientRepositoryInterface
         extract($querystringed);
 
         $idunit = request()->query("idunit");
+        $type = request()->query("type", "active");
         $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
         $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
 
@@ -41,9 +42,27 @@ class PatientRepository implements PatientRepositoryInterface
 
         if ($idunit) {
 
+            $fix = "";
+
+            if ($this->table_unit[$idunit] == "emrradiologies") {
+
+                $fix = "";
+
+            } else {
+
+                if ($type == "active") {
+
+                    $fix = " AND ".$this->table_unit[$idunit].".status_emr = 'OPEN'";
+
+                } else if ($type == "history") {
+
+                    $fix = " AND ".$this->table_unit[$idunit].".status_emr <> 'OPEN'";
+                }
+            }
+
             $content = $content->
             where("idunit", $idunit)->
-            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
             select("patients.*",
             $this->table_unit[$idunit].".id as id_emr",
             $this->table_unit[$idunit].".status_emr as status_emr",
@@ -82,7 +101,7 @@ class PatientRepository implements PatientRepositoryInterface
 
             $content = $content->
             where("idunit", $idunit)->
-            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+            join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
             select("patients.*",
             $this->table_unit[$idunit].".id as id_emr",
             $this->table_unit[$idunit].".status_emr as status_emr",
