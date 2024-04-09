@@ -21,6 +21,8 @@ class AssesmentDetailRepository implements AssesmentDetailRepositoryInterface
         extract($querystringed);
 
         $content = QueryBuilder::for(assesmentdetail::class)->
+        join("assesmentgroups", "assesmentdetails.assesmentgroupid", "=", "assesmentgroups.id")->
+        select("assesmentdetails.*", "assesmentgroups.specialistid as specialistid")->
         defaultSort("-id")->
         allowedSorts([ "id", "assesmentgroupid", "assesmentdescription", "active", "updated_at", ])->
         allowedFilters([ "id", "assesmentgroupid", "assesmentdescription", "active", ])->

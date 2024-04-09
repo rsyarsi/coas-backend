@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EmrOrtodonsiController;
 use App\Http\Controllers\Api\EmrProstodontieController;
 use App\Http\Controllers\Api\EmrKonservasiController;
 use App\Http\Controllers\Api\EmrPeriodontieController;
+use App\Http\Controllers\Api\EmrRadiologiController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\LectureController;
 use App\Http\Controllers\Api\PatientListController;
@@ -163,6 +164,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("detail", [TransactionAssesmentController::class, "show"]);
                     });
                     Route::group(['prefix' => 'patient'], function () {
+                        Route::post("update_status", [ PatientListController::class, "updateStatus" ]);
                         Route::get("listksmgigi", [PatientListController::class, "create"]);
                         Route::post("listksmgigihistory", [PatientListController::class, "update"]);
                         Route::get("detailbyNoregistrasi/{noreg}", [PatientListController::class, "store"]);
@@ -319,6 +321,9 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::post("verifydpk", [EmrPeriodontieController::class, "verifydpk"]);  
                             
                         });
+                    });
+                    Route::group(['prefix' => 'radiologi'], function () {
+                        Route::post("/", [EmrRadiologiController::class, "store"]); 
                     });
                 });
             });

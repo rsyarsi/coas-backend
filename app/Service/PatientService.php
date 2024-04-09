@@ -34,27 +34,31 @@ class PatientService extends Controller
     }
     public function listksmgigi()
     {
+        $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
+        $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
+
         try {
  
             $list =  $this->GuzzleClientRequestPost(
                 env('API_URL_YARSI') . "registrations/getRegistrationRajalActiveCoas",
                 "POST",
                 json_encode([
-                    'tglPeriodeBerobatAwal' => Carbon::now()->format('Y-m-d'),
-                    'tglPeriodeBerobatAkhir' =>  Carbon::now()->format('Y-m-d'),
+                    'tglPeriodeBerobatAwal' => $datetime_start,
+                    'tglPeriodeBerobatAkhir' =>  $datetime_to,
                 ]) 
             );
        
-            foreach ($list['data'] as $key  ) {
-                # code...
+            if (@$list['data']) {
+                foreach ($list['data'] as $key  ) {
+                    # code...
+                    
+                    $cek = $this->patientRepository->findbyNoregistrasi($key['NoRegistrasi']);
                 
-                $cek = $this->patientRepository->findbyNoregistrasi($key['NoRegistrasi']);
-               
-                if($cek->count() < 1){
-                    $this->patientRepository->storePatient($key);
+                    if($cek->count() < 1){
+                        $this->patientRepository->storePatient($key);
 
+                    }
                 }
-                
             }
 
             $datalistreg = $this->patientRepository->findpatients();
@@ -105,28 +109,32 @@ class PatientService extends Controller
             if($findstudent->count() < 1){
                 return $this->sendError('Mahasiswa tidak di temukan !', []);
             }
+
             $nim = $findstudent->first()->nim;
 
             $unitsimrsid = $findgroupspecialist->first()->simrsid;
 
-            if ($unitsimrsid == '46'){
+            if ($unitsimrsid) $find = $this->patientRepository->findpatientsByEmr($unitsimrsid, $nim);
+            else return $this->sendError('Data tidak ditemukan !', []);
+
+            //if ($unitsimrsid == '46'){
                 //ortodonti
-                 $find = $this->patientRepository->listByEmrAndNimOrto($nim);
-            }elseif($unitsimrsid == '58'){
+                 //$find = $this->patientRepository->listByEmrAndNimOrto($nim);
+            //}elseif($unitsimrsid == '58'){
                 //pedodonti
-                 $find = $this->patientRepository->listByEmrAndNimPedo($nim);
-            }elseif($unitsimrsid == '59'){
+                 //$find = $this->patientRepository->listByEmrAndNimPedo($nim);
+            //}elseif($unitsimrsid == '59'){
                 //periodonti
-                 $find = $this->patientRepository->listByEmrAndNimPerio($nim);
-            }elseif($unitsimrsid == '60'){
+                 //$find = $this->patientRepository->listByEmrAndNimPerio($nim);
+            //}elseif($unitsimrsid == '60'){
                 //prostodonti
-                 $find = $this->patientRepository->listByEmrAndNimProsto($nim);
-            }elseif($unitsimrsid == '137'){
+                 //$find = $this->patientRepository->listByEmrAndNimProsto($nim);
+            //}elseif($unitsimrsid == '137'){
                 //konservasi
-                 $find = $this->patientRepository->listByEmrAndNimKonser($nim);
-            }else{
-                return $this->sendError('Data tidak ditemukan !',[]);
-            }
+                 //$find = $this->patientRepository->listByEmrAndNimKonser($nim);
+            //}else{
+                //return $this->sendError('Data tidak ditemukan !',[]);
+            //}
              
             if($find->count() < 1){
                 return $this->sendError('Data tidak ditemukan !',[]);
@@ -135,6 +143,42 @@ class PatientService extends Controller
         } catch (Exception $e) { 
             Log::info($e->getMessage());
             return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function updateStatus($request)
+    {
+        $request->validate(
+        [
+            "status" => "required",
+        ]);
+
+        $data =
+        [
+            "id" => $request->id,
+            "idunit" => $request->idunit,
+            "status" => $request->status,
+        ];
+
+        try {
+
+            DB::beginTransaction();
+
+            $execute = $this->patientRepository->updateStatus($data);
+
+            DB::commit();
+
+            if ($execute) {
+
+                return $this->sendResponse($data, "Status berhasil diupdate!");
+            }
+
+        } catch (Exception $x) {
+
+            DB::rollBack();
+            Log::info($x->getMessage());
+
+            return $this->sendError("Status gagal diproses!", $x->getMessage());
         }
     }
 }
