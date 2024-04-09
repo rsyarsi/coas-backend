@@ -86,7 +86,7 @@ class PatientRepository implements PatientRepositoryInterface
         whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
 
         $content = $content->
-        defaultSort("-noepisode")->
+        //defaultSort("-noepisode")->
         allowedSorts($content->getSubject()->getModel()->getFillable())->
         allowedFilters($content->getSubject()->getModel()->getFillable())->
         paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);
@@ -113,19 +113,34 @@ class PatientRepository implements PatientRepositoryInterface
         if ($idunit) {
 
             $content = $content->
-            where("idunit", $idunit)->
-            join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
-            select("patients.*",
-            $this->table_unit[$idunit].".id as id_emr",
-            $this->table_unit[$idunit].".status_emr as status_emr",
-            $this->table_unit[$idunit].".status_penilaian as status_penilaian");
+            where("idunit", $idunit);
+
+            if ($this->table_unit[$idunit] == "emrradiologies") {
+
+                $content = $content->
+                join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
+                select("patients.*",
+                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".status_emr as status_emr",
+                $this->table_unit[$idunit].".status_penilaian as status_penilaian",
+                $this->table_unit[$idunit].".jenis_radiologi as jenis_radiologi");
+
+            } else {
+
+                $content = $content->
+                join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+                select("patients.*",
+                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".status_emr as status_emr",
+                $this->table_unit[$idunit].".status_penilaian as status_penilaian");
+            }
         }
 
         $content = $content->
         whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
 
         $content = $content->
-        defaultSort("-noepisode")->
+        //defaultSort("-noepisode")->
         allowedSorts($content->getSubject()->getModel()->getFillable())->
         allowedFilters($content->getSubject()->getModel()->getFillable())->
         paginate($limit, [ "*", ], "current_page", $current_page)->appends(empty($querystring) ? request()->query() : $querystringed);

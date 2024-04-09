@@ -37,6 +37,8 @@ class EmrRadiologiService extends Controller
     {
         $data = $request->validate(
         [
+            "nim" => "required",
+
             "noepisode" => "required",
             "noregistrasi" => "required",
             "nomr" => "required",
@@ -65,11 +67,12 @@ class EmrRadiologiService extends Controller
 
             $id = \Ramsey\Uuid\Uuid::uuid4();
 
-            \App\Models\patient::insert($request->all());
+            \App\Models\patient::insert($request->except("nim", "jenis_radiologi"));
 
             $execute = $this->repository->store(new Request(
             [
                 "id" => $id,
+                "nim" => $request->nim,
                 "noregistrasi" => $request->noregistrasi,
                 "noepisode" => $request->noepisode,
                 "nomr" => $request->nomr,
