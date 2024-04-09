@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EmrOrtodonsiController;
 use App\Http\Controllers\Api\EmrProstodontieController;
 use App\Http\Controllers\Api\EmrKonservasiController;
 use App\Http\Controllers\Api\EmrPeriodontieController;
+use App\Http\Controllers\Api\EmrRadiologiController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\LectureController;
 use App\Http\Controllers\Api\PatientListController;
@@ -320,6 +321,9 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::post("verifydpk", [EmrPeriodontieController::class, "verifydpk"]);  
                             
                         });
+                    });
+                    Route::group(['prefix' => 'radiologi'], function () {
+                        Route::post("/", [EmrRadiologiController::class, "store"]); 
                     });
                 });
             });

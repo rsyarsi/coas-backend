@@ -42,11 +42,18 @@ class PatientRepository implements PatientRepositoryInterface
 
         if ($idunit) {
 
-            $fix = "";
-
             if ($this->table_unit[$idunit] == "emrradiologies") {
 
                 $fix = "";
+
+                $content = $content->
+                where("idunit", $idunit)->
+                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
+                select("patients.*",
+                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".status_emr as status_emr",
+                $this->table_unit[$idunit].".status_penilaian as status_penilaian",
+                $this->table_unit[$idunit].".jenis_radiologi as jenis_radiologi");
 
             } else {
 
@@ -54,19 +61,25 @@ class PatientRepository implements PatientRepositoryInterface
 
                     $fix = " AND ".$this->table_unit[$idunit].".status_emr = 'OPEN'";
 
+                    $content = $content->
+                    where("idunit", $idunit)->
+                    leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+
                 } else if ($type == "history") {
 
                     $fix = " AND ".$this->table_unit[$idunit].".status_emr <> 'OPEN'";
-                }
-            }
 
-            $content = $content->
-            where("idunit", $idunit)->
-            leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
-            select("patients.*",
-            $this->table_unit[$idunit].".id as id_emr",
-            $this->table_unit[$idunit].".status_emr as status_emr",
-            $this->table_unit[$idunit].".status_penilaian as status_penilaian");
+                    $content = $content->
+                    where("idunit", $idunit)->
+                    join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+                }
+
+                $content = $content->
+                select("patients.*",
+                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".status_emr as status_emr",
+                $this->table_unit[$idunit].".status_penilaian as status_penilaian");
+            }
         }
 
         $content = $content->
