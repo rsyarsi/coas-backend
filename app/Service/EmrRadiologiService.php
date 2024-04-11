@@ -30,6 +30,54 @@ class EmrRadiologiService extends Controller
     }
 
     /**
+     * @param string $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function show($id, Request $request)
+    {
+        $data = $this->repository->show($id, $request);
+
+        if ($data->count()) {
+
+            return $this->sendResponse($data->first(), "Data tersedia!");
+
+        } else {
+
+            return $this->sendError("Data tidak tersedia!", "");
+        }
+    }
+
+    /**
+     * @param string $id
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $execute = $this->repository->update($id, $request);
+
+            DB::commit();
+
+            if ($execute) {
+
+                return $this->sendResponse(array_merge([ "id" => $id, ...$request->all(), ]), "Status berhasil diproses!");
+            }
+
+        } catch (Exception $throwable) {
+
+            DB::rollBack();
+            Log::info($throwable->getMessage());
+
+            return $this->sendError("Status gagal diproses!", $throwable->getMessage());
+        }
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
@@ -77,8 +125,10 @@ class EmrRadiologiService extends Controller
                 "noepisode" => $request->noepisode,
                 "nomr" => $request->nomr,
                 "namapasien" => $request->patientname,
+                "namadokter" => $request->namadokter,
                 "alamat" => $request->address,
                 "usia" => Carbon::parse($request->date_of_birth)->age,
+                "jenisradiologi" => $request->jenis_radiologi,
                 "jenis_radiologi" => $request->jenis_radiologi,
                 "status_emr" => "OPEN",
                 "status_penilaian" => "OPEN",
@@ -102,6 +152,24 @@ class EmrRadiologiService extends Controller
             Log::info($throwable->getMessage());
 
             return $this->sendError("Status gagal diproses!", $throwable->getMessage());
+        }
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function student(Request $request)
+    {
+        $data = $this->repository->student($request);
+
+        if ($data->count()) {
+
+            return $this->sendResponse($data, "Data tersedia!");
+
+        } else {
+
+            return $this->sendError("Data tidak tersedia!", "");
         }
     }
 }

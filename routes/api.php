@@ -323,7 +323,11 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         });
                     });
                     Route::group(['prefix' => 'radiologi'], function () {
-                        Route::post("/", [EmrRadiologiController::class, "store"]); 
+                        Route::post("store", [EmrRadiologiController::class, "store"]);
+                        Route::post("update", [EmrRadiologiController::class, "update"]);
+                        Route::post("upload", [EmrRadiologiController::class, "upload"]);
+                        Route::get("/show/{id}", [EmrRadiologiController::class, "show"]);
+                        Route::get("students", [EmrRadiologiController::class, "student"]);
                     });
                 });
             });
