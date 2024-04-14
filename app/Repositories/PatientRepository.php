@@ -155,15 +155,18 @@ class PatientRepository implements PatientRepositoryInterface
 
     public function updateStatus($data)
     {
+        $count = 0;
         $result = [];
 
         $user = auth()->user();
-        $emr = DB::table($this->table_unit[$data["idunit"]])->
-        where("id", $data["id"]);
+        $emr = DB::table($this->table_unit[$data["idunit"]]);
+
+        if ($this->table_unit[$data["idunit"]] == "emrradiologies") $emr = $emr->where("noregistrasi", $data["id"]);
+        else $emr = $emr->where("noregister", $data["id"]);
 
         if ($user->role == "dosen") {
 
-            $emr->update(
+            $count = $emr->update(
             [
                 "status_penilaian" => $data["status"],
             ]);
@@ -172,7 +175,7 @@ class PatientRepository implements PatientRepositoryInterface
 
         } else if ($user->role == "mahasiswa") {
 
-            $emr->update(
+            $count = $emr->update(
             [
                 "status_emr" => $data["status"],
             ]);
