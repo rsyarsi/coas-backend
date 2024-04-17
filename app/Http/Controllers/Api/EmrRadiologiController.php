@@ -17,6 +17,19 @@ class EmrRadiologiController extends Controller
     use AwsTrait;
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function students(Request $request)
+    {
+        $repository = new EmrRadiologiRepository();
+        $services = new EmrRadiologiService($repository);
+        $execute = $services->students($request);
+
+        return $execute;
+    }
+
+    /**
      * @param string $id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
@@ -38,7 +51,7 @@ class EmrRadiologiController extends Controller
     {
         $repository = new EmrRadiologiRepository();
         $services = new EmrRadiologiService($repository);
-        $execute = $services->update($request->id, new Request($request->except("id")));
+        $execute = $services->update($request->noregistrasi, $request);
 
         return $execute;
     }
@@ -52,19 +65,6 @@ class EmrRadiologiController extends Controller
         $repository = new EmrRadiologiRepository();
         $services = new EmrRadiologiService($repository);
         $execute = $services->store($request);
-
-        return $execute;
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-     */
-    public function student(Request $request)
-    {
-        $repository = new EmrRadiologiRepository();
-        $services = new EmrRadiologiService($repository);
-        $execute = $services->student($request);
 
         return $execute;
     }

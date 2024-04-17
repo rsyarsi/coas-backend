@@ -327,7 +327,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("update", [EmrRadiologiController::class, "update"]);
                         Route::post("upload", [EmrRadiologiController::class, "upload"]);
                         Route::get("/show/{id}", [EmrRadiologiController::class, "show"]);
-                        Route::get("students", [EmrRadiologiController::class, "student"]);
+                        Route::get("students", [EmrRadiologiController::class, "students"]);
                     });
                 });
             });

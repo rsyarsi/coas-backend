@@ -14,13 +14,26 @@ use Illuminate\Http\JsonResponse;
 class EmrRadiologiRepository extends Controller implements EmrRadiologiRepositoryInterface
 {
     /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function students(Request $request)
+    {
+        $data = DB::table("students")->join(DB::raw("(SELECT * FROM specialists WHERE specialistname LIKE '%adiologi%') AS specialists"), "students.specialistid", "=", "specialists.id")->select("students.*", "specialists.specialistname as specialistname")->get();
+
+        return $data;
+    }
+
+    /**
      * @param string $id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function show($id, Request $request)
     {
-        return DB::table("emrradiologies")->where("id", "=", $id)->get();
+        $data = DB::table("emrradiologies")->where("noregistrasi", "=", $id)->first();
+
+        return $data;
     }
 
     /**
@@ -30,7 +43,11 @@ class EmrRadiologiRepository extends Controller implements EmrRadiologiRepositor
      */
     public function update($id, Request $request)
     {
-        return DB::table("emrradiologies")->where("id", "=", $id)->update($request->all());
+        $data = DB::table("emrradiologies")->where("noregistrasi", "=", $id);
+
+        $updated = $data->update($request->all());
+
+        return $data->first();
     }
 
     /**
@@ -39,15 +56,8 @@ class EmrRadiologiRepository extends Controller implements EmrRadiologiRepositor
      */
     public function store(Request $request)
     {
-        return DB::table("emrradiologies")->insert($request->all());
-    }
+        $data = DB::table("emrradiologies")->insert($request->all());
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-     */
-    public function student(Request $request)
-    {
-        return DB::table("students")->join(DB::raw("(SELECT * FROM specialists WHERE specialistname LIKE '%adiologi%') AS specialists"), "students.specialistid", "=", "specialists.id")->select("students.*", "specialists.specialistname as specialistname")->get();
+        return $data;
     }
 }

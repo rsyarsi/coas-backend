@@ -30,6 +30,24 @@ class EmrRadiologiService extends Controller
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
+    public function students(Request $request)
+    {
+        $datas = $this->repository->students($request);
+
+        if ($datas->count()) {
+
+            return $this->sendResponse($datas, "Data tersedia!");
+
+        } else {
+
+            return $this->sendError("Data tidak tersedia!", "");
+        }
+    }
+
+    /**
      * @param string $id
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
@@ -38,9 +56,9 @@ class EmrRadiologiService extends Controller
     {
         $data = $this->repository->show($id, $request);
 
-        if ($data->count()) {
+        if ($data) {
 
-            return $this->sendResponse($data->first(), "Data tersedia!");
+            return $this->sendResponse($data, "Data tersedia!");
 
         } else {
 
@@ -65,7 +83,7 @@ class EmrRadiologiService extends Controller
 
             if ($execute) {
 
-                return $this->sendResponse(array_merge([ "id" => $id, ...$request->all(), ]), "Status berhasil diproses!");
+                return $this->sendResponse($execute, "Status berhasil diproses!");
             }
 
         } catch (Exception $throwable) {
@@ -139,7 +157,7 @@ class EmrRadiologiService extends Controller
             if ($execute) {
 
                 $data["idunit"] = $data["idunit"];
-                $data["id_emr"] = $id;
+                $data["noreg"] = $data["noregistrasi"];
                 $data["status_emr"] = "OPEN";
                 $data["status_penilaian"] = "OPEN";
 
@@ -152,24 +170,6 @@ class EmrRadiologiService extends Controller
             Log::info($throwable->getMessage());
 
             return $this->sendError("Status gagal diproses!", $throwable->getMessage());
-        }
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-     */
-    public function student(Request $request)
-    {
-        $data = $this->repository->student($request);
-
-        if ($data->count()) {
-
-            return $this->sendResponse($data, "Data tersedia!");
-
-        } else {
-
-            return $this->sendError("Data tidak tersedia!", "");
         }
     }
 }

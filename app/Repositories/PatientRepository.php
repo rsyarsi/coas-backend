@@ -47,10 +47,10 @@ class PatientRepository implements PatientRepositoryInterface
                 $fix = "";
 
                 $content = $content->
-                where("idunit", $idunit)->
+                // where("idunit", $idunit)-> //
                 leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
                 select("patients.*",
-                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".noregistrasi as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian",
                 $this->table_unit[$idunit].".jenis_radiologi as jenis_radiologi");
@@ -76,7 +76,7 @@ class PatientRepository implements PatientRepositoryInterface
 
                 $content = $content->
                 select("patients.*",
-                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".noregister as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
@@ -120,7 +120,7 @@ class PatientRepository implements PatientRepositoryInterface
                 $content = $content->
                 join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
                 select("patients.*",
-                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".noregistrasi as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian",
                 $this->table_unit[$idunit].".jenis_radiologi as jenis_radiologi");
@@ -130,7 +130,7 @@ class PatientRepository implements PatientRepositoryInterface
                 $content = $content->
                 join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
                 select("patients.*",
-                $this->table_unit[$idunit].".id as id_emr",
+                $this->table_unit[$idunit].".noregister as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
