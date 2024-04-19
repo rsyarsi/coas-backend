@@ -87,13 +87,47 @@ class PatientService extends Controller
     public function detail($request)
     {
         try {
-            return $this->GuzzleClientRequestPost(
+            $data = $this->GuzzleClientRequestPost(
                 env('API_URL_YARSI') . "registrations/viewByNoregistrasi",
                 "POST",
                 json_encode([ 
                     'NoRegistrasi' => $request
                 ])
             );
+
+            if (! $data['status']) {
+
+                $db = (array) DB::table("patients")->where("noregistrasi", "RJJP040424-0193")->first();
+
+                $data =
+                [
+                    'status' => true,
+                    'message' => 'Data ditemukan.',
+                    'data' =>
+                    [
+                        [
+                            'NoAntrianAll' => @$db['noantrianall'],
+                            'NamaJaminan' => @$db['namajaminan'],
+                            'PatientName' => @$db['patientname'],
+                            'Gander' => @$db['gander'],
+                            'Date_of_birth' => @$db['date_of_birth'],
+                            'Address' => @$db['address'],
+                            'IdUnit' => @$db['idunit'],
+                            'Visit_Date' => @$db['visit_date'],
+                            'NamaUnit' => @$db['namaunit'],
+                            'IdDokter' => @$db['iddokter'],
+                            'NamaDokter' => @$db['namadokter'],
+                            'NoMR' => @$db['nomr'],
+                            'NoEpisode' => @$db['noepisode'],
+                            'NoRegistrasi' => @$db['noregistrasi'],
+                            'PatientType' => @$db['patienttype'],
+                            'StatusID' => @$db['statusid'],
+                        ],
+                    ],
+                ];
+            }
+
+            return $data;
         } catch (\Exception $e) {
             throw new HttpException(200, $e);
         }

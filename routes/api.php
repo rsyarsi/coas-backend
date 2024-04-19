@@ -274,7 +274,7 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                         Route::post("viewemrbyRegOperator", [EmrProstodontieController::class, "update"]);
                         Route::group(['prefix' => 'create'], function () {
                             Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
-                            Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
+                            //Route::post("medicaldentalhistory", [EmrProstodontieController::class, "store"]);
                             Route::post("uploadgigi", [EmrProstodontieController::class, "uploadfoto"]);   
                             Route::post("uploadodontogram", [EmrProstodontieController::class, "uploadodontogram"]);   
                         });

@@ -626,7 +626,7 @@ class EmrKonservasiService extends Controller
                 ];
 
                 $this->emrkonservasiRepository->createwaktuperawatan($data, $uuid);
-                $message = 'Assesment Prostodonti Berhasil Dibuat !';
+                $message = 'Assesment Konservasi Berhasil Dibuat !';
 
                  DB::commit();
  

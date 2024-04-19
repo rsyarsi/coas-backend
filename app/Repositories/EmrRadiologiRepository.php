@@ -31,7 +31,11 @@ class EmrRadiologiRepository extends Controller implements EmrRadiologiRepositor
      */
     public function show($id, Request $request)
     {
-        $data = DB::table("emrradiologies")->where("noregistrasi", "=", $id)->first();
+        $data = DB::table("emrradiologies");
+
+        if ($request->query("nim")) $data = $data->where("nim", "=", $request->query("nim"));
+
+        $data = $data->where("noregistrasi", "=", $id)->first();
 
         return $data;
     }

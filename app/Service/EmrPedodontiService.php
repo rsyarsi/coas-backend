@@ -808,6 +808,7 @@ class EmrPedodontiService extends Controller
                     'id' => $uuid,
                     'nim' => $request->nim,
                     "noregister" => $request->noregister,
+                    "noepisode" => null,
                 ];
 
 
