@@ -33,6 +33,8 @@ class PatientRepository implements PatientRepositoryInterface
         ];
         extract($querystringed);
 
+        $user = auth()->user();
+        $nim = $user->username;
         $idunit = request()->query("idunit");
         $type = request()->query("type", "active");
         $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
@@ -44,11 +46,9 @@ class PatientRepository implements PatientRepositoryInterface
 
             if ($this->table_unit[$idunit] == "emrradiologies") {
 
-                $fix = "";
-
                 $content = $content->
                 // where("idunit", $idunit)-> //
-                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
+                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregistrasi as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
@@ -57,26 +57,40 @@ class PatientRepository implements PatientRepositoryInterface
 
             } else {
 
+                $content = $content->
+                where("idunit", $idunit)->
+                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+
                 if ($type == "active") {
 
-                    $fix = " AND ".$this->table_unit[$idunit].".status_emr = 'OPEN'";
-
                     $content = $content->
-                    where("idunit", $idunit)->
-                    leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+                    where(function ($query) {
+
+                        $query->
+                        whereNull("status_emr")->
+                        orWhere("status_emr", 'OPEN');
+                    });
 
                 } else if ($type == "history") {
 
-                    $fix = " AND ".$this->table_unit[$idunit].".status_emr <> 'OPEN'";
-
                     $content = $content->
-                    where("idunit", $idunit)->
-                    join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL".$fix.") AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+                    where(function ($query) {
+
+                        $query->
+                        where("status_emr", 'WRITE')->
+                        orWhere("status_emr", 'FINISH');
+                    });
+
+                    if ($user->role == "mahasiswa") {
+
+                        $content = $content->where("nim", $nim);
+                    }
                 }
 
                 $content = $content->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregister as noreg",
+                $this->table_unit[$idunit].".nim as nim",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
@@ -96,6 +110,7 @@ class PatientRepository implements PatientRepositoryInterface
 
     public function findpatientsByEmr($idunit, $nim)
     {
+
         $querystring = [];
 
         $querystringed =
@@ -105,20 +120,18 @@ class PatientRepository implements PatientRepositoryInterface
         ];
         extract($querystringed);
 
-        $datetime_start = request()->input("from", Carbon::now()->format('Y-m-d'));
-        $datetime_to = request()->input("to", Carbon::now()->format('Y-m-d'));
+        $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
+        $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
 
         $content = QueryBuilder::for(patient::class);
 
         if ($idunit) {
 
-            $content = $content->
-            where("idunit", $idunit);
-
             if ($this->table_unit[$idunit] == "emrradiologies") {
 
                 $content = $content->
-                join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
+                // where("idunit", $idunit)-> //
+                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregistrasi")->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregistrasi as noreg",
                 $this->table_unit[$idunit].".status_emr as status_emr",
@@ -128,15 +141,20 @@ class PatientRepository implements PatientRepositoryInterface
             } else {
 
                 $content = $content->
-                join(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL AND ".$this->table_unit[$idunit].".nim = '".$nim."') AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister")->
+                where("idunit", $idunit)->
+                leftJoin(DB::raw("(SELECT * FROM ".$this->table_unit[$idunit]." WHERE ".$this->table_unit[$idunit].".noepisode IS NOT NULL) AS ".$this->table_unit[$idunit]), "patients.noregistrasi", "=", $this->table_unit[$idunit].".noregister");
+
+                $content = $content->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregister as noreg",
+                $this->table_unit[$idunit].".nim as nim",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
         }
 
         $content = $content->
+        where("nim", $nim)->
         whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
 
         $content = $content->
