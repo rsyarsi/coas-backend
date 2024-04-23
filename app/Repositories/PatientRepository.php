@@ -34,6 +34,7 @@ class PatientRepository implements PatientRepositoryInterface
         extract($querystringed);
 
         $user = auth()->user();
+        $fieldnim = "nim";
         $nim = $user->username;
         $idunit = request()->query("idunit");
         $type = request()->query("type", "active");
@@ -41,6 +42,8 @@ class PatientRepository implements PatientRepositoryInterface
         $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
 
         $content = QueryBuilder::for(patient::class);
+
+        if ($this->table_unit[$idunit] == "emrperiodonties") $fieldnim = "npm";
 
         if ($idunit) {
 
@@ -83,14 +86,14 @@ class PatientRepository implements PatientRepositoryInterface
 
                     if ($user->role == "mahasiswa") {
 
-                        $content = $content->where("nim", $nim);
+                        $content = $content->where($fieldnim, $nim);
                     }
                 }
 
                 $content = $content->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregister as noreg",
-                $this->table_unit[$idunit].".nim as nim",
+                $this->table_unit[$idunit].".$fieldnim as nim",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
@@ -110,7 +113,6 @@ class PatientRepository implements PatientRepositoryInterface
 
     public function findpatientsByEmr($idunit, $nim)
     {
-
         $querystring = [];
 
         $querystringed =
@@ -120,10 +122,14 @@ class PatientRepository implements PatientRepositoryInterface
         ];
         extract($querystringed);
 
-        $datetime_start = request()->query("start", Carbon::now()->format('Y-m-d'));
-        $datetime_to = request()->query("to", Carbon::now()->format('Y-m-d'));
+        $user = auth()->user();
+        $fieldnim = "nim";
+        $datetime_start = request()->from ?? Carbon::now()->format('Y-m-d');
+        $datetime_to = request()->to ?? Carbon::now()->format('Y-m-d');
 
         $content = QueryBuilder::for(patient::class);
+
+        if ($this->table_unit[$idunit] == "emrperiodonties") $fieldnim = "npm";
 
         if ($idunit) {
 
@@ -147,14 +153,14 @@ class PatientRepository implements PatientRepositoryInterface
                 $content = $content->
                 select("patients.*",
                 $this->table_unit[$idunit].".noregister as noreg",
-                $this->table_unit[$idunit].".nim as nim",
+                $this->table_unit[$idunit].".$fieldnim as nim",
                 $this->table_unit[$idunit].".status_emr as status_emr",
                 $this->table_unit[$idunit].".status_penilaian as status_penilaian");
             }
         }
 
         $content = $content->
-        where("nim", $nim)->
+        where($fieldnim, $nim)->
         whereBetween(DB::raw("CAST(visit_date as DATE)"), [ $datetime_start, $datetime_to, ]);
 
         $content = $content->
@@ -177,10 +183,16 @@ class PatientRepository implements PatientRepositoryInterface
         $result = [];
 
         $user = auth()->user();
+        $fieldnim = "nim";
+        $nim = request()->nim ?? request()->query("nim", $user->username);
         $emr = DB::table($this->table_unit[$data["idunit"]]);
 
         if ($this->table_unit[$data["idunit"]] == "emrradiologies") $emr = $emr->where("noregistrasi", $data["id"]);
         else $emr = $emr->where("noregister", $data["id"]);
+
+        if ($this->table_unit[$data["idunit"]] == "emrperiodonties") $fieldnim = "npm";
+
+        $emr = $emr->where($fieldnim, $nim);
 
         if ($user->role == "dosen") {
 
