@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Error;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use App\Repositories\Interfaces\EmrRadiologiRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -35,7 +36,9 @@ class EmrRadiologiRepository extends Controller implements EmrRadiologiRepositor
 
         if ($request->query("nim")) $data = $data->where("nim", "=", $request->query("nim"));
 
-        $data = $data->where("noregistrasi", "=", $id)->first();
+        $data = $data->where("noregistrasi", "=", (string) $id)->first();
+
+        if (! $data) $data = collect(Schema::getColumnListing("emrradiologies"))->map(function ($item) { return [ $item => null ]; })->collapse();
 
         return $data;
     }
