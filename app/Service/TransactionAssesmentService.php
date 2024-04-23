@@ -430,9 +430,9 @@ class TransactionAssesmentService extends Controller
                 } 
                 if($request->assesmenttype == "1"){
 
-                    if($request->assementvalue > $request->assesmentbobotvalue){
-                        return $this->sendError('Nilai yang anda masukan melebihi Bobot Nilai !', []);
-                    } 
+                    // if($request->assementvalue > $request->assesmentbobotvalue){
+                    //     return $this->sendError('Nilai yang anda masukan melebihi Bobot Nilai !', []);
+                    // } 
                     $this->transactionassesmentRepository->updateTrsAssesmentDetailoneSingle($request);
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailonebyId($request->id)->first();
 
@@ -589,6 +589,8 @@ class TransactionAssesmentService extends Controller
                 $callsp = 'generatefinal_periodonties';
             }elseif ($simrsid=='46'){
                 $callsp = 'generatefinal_pedodonti';
+            }elseif ($simrsid=='10'){
+                $callsp = 'generatefinal_radiologi';
             }
             else{
                 return $this->sendError('Stored Procedure Not Found !', []);

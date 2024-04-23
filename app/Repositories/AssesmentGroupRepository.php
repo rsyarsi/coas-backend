@@ -66,4 +66,10 @@ class AssesmentGroupRepository implements AssesmentGroupRepositoryInterface
     {
         return assesmentgroup::where('specialistid',$id)->get();
     }
+    public function findAssesmentGroupbyspecialistactive($id)
+    {
+        return assesmentgroup::where('specialistid',$id)
+        ->where('active','1')
+        ->get();
+    }
 }

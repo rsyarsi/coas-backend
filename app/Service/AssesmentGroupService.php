@@ -169,7 +169,7 @@ class AssesmentGroupService extends Controller
     public function byspecialist($id)
     {
         try {
-            $find = $this->AssesmentGroupRepository->findAssesmentGroupbyspecialist($id);
+            $find = $this->AssesmentGroupRepository->findAssesmentGroupbyspecialistactive($id);
              
             if($find->count() < 1){
                 return $this->sendError('Data Group Penilaian tidak ditemukan !',[]);
