@@ -589,6 +589,8 @@ class TransactionAssesmentService extends Controller
                 $callsp = 'generatefinal_periodonties';
             }elseif ($simrsid=='46'){
                 $callsp = 'generatefinal_pedodonti';
+            }elseif ($simrsid=='10'){
+                $callsp = 'generatefinal_radiologi';
             }
             else{
                 return $this->sendError('Stored Procedure Not Found !', []);
