@@ -193,6 +193,9 @@ Route::group(["middleware" => ["CorsMiddleware"]], function () {
                             Route::group(['prefix' => 'ortodonti'], function () {
                                 Route::post("viewall", [TransactionAssesmentController::class, "viewRecapOrtodonsi"]);
                             });
+                            Route::group(['prefix' => 'radiologi'], function () {
+                                Route::post("viewall", [TransactionAssesmentController::class, "viewRecapRadiologi"]);
+                            });
                         //Route::get("view/{id}", [TransactionAssesmentController::class, "showrecap"]);
                     });
                 });

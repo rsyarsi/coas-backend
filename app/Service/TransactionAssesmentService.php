@@ -372,6 +372,8 @@ class TransactionAssesmentService extends Controller
                 }else if($request->type == "5"){
                     $datadetail = $this->transactionassesmentRepository->findFillednoPagingTrsAssesmentDetailfivebyId($request->id);
                 } 
+
+                return $datadetail;
             
             return $this->sendResponse($datadetail->first(), 'Data Penilaian detail ditemukan !');
 
@@ -587,7 +589,7 @@ class TransactionAssesmentService extends Controller
                 $callsp = 'generatefinal_konservasi';
             }elseif ($simrsid=='59'){
                 $callsp = 'generatefinal_periodonties';
-            }elseif ($simrsid=='46'){
+            }elseif ($simrsid=='58'){
                 $callsp = 'generatefinal_pedodonti';
             }elseif ($simrsid=='10'){
                 $callsp = 'generatefinal_radiologi';
@@ -686,6 +688,23 @@ class TransactionAssesmentService extends Controller
             "semesterid" => "required",   
         ]);
             $find = $this->transactionassesmentRepository->viewRecapOrtodonsi($request);
+             
+            return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
+        } catch (Exception $e) { 
+            Log::info($e->getMessage());
+            return $this->sendError('Data Transaksi Gagal Di Proses !', $e->getMessage());
+        }
+    }
+
+    public function viewRecapRadiologi($request)
+    {
+        try {
+            // validate 
+        $request->validate([ 
+            "yearid" => "required", 
+            "semesterid" => "required",   
+        ]);
+            $find = $this->transactionassesmentRepository->viewRecapRadiologi($request);
              
             return $this->sendResponse($find, 'Rekapitulasi ditemukan !');
         } catch (Exception $e) { 

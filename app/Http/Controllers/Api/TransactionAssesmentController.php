@@ -419,4 +419,32 @@ class TransactionAssesmentController extends Controller
             $execute =  $Service->viewRecapOrtodonsi($request);
             return $execute;
     }
+    public function viewRecapRadiologi(Request $request)
+    {
+        //
+        $SpecialistRepository =  new SpecialistRepository(); 
+            $LectureRepository =  new LectureRepository(); 
+            $semesterRepository = new SemesterRepository();
+            $universityRepository = new UniversityRepository;
+            $hospitalRepository = new HospitalRepository();
+            $studentRepository = new StudentRepository();
+            $transactionassesmentRepository = new TransactionAssesmentRepository();
+            $yearRepository = new YearRepository();
+            $assesmentGroupRepository = new AssesmentGroupRepository();
+
+            $Service = new TransactionAssesmentService(
+              $SpecialistRepository,
+              $LectureRepository,
+              $semesterRepository, 
+              $universityRepository,
+              $hospitalRepository, 
+              $studentRepository,
+              $transactionassesmentRepository, 
+              $yearRepository,
+              $assesmentGroupRepository 
+  
+            );
+            $execute =  $Service->viewRecapRadiologi($request);
+            return $execute;
+    }
 }

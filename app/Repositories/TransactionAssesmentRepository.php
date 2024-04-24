@@ -420,6 +420,13 @@ class TransactionAssesmentRepository implements TransactionAssesmentRepositoryIn
         ->where('semesterid',$request->semesterid)
         ->paginate(10);
     }
+    public function viewRecapRadiologi($request)
+    {
+        return DB::table("finalassesment_radiologies")
+        ->where('yearid',$request->yearid)
+        ->where('semesterid',$request->semesterid)
+        ->paginate(10);
+    }
     public function generateRecapAssesment($request,$procedure)
     { 
         $updates= DB::select('CALL '.$procedure.'(?, ?, ?)', [$request->studentid,$request->semesterid,$request->yearid]);
